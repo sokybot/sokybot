@@ -1,0 +1,211 @@
+<?xml version="1.0" standalone="yes"?>
+
+<mydoggy version="1.5.0" contentManagerEnabled="true">
+    <toolWindows>
+        <sharedWindows></sharedWindows>
+        <toolWindow id="Tool 1" available="true" visible="false" active="false" autoHide="false" anchor="RIGHT" anchorIndex="3" type="DOCKED" aggregateMode="false" maximized="false" index="1" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 1" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 2" available="true" visible="false" active="false" autoHide="false" anchor="BOTTOM" anchorIndex="3" type="DOCKED" aggregateMode="false" maximized="false" index="2" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 2" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 3" available="true" visible="false" active="false" autoHide="false" anchor="LEFT" anchorIndex="3" type="DOCKED" aggregateMode="false" maximized="false" index="3" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 3" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 4" available="true" visible="false" active="false" autoHide="false" anchor="BOTTOM" anchorIndex="2" type="DOCKED" aggregateMode="false" maximized="false" index="4" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 4" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 5" available="true" visible="false" active="false" autoHide="false" anchor="RIGHT" anchorIndex="2" type="DOCKED" aggregateMode="false" maximized="false" index="5" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 5" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 6" available="true" visible="false" active="false" autoHide="false" anchor="RIGHT" anchorIndex="1" type="DOCKED" aggregateMode="false" maximized="false" index="6" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 6" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 7" available="true" visible="false" active="false" autoHide="false" anchor="BOTTOM" anchorIndex="4" type="DOCKED" aggregateMode="false" maximized="false" index="7" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 7" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 8" available="true" visible="false" active="false" autoHide="false" anchor="LEFT" anchorIndex="2" type="DOCKED" aggregateMode="false" maximized="false" index="8" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 8" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 9" available="true" visible="false" active="false" autoHide="false" anchor="BOTTOM" anchorIndex="5" type="DOCKED" aggregateMode="false" maximized="false" index="9" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 9" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Tool 10" available="true" visible="false" active="false" autoHide="false" anchor="RIGHT" anchorIndex="0" type="DOCKED" aggregateMode="false" maximized="false" index="-1" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Tool 10" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Navigation Panel" available="true" visible="false" active="false" autoHide="false" anchor="LEFT" anchorIndex="1" type="DOCKED" aggregateMode="false" maximized="false" index="-1" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Navigation Panel" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Date Picker" available="true" visible="false" active="false" autoHide="false" anchor="BOTTOM" anchorIndex="1" type="DOCKED" aggregateMode="false" maximized="false" index="-1" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Date Picker" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Monitor Panel" available="true" visible="false" active="false" autoHide="false" anchor="LEFT" anchorIndex="0" type="DOCKED" aggregateMode="false" maximized="false" index="-1" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Monitor Panel" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+        <toolWindow id="Doggy Table" available="true" visible="false" active="false" autoHide="false" anchor="BOTTOM" anchorIndex="6" type="DOCKED" aggregateMode="false" maximized="false" index="-1" flashing="false" lockedOnAnchor="false" hideOnZeroTabs="true">
+            <descriptors>
+                <docked animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" dockLength="200" minimumDockLength="100" popupMenuEnabled="true"/>
+                <sliding animating="true" autoHide="true" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5"/>
+                <floating animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" modal="false" transparentMode="true" transparentDelay="1500" transparentRatio="0.7" addToTaskBar="false" alwaysOnTop="true" osDecorated="false" resizable="true"/>
+                <floatingLive animating="true" autoHide="false" enabled="true" hideRepresentativeButtonOnVisible="false" idVisibleOnTitleBar="true" titleBarButtonsVisible="true" titleBarVisible="true" transparentMode="true" transparentDelay="1000" transparentRatio="0.5" resizable="true"/>
+                <anchor visible="true" title="Doggy Table" previewEnabled="true" previewDelay="1000" previewTransparentRatio="0.65">
+                    <lockingAnchors></lockingAnchors>
+                </anchor>
+            </descriptors>
+        </toolWindow>
+    </toolWindows>
+    <toolWindowManagerDescriptor numberingEnabled="true" previewEnabled="true" showUnavailableTools="false">
+        <pushAway pushAwayMode="VERTICAL">
+            <mode type="MOST_RECENT">
+                <anchor type="TOP"/>
+                <anchor type="RIGHT"/>
+                <anchor type="BOTTOM"/>
+                <anchor type="LEFT"/>
+            </mode>
+        </pushAway>
+    </toolWindowManagerDescriptor>
+    <contentManagerUI>
+        <TabbedContentManagerUI closeable="true" detachable="true" minimizable="true" maximizable="true" popupMenuEnabled="true" showAlwaysTab="false" tabLayout="SCROLL" tabPlacement="TOP"/>
+    </contentManagerUI>
+    <contentManager>
+        <sharedWindows></sharedWindows>
+        <contents>
+            <content id="Welcome" detached="false" enabled="true" selected="true" maximized="false" minimized="false" flashing="false" closeable="true" detachable="true" minimizable="true" maximizable="true" transparentMode="true" transparentDelay="0" transparentRatio="0.7" addToTaskBarWhenDetached="false" alwaysOnTop="false"></content>
+        </contents>
+    </contentManager>
+    <toolWindowBars>
+        <toolWindowBar anchor="LEFT" dividerSize="3" aggregateMode="false" length="23" visible="true" toolsVisible="true">
+            <layout>
+                <![CDATA[
+<java version="11.0.10" class="java.beans.XMLDecoder">
+ <null/>
+</java>
+]]>
+            </layout>
+        </toolWindowBar>
+        <toolWindowBar anchor="BOTTOM" dividerSize="3" aggregateMode="false" length="23" visible="true" toolsVisible="true">
+            <layout>
+                <![CDATA[
+<java version="11.0.10" class="java.beans.XMLDecoder">
+ <null/>
+</java>
+]]>
+            </layout>
+        </toolWindowBar>
+        <toolWindowBar anchor="RIGHT" dividerSize="3" aggregateMode="false" length="23" visible="true" toolsVisible="true">
+            <layout>
+                <![CDATA[
+<java version="11.0.10" class="java.beans.XMLDecoder">
+ <null/>
+</java>
+]]>
+            </layout>
+        </toolWindowBar>
+        <toolWindowBar anchor="TOP" dividerSize="3" aggregateMode="false" length="23" visible="true" toolsVisible="true"></toolWindowBar>
+    </toolWindowBars>
+</mydoggy>
+
