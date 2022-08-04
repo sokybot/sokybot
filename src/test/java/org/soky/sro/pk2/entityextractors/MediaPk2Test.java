@@ -42,11 +42,21 @@ class MediaPk2Test {
     @Test
     void testVersionExtraction() { 
     	
-      int ver = 	this.mediaPk2.extractVersion() ;
+      int ver = 	mediaPk2.extractVersion() ;
      
       log.info("getten version is {}" , ver) ; 
       assertNotEquals(ver, -1);
     
     }
+    
+    @Test
+    void testPortExtraction() { 
+     
+    	int port = mediaPk2.extractPort() ; 
+    	log.info("getten port is {}" , port) ; 
+        assertNotEquals(port, -1);
+    	
+    }
+    
 
 }

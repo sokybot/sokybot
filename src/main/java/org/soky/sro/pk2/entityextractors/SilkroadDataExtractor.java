@@ -1,8 +1,6 @@
 package org.soky.sro.pk2.entityextractors;
-import org.soky.sro.model.SilkroadType;
-import org.soky.sro.pk2.IPk2File;
-import org.soky.sro.security.Blowfish;
-import org.soky.sro.security.IBlowfish;
+
+import org.sokybot.domain.SilkroadType;
 
 public class SilkroadDataExtractor implements IPK2EntityExtractor<SilkroadData> {
 
@@ -38,14 +36,6 @@ public class SilkroadDataExtractor implements IPK2EntityExtractor<SilkroadData> 
 
 	
 
-	private int extractPort() {
-		JMXFile portFile = reader.find("(?i)gateport.txt", 1).get(0);
-
-		if (portFile == null)
-			return -1;
-
-		return Integer.parseInt(new String(reader.getFileBytes(portFile)).trim());
-	}
 
 	private DivisionInfo extractDivisionInfo() {
 		DivisionInfo divisionInfo = new DivisionInfo();

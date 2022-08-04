@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,13 +20,19 @@ import java.util.stream.Stream;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.io.EndianUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.reflect.TypeUtils;
 import org.sokybot.domain.SilkroadData;
 import org.sokybot.domain.SkillEntity;
 import org.sokybot.domain.items.ItemEntity;
 import org.sokybot.pk2.IPk2File;
+import org.sokybot.pk2.JMXFile;
 import org.sokybot.pk2.Pk2File;
 import org.sokybot.security.Blowfish;
 import org.sokybot.security.IBlowfish;
+
+import lombok.extern.slf4j.Slf4j;
 
 import static org.sokybot.pk2.io.Pk2IO.getInputStream;
 
@@ -33,6 +40,7 @@ import static org.sokybot.pk2.io.Pk2IO.getInputStream;
  *
  * @author AMROO
  */
+@Slf4j
 public class MediaPk2 implements IMediaPk2 {
 
 	private IPk2File mediaFile;
@@ -135,4 +143,31 @@ public class MediaPk2 implements IMediaPk2 {
 		return -1;
 	}
 
+	@Override
+	public int extractPort() {
+
+		// IOUtils.toString(getInputStream(null)).trim() ;
+		return this.mediaFile.findFirst("(?i)gateport.txt").map((jmx) -> {
+			try {
+				String thePort = IOUtils.toString(getInputStream(jmx), "UTF-8").trim();
+
+				if (NumberUtils.isParsable(thePort)) {
+					return NumberUtils.toInt(thePort);
+				} else {
+					log.error("Extracted Port is not parsable --> {}", thePort);
+				}
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return -1;
+		}).get();
+
+		// JMXFile portFile =
+		// if (portFile == null)
+		// return -1;
+
+		// return Integer.parseInt(new String(reader.getFileBytes(portFile)).trim());
+	}
 }

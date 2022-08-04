@@ -24,6 +24,8 @@ import org.sokybot.pk2.IPk2File;
 public class NamesExtracor implements IPK2EntityExtractor<Map<String, String>> {
 
 	
+	
+	
 	@Override
 	public Map<String, String> extract(IPk2File pk2File) {
 

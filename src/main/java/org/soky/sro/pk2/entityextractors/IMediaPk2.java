@@ -15,7 +15,7 @@ public interface IMediaPk2 extends Closeable {
 
 	
 	//public DivisionInfo extractDivisionInfo() ;
-	//public int extractPort() ;
+	public int extractPort() ;
 	public int extractVersion();
 	
 	public Set<SkillEntity> getSkillEntities();

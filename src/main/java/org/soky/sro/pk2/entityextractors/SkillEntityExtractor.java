@@ -8,34 +8,28 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.sokybot.domain.SkillEntity;
+import org.sokybot.domain.SkillType;
+import org.sokybot.pk2.IPk2File;
+import org.sokybot.pk2.JMXFile;
 
-import org.soky.sro.model.SkillEntity;
-import org.soky.sro.model.SkillType;
-import org.soky.sro.pk2.IPk2File;
-import org.soky.sro.pk2.JMXFile;
-import sokybot.gamemodel.SkillEntity;
-import sokybot.gamemodel.SkillType;
-import sokybot.pk2.IPk2Reader;
-import sokybot.pk2.JMXFile;
 
-public class SkillEntityExtractor implements IPK2EntityExtractor<Set<SkillEntity>> {
+
+public class SkillEntityExtractor implements IPK2EntityExtractor<SkillEntity> {
 
 	private IPk2File reader;
-
-	public SkillEntityExtractor(IPk2File reader) {
-		this.reader = reader;
-	}
 
 	private static int c = 0;
 
 	@Override
-	public Set<SkillEntity> extract() {
+	public Stream<SkillEntity> extract(IPk2File reader) {
 
 		Set<SkillEntity> res = new HashSet<>();
 
