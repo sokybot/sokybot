@@ -1,9 +1,10 @@
 package org.soky.sro.pk2.entityextractors;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
@@ -16,16 +17,15 @@ class MediaPk2Test {
 
 
     @BeforeAll
-    void init() {
+   static void init() {
         String gamePath =  "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019";
         mediaPk2 = MediaPk2.createInstance(gamePath) ;
-
     }
 
     @AfterAll
-    void dest() {
+    static void dest() {
         try {
-            this.mediaPk2.close();
+          mediaPk2.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -37,4 +37,16 @@ class MediaPk2Test {
             log.info("({} , {} ) " , key , value);
         });
     }
+
+    
+    @Test
+    void testVersionExtraction() { 
+    	
+      int ver = 	this.mediaPk2.extractVersion() ;
+     
+      log.info("getten version is {}" , ver) ; 
+      assertNotEquals(ver, -1);
+    
+    }
+
 }

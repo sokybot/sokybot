@@ -18,23 +18,14 @@ import java.util.stream.Stream;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.sokybot.pk2.IPk2File;
 
-import org.soky.sro.pk2.IPk2File;
-import org.soky.sro.pk2.io.Pk2IO;
-
-import static org.soky.sro.pk2.io.Pk2IO.getInputStream;
 
 public class NamesExtracor implements IPK2EntityExtractor<Map<String, String>> {
 
-	private IPk2File reader;
-
-	public NamesExtracor(IPk2File reader) {
-
-		this.reader = reader;
-	}
-
+	
 	@Override
-	public Map<String, String> extract() {
+	public Map<String, String> extract(IPk2File pk2File) {
 
 		Map<String, String> res = new HashMap<>();
 
