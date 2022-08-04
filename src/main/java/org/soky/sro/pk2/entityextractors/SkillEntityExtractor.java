@@ -16,6 +16,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import org.soky.sro.model.SkillEntity;
+import org.soky.sro.model.SkillType;
 import org.soky.sro.pk2.IPk2File;
 import org.soky.sro.pk2.JMXFile;
 import sokybot.gamemodel.SkillEntity;
@@ -110,7 +111,7 @@ public class SkillEntityExtractor implements IPK2EntityExtractor<Set<SkillEntity
 				}
 				
 				// parse type 
-                SkillType type = SkillType.Passive ; 
+                SkillType type = SkillType.Passive ;
                 
                 field = record.get(8) ; // {0 , 1 , 2} 0 = passive
                 

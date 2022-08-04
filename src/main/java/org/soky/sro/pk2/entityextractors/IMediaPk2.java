@@ -1,28 +1,31 @@
 package org.soky.sro.pk2.entityextractors;
 
-import java.util.List;
+import java.io.Closeable;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
-import org.soky.sro.model.ItemEntity;
-import org.soky.sro.model.SilkroadData;
-import org.soky.sro.model.SkillEntity;
+import org.sokybot.domain.SilkroadData;
+import org.sokybot.domain.SkillEntity;
+import org.sokybot.domain.items.ItemEntity;
 
 
-public interface IMediaPk2 {
+
+public interface IMediaPk2 extends Closeable {
 
 	
 	//public DivisionInfo extractDivisionInfo() ;
 	//public int extractPort() ;
-	//public int extractVersion();
+	public int extractVersion();
+	
 	public Set<SkillEntity> getSkillEntities();
-	public Set<ItemEntity> getItemEntities() ;
+	public Stream<ItemEntity> getItemEntities() ;
 	public Map<String, String> getEntityNames() ; 
 	
 	//public SilkroadType extractType() ;
 	public SilkroadData getSilkroadData() ;
 	
-	public void close() ; 
-	public void open() ; 
+	//public void close() ;
+//	public void open() ;
 	
 }

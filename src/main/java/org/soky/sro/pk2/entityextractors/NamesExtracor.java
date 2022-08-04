@@ -7,16 +7,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
 import org.soky.sro.pk2.IPk2File;
+import org.soky.sro.pk2.io.Pk2IO;
+
+import static org.soky.sro.pk2.io.Pk2IO.getInputStream;
 
 public class NamesExtracor implements IPK2EntityExtractor<Map<String, String>> {
 
@@ -43,7 +49,58 @@ public class NamesExtracor implements IPK2EntityExtractor<Map<String, String>> {
 		return res;
 	}
 
-	private Map<String, String> extractNamesAt(String entryName) {
+
+	private Map<String , String > getEntityNames() {
+
+		//	return getInputStream(nameJmxFile) ;
+		return this.reader.find("(?i)textdataname.txt").stream()
+				.map(jmxFile -> {
+					try {
+						return new BufferedReader(new InputStreamReader(getInputStream(jmxFile) , StandardCharsets.UTF_16LE));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				})
+				.flatMap(BufferedReader::lines)
+				.flatMap((fileEntryName)-> this.reader.find("(?i)" + fileEntryName).stream())
+				.flatMap((nameJmxFile)->{
+				//	return getInputStream(nameJmxFile) ;
+					try {
+						return
+								CSVFormat.MYSQL.builder().setTrim(true)
+								.build()
+								.parse(new BufferedReader(new InputStreamReader(getInputStream(nameJmxFile
+								), StandardCharsets.UTF_16LE))).stream() ;
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				})
+				.filter((record)->{
+					if (record.size() < 2 || record.hasComment()) return false ;
+
+					String firstField = record.get(0);
+
+					return !firstField.startsWith("//") && !firstField.equals("0") && !firstField.isBlank();
+				}).collect(Collectors.toMap((record)-> record.get(1), (record)->{
+
+
+					for (int i = 2; i < record.size(); i++) {
+
+						if (Pattern.matches(".*[a-zA-Z]+.*", record.get(i))) {
+							return record.get(i);
+
+						}
+
+					}
+
+
+					return "UNDEFINED" ;
+				}));
+
+
+	}
+
+	/*private Map<String, String> extractNamesAt(String entryName) {
 
 		Map<String, String> res = new HashMap<>();
 		List<JMXFile> matchedFiles = this.reader.find("(?i)" + entryName);
@@ -100,23 +157,25 @@ public class NamesExtracor implements IPK2EntityExtractor<Map<String, String>> {
 		}
 		return res;
 	}
+*/
+/*	private String[] getFileNames() {
 
-	private String[] getFileNames() {
 
-		List<JMXFile> txtDataNames = this.reader.find("(?i)textdataname.txt");
-		List<String> res = new ArrayList<>();
 
-		for (JMXFile textDataNameFile : txtDataNames) {
+		//List<JMXFile> txtDataNames = this.reader.find("(?i)textdataname.txt");
+		//List<String> res = new ArrayList<>();
 
-			byte[] fileBytes = this.reader.getFileBytes(textDataNameFile);
+		//for (JMXFile textDataNameFile : txtDataNames) {
 
-			String fileStr = new String(fileBytes, Charset.forName("UTF-16"));
-			String[] files = fileStr.split(System.getProperty("line.separator"));
-			for (String file : files) {
-				res.add(file);
-			}
-		}
-		return res.toArray(new String[0]) ; 
+		//	byte[] fileBytes = this.reader.getFileBytes(textDataNameFile);
 
-	}
+			//String fileStr = new String(fileBytes, Charset.forName("UTF-16"));
+		//	String[] files = fileStr.split(System.getProperty("line.separator"));
+		//	for (String file : files) {
+		//		res.add(file);
+	//		}
+	//	}
+//		return res.toArray(new String[0]) ;
+
+	}*/
 }

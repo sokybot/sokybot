@@ -1,14 +1,8 @@
 package org.soky.sro.pk2.entityextractors;
-
-import Test.primarydatatypes.BinaryReader;
+import org.soky.sro.model.SilkroadType;
 import org.soky.sro.pk2.IPk2File;
-import sokybot.bot.network.security.Blowfish;
-import sokybot.pk2.JMXFile;
-import sokybot.pk2.IPk2Reader;
-import sokybot.silkroadgroups.model.Division;
-import sokybot.silkroadgroups.model.DivisionInfo;
-import sokybot.silkroadgroups.model.SilkroadData;
-import sokybot.silkroadgroups.model.SilkroadType;
+import org.soky.sro.security.Blowfish;
+import org.soky.sro.security.IBlowfish;
 
 public class SilkroadDataExtractor implements IPK2EntityExtractor<SilkroadData> {
 
@@ -42,17 +36,7 @@ public class SilkroadDataExtractor implements IPK2EntityExtractor<SilkroadData> 
 		return type;
 	}
 
-	private int extractVersion() {
-		Blowfish bf = new Blowfish();
-		bf.init(false, "SILKROAD".getBytes());
-		byte[] filebytes = reader.getFileBytes("SV.T");
-		BinaryReader BReader = new BinaryReader(filebytes);
-		int VerLength = BReader.getDword().toInteger();
-		byte[] ver = BReader.getBytes(VerLength);
-		ver = bf.decode(0, ver);
-
-		return Integer.parseInt(new String(ver).trim());
-	}
+	
 
 	private int extractPort() {
 		JMXFile portFile = reader.find("(?i)gateport.txt", 1).get(0);

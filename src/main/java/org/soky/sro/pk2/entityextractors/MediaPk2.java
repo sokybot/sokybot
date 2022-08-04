@@ -5,14 +5,24 @@
  */
 package org.soky.sro.pk2.entityextractors;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import org.soky.sro.model.ItemEntity;
-import org.soky.sro.model.SkillEntity;
-import org.soky.sro.pk2.IPk2File;
-import org.soky.sro.pk2.Pk2File;
+import org.apache.commons.csv.CSVFormat;
+import org.sokybot.domain.SilkroadData;
+import org.sokybot.domain.SkillEntity;
+import org.sokybot.domain.items.ItemEntity;
+import org.sokybot.pk2.IPk2File;
+import org.sokybot.pk2.Pk2File;
 
+import static org.sokybot.pk2.io.Pk2IO.getInputStream;
 
 /**
  *
@@ -30,42 +40,95 @@ public class MediaPk2 implements IMediaPk2 {
 	@Override
 	public Map<String, String> getEntityNames() {
 
-		return Pk2ExtractorsFactory.getEntityNamesExtractor(this.mediaFile).extract();
+		return this.mediaFile.find("(?i)textdataname.txt").stream()
+				.map(jmxFile -> {
+					try {
+						return new BufferedReader(new InputStreamReader(getInputStream(jmxFile) , StandardCharsets.UTF_16LE));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				})
+				.flatMap(BufferedReader::lines)
+				.flatMap((fileEntryName)-> this.mediaFile.find("(?i)" + fileEntryName).stream())
+				.flatMap((nameJmxFile)->{
+					//	return getInputStream(nameJmxFile) ;
+					try {
+						return
+								CSVFormat.MYSQL.builder().setTrim(true)
+										.build()
+										.parse(new BufferedReader(new InputStreamReader(getInputStream(nameJmxFile
+										), StandardCharsets.UTF_16LE))).stream() ;
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				})
+				.filter((record)->{
+					if (record.size() < 2 || record.hasComment()) return false ;
+
+					String firstField = record.get(0);
+
+					return !firstField.startsWith("//") && !firstField.equals("0") && !firstField.isBlank();
+				}).collect(Collectors.toMap((record)-> record.get(1), (record)->{
+
+
+					for (int i = 2; i < record.size(); i++) {
+
+						if (Pattern.matches(".*[a-zA-Z]+.*", record.get(i))) {
+							return record.get(i);
+
+						}
+
+					}
+
+
+					return "UNDEFINED" ;
+				}));
+
 	}
 
 	@Override
-	public Set<ItemEntity> getItemEntities() {
-
-		return Pk2ExtractorsFactory.getItemEntityExtractor(this.mediaFile).extract();
+	public Stream<ItemEntity> getItemEntities() {
+		return Pk2Extractors.getExtractorForEntity(ItemEntity.class)
+							.extract(this.mediaFile)
+							.peek(item-> item.setName("Here We Must Get Item name From EntityNames"));
 	}
 
 	@Override
 	public SilkroadData getSilkroadData() {
 
-		return Pk2ExtractorsFactory.getSilkroadDataExtractor(this.mediaFile).extract();
+		return  null ;
+		//return Pk2Extractors.getSilkroadDataExtractor(this.mediaFile).extract();
 	}
 
 	@Override
 	public Set<SkillEntity> getSkillEntities() {
-		 
-		return Pk2ExtractorsFactory.getSkillEntitiesExtractor(this.mediaFile).extract() ;
+
+		return  null ;
+		//return Pk2Extractors.getSkillEntitiesExtractor(this.mediaFile).extract() ;
 	}
 	@Override
-	public void close() {
- 
-		this.mediaFile.close();  
+	public void close() throws IOException {
+		this.mediaFile.close();
 	}
 
-	@Override
-	public void open() {
- 
-		this.mediaFile.open();
-	}
 
 	
 	public static IMediaPk2 createInstance(String silkroadPath) {
 		
 			return new MediaPk2(new Pk2File(silkroadPath + "\\Media.pk2"));
+	}
+
+	@Override
+	public int extractVersion() {
+		Blowfish bf = new Blowfish() ;
+		bf.init(false, "SILKROAD".getBytes());
+		byte[] filebytes = reader.getFileBytes("SV.T");
+		BinaryReader BReader = new BinaryReader(filebytes);
+		int VerLength = BReader.getDword().toInteger();
+		byte[] ver = BReader.getBytes(VerLength);
+		ver = bf.decode(0, ver);
+
+		return Integer.parseInt(new String(ver).trim());
 	}
 
 

@@ -3,20 +3,18 @@ package org.soky.sro.pk2.entityextractors;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.apache.commons.lang3.reflect.TypeUtils;
 
 
 
-public class Pk2ExtractorsFactory {
+public class Pk2Extractors {
 
 
 
 	public static <T> IPK2EntityExtractor<T > getExtractorForEntity(Class<T> entity) {
-		String pack = "extractors";
+		String pack = Pk2Extractors.class.getPackage().getName() ; //
 
 		return
 				new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(pack)))

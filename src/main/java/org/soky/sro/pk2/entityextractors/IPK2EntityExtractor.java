@@ -1,8 +1,13 @@
 package org.soky.sro.pk2.entityextractors;
 
+
+import java.util.stream.Stream;
+
+import org.sokybot.pk2.IPk2File;
+
 public interface IPK2EntityExtractor<T> {
 
 	
-	T extract() ; 
+	Stream<T> extract(IPk2File pk2File) ;
 	
 }
