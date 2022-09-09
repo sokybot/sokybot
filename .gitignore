@@ -49,3 +49,4 @@ build/
 ### Mac OS ###
 .DS_Store
 >>>>>>> soky-bot/master
+/.metadata/
