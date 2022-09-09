@@ -1,38 +1,23 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>org.sokybot</groupId>
+    <artifactId>soky-bot-mydoggy</artifactId>
 
-    <parent>
-        <artifactId>soky-bot-mydoggy</artifactId>
-        <groupId>org.sokybot</groupId>
-        <version>1.5.1</version>
-    </parent>
+    <version>1.5.1</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>mydoggy-api</module>
+        <module>mydoggy-plaf</module>
+        <module>mydoggy-res</module>
+        <module>mydoggy-examples</module>
+    </modules>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <build>
 
-    <artifactId>mydoggy-api</artifactId>
-    <packaging>jar</packaging>
-
-
-    <url>http://mydoggy.sourceforge.net</url>
-    <description>
-        MyDoggy - My Java Docking Framework - API:
-        MyDoggy-Api contains the application program interface of MyDoggy to manage every aspects of the framework.
-    </description>
-
-    <reporting>
-        <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
-
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
-
+    </build>
 </project>

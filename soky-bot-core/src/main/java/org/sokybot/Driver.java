@@ -1,23 +1,13 @@
 package org.sokybot;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.formdev.flatlaf.FlatDarkLaf;
 
-import picocli.CommandLine.ExitCode;
 
-import org.jdesktop.swingx.JXFrame;
-import org.noos.xing.mydoggy.ToolWindowManager;
-import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
-import org.osgi.framework.launch.Framework;
-import org.osgi.framework.launch.FrameworkFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.Banner;
 import org.springframework.boot.ExitCodeEvent;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -30,8 +20,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.osgi.io.OsgiBundleResourceLoader;
 import javax.swing.*;
+
 import java.awt.*;
 
+
+/*
+ * TODO : implement Driver class using OSGI declarative service instead of implement BundleActivator 
+ *  
+ * 
+ * 
+ */
 
 @ComponentScan(basePackages = {"org.sokybot.app" ,
 								"org.sokybot.mainframe"  , 
@@ -45,8 +43,11 @@ public class Driver implements BundleActivator {
 	
 	
 
+	
+	
     @Override
     public void start(BundleContext context) throws Exception {
+    	
     	
 
     	Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
@@ -60,7 +61,6 @@ public class Driver implements BundleActivator {
 		
     		this.ctx = new SpringApplicationBuilder(Driver.class)
         		.resourceLoader(bundleResourceLoader)
-        		
                 .headless(false)
                 .web(WebApplicationType.NONE)
                 .properties("spring.application.name:sokybot" , "logging.level.root:INFO")
@@ -102,6 +102,7 @@ public class Driver implements BundleActivator {
         new SpringApplicationBuilder(Driver.class)        	
                 .headless(false)
                 .web(WebApplicationType.NONE)
+                .bannerMode(Banner.Mode.OFF)
                 .properties("spring.application.name:sokybot")
                 .profiles("dev" , "test")
                 .logStartupInfo(false)

@@ -164,7 +164,9 @@ public class TutorialSet6 {
         floatingTypeDescriptor.setAnimating(true);
     }
 
+    
     protected void initContentManager() {
+    	  setupContentManagerUI();
          JTree treeContent = new JTree();
 
         ContentManager contentManager = toolWindowManager.getContentManager();
@@ -174,12 +176,13 @@ public class TutorialSet6 {
                                                     treeContent);
         content.setToolTipText("Tree tip");
 
-        setupContentManagerUI();
+      
     }
 
     protected void setupContentManagerUI() {
         // By default the content manager ui is a TabbedContentManagerUI<TabbedContentUI> instance. 
-        TabbedContentManagerUI<TabbedContentUI> contentManagerUI = (TabbedContentManagerUI<TabbedContentUI>) toolWindowManager.getContentManager().getContentManagerUI();
+        TabbedContentManagerUI<TabbedContentUI> contentManagerUI = 
+        		(TabbedContentManagerUI<TabbedContentUI>) toolWindowManager.getContentManager().getContentManagerUI();
         contentManagerUI.setShowAlwaysTab(true);
         contentManagerUI.setTabPlacement(TabbedContentManagerUI.TabPlacement.BOTTOM);
         contentManagerUI.addContentManagerUIListener(new ContentManagerUIListener() {
@@ -191,14 +194,22 @@ public class TutorialSet6 {
                 JOptionPane.showMessageDialog(frame, "Hello World!!!");
             }
         });
+        
+        // for test
+        contentManagerUI.setDetachable(false);
+        
+        // for test
+        contentManagerUI.setCloseable(false);
 
+        /*
         TabbedContentUI contentUI = contentManagerUI.getContentUI(toolWindowManager.getContentManager().getContent(0));
 
-        contentUI.setCloseable(true);
-        contentUI.setDetachable(true);
+        contentUI.setCloseable(false);
+        contentUI.setDetachable(false);
         contentUI.setTransparentMode(true);
         contentUI.setTransparentRatio(0.7f);
         contentUI.setTransparentDelay(1000);
+        */
     }
 
     public static void main(String[] args) {

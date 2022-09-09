@@ -9,49 +9,29 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.function.Predicate;
 
 import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.DocumentEvent;
 
 import org.sing_group.gc4s.dialog.AbstractInputJDialog;
-import org.sing_group.gc4s.event.DocumentAdapter;
 import org.sing_group.gc4s.input.filechooser.JFileChooserPanel;
 import org.sing_group.gc4s.input.filechooser.JFileChooserPanelBuilder;
-import org.sing_group.gc4s.input.filechooser.Mode;
 import org.sing_group.gc4s.input.filechooser.SelectionMode;
-import org.sing_group.gc4s.input.filechooser.event.FileChooserListener;
 import org.sing_group.gc4s.input.text.BindJXTextField;
-import org.sing_group.gc4s.ui.icons.Icons;
-import org.sing_group.gc4s.utilities.ColorUtils;
-import org.sokybot.Driver;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.sokybot.app.service.IBotMachineGroupService;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.icons.FlatFileViewDirectoryIcon;
-import com.formdev.flatlaf.icons.FlatInternalFrameCloseIcon;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
-import com.formdev.flatlaf.ui.FlatDesktopIconUI;
 
-import kotlin.collections.IndexingIterable;
 
 @Component
 @Scope("prototype")
@@ -65,14 +45,14 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 	private Box page;
 
-	private ApplicationContext ctx;
+	private IBotMachineGroupService botMachineGroupService  ; 
 
-	public GameConfigInputDialog(ApplicationContext ctx) {
-
-		// super(ctx.getBean(JFrame.class));
-		super(null);
-		this.ctx = ctx;
-
+	private SilkroadFileBrowser silkroadFileBrowser ; 
+	
+	public GameConfigInputDialog(  JFrame mainFrame ,SilkroadFileBrowser silkroadFileBrowser  ,  IBotMachineGroupService botMachineGroup ) {
+			super(mainFrame); 
+			this.botMachineGroupService = botMachineGroup ; 
+			this.silkroadFileBrowser  = silkroadFileBrowser ; 
 	}
 
 	@PostConstruct
@@ -90,9 +70,10 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 		
 		// we need to configure fileChooserPanel
 		this.fileChooserPanel = JFileChooserPanelBuilder.createOpenJFileChooserPanel()
-				.withFileChooser(this.ctx.getBean(SilkroadFileBrowser.class))
+				.withFileChooser(this.silkroadFileBrowser)
 				.withFileChooserSelectionMode(SelectionMode.DIRECTORIES).withLabel("Game Path ")
 				.withBrowseIcon(new FlatSearchIcon())
+				
 				.build();
         
 		this.fileChooserPanel.setClearSelectedFileActionEnabled(false);
@@ -139,7 +120,9 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 		if (isValidInputs()) {
 			// create new bot group using groupService and then forward request to super
-			System.out.println("creating new bot group ........") ; 
+			//System.out.println("creating new bot group ........") ; 
+			this.botMachineGroupService.createNewGroup(this.txtGroupName.getText(),
+					this.fileChooserPanel.getSelectedFile().getAbsolutePath());
 			super.onOkButtonEvent(event);
 		} else {
 			System.out.println("invalid inputs") ; 
@@ -148,7 +131,7 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 	private boolean isValidInputs() {
 
-		return false;
+		return true;
 	}
 
 	private void inputUpdated() {
@@ -202,16 +185,7 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 		});
 
-//		for(int i = 0 ; i < 1000 ; i++) { 
-//			try {
-//				System.out.println("working....");
-//				Thread.sleep(200);
-//				
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+
 	}
 
 }

@@ -47,6 +47,7 @@ public class SilkroadFileBrowser extends JFileChooser {
 	  void inti() {
 		
 			setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			setSelectedFile(new File("E:\\Amroo\\Silkroad Games\\Silkroad"));
 			addChoosableFileFilter(new FileNameExtensionFilter("Silkroad Directory", "*"));
 			setAcceptAllFileFilterUsed(true);
 			setDialogTitle("Select Silkroad Directory");

@@ -2,13 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.thevpc.more.mydoggy</groupId>
+
+
+    <parent>
+        <artifactId>soky-bot-mydoggy</artifactId>
+        <groupId>org.sokybot</groupId>
+        <version>1.5.1</version>
+    </parent>
     <artifactId>mydoggy-examples</artifactId>
-    <version>1.5.1</version>
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+
     <name>net.thevpc.more.mydoggy.mydoggy-examples</name>
     <url>http://mydoggy.sourceforge.net</url>
     <description>MyDoggy - My Java Docking Framework - Examples:

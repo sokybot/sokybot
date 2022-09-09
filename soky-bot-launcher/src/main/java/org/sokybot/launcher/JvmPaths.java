@@ -1,4 +1,4 @@
-package org.soky.launcher;
+package org.sokybot.launcher;
 
 import java.io.File;
 

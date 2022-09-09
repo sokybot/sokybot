@@ -1,21 +1,12 @@
-package org.soky.launcher;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Properties;
-import java.util.TreeMap;
+package org.sokybot.launcher;
 
 import org.apache.felix.framework.FrameworkFactory;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.launch.Framework;
+
+import java.io.*;
+import java.util.*;
 
 public class Launcher {
 	
@@ -27,7 +18,7 @@ public class Launcher {
 
 	public Launcher(File root) {
 		this.root = root;
-		this.bundleDir = new File(root, "bundles");
+		this.bundleDir = new File(root, "system");
 		this.configFile = findConfigFile();
 		if (!bundleDir.isDirectory()) {
 			throw new Error("directory does not exist " + bundleDir);
@@ -113,7 +104,7 @@ public class Launcher {
 	private Hashtable<String, String> defaultProperties() {
 		Hashtable<String, String> properties = new Hashtable<>();
 		properties.put("org.osgi.framework.storage.clean", "onFirstInit");
-		properties.put("org.osgi.service.http.port", "8000");
+		//properties.put("org.osgi.service.http.port", "8000");
 		properties.put("felix.log.level", "3");
 		properties.put("felix.cache.rootdir", root.getAbsolutePath());
 		properties.put("org.apache.felix.http.debug", "true");

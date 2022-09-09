@@ -162,15 +162,18 @@ public class TutorialSet5 {
                 JOptionPane.showMessageDialog(frame, "Hello World!!!");
             }
         });
-
+        
+        
         TabbedContentUI contentUI = (TabbedContentUI) toolWindowManager.getContentManager().getContent(0).getContentUI();
         // Or you can use :
         // TabbedContentUI contentUI = contentManagerUI.getContentUI(toolWindowManager.getContentManager().getContent(0));
         // without the need of the cast
 
-        contentUI.setCloseable(true);
-        contentUI.setDetachable(true);
-        contentUI.setTransparentMode(true);
+       // contentUI.setCloseable(false);
+       // contentUI.setDetachable(false);
+       // contentUI.setMaximizable(false);
+       // contentUI.setMinimizable(false);
+        contentUI.setTransparentMode(false);
         contentUI.setTransparentRatio(0.7f);
         contentUI.setTransparentDelay(1000);
     }

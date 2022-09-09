@@ -10,6 +10,7 @@ import javax.swing.*;
 //@Component
 //@Getter
 //@Builder
+
 @Getter
 public class WindowPreparedEvent  extends ApplicationEvent {
 

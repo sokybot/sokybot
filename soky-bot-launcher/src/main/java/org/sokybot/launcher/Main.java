@@ -1,12 +1,13 @@
-package org.soky.launcher;
+package org.sokybot.launcher;
 
+import javax.swing.*;
 import java.io.File;
 
 public class Main {
 
 	
 
-	public static void main(String[] args) throws Exception { 
+	public static void main(String[] args) throws Exception {
 		new Launcher(getRootDir(args)).start();
 		
 	}

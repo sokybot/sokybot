@@ -26,10 +26,16 @@
     <option name="priority" value="Medium" />
     <option name="excludeFilter" value="" />
   </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="Osmorc" url="file://$PROJECT_DIR$/soky-bot-core" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../soky-bot-mydoggy/pom.xml" />
+        <option value="$PROJECT_DIR$/soky-bot-mydoggy/pom.xml" />
+        <option value="$PROJECT_DIR$/soky-bot-mydoggy/mydoggy-examples/pom.xml" />
       </list>
     </option>
   </component>
