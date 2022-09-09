@@ -1,33 +1,30 @@
 package org.soky.sro.pk2;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.builder.ToStringExclude;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.sokybot.pk2.IPk2File;
+import org.sokybot.pk2.JMXFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.regex.Pattern;
-
-import  static  org.soky.sro.pk2.io.Pk2IO.getInputStream ;
 
 @Slf4j
 public class Pk2FileTest {
 
 
     static private String filePath ;
-   static private Pk2File pk2File ;
+   static private IPk2File pk2File ;
 
 
     @BeforeAll
     static void init() {
        filePath =  "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019\\Media.pk2";
-        pk2File = new Pk2File(filePath);
+        pk2File = IPk2File.open(filePath) ; 
 
 
     }

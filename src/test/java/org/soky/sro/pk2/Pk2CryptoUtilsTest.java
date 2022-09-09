@@ -8,6 +8,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.sokybot.pk2.IPk2File;
+import org.sokybot.pk2.JMXFile;
+import org.sokybot.pk2.Pk2CryptoUtils;
+import org.sokybot.pk2.Pk2File;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,21 +23,22 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.soky.sro.pk2.Pk2CryptoUtils.ENCRYPTED_TEXT_FOOTER;
-import static org.soky.sro.pk2.io.Pk2IO.getInputStream;
+import static org.sokybot.pk2.Pk2CryptoUtils.ENCRYPTED_TEXT_FOOTER;
+import static org.sokybot.pk2.io.Pk2IO.getInputStream;
 
 @Slf4j
 class Pk2CryptoUtilsTest {
 
 
     static private String filePath ;
-    static private Pk2File pk2File ;
+    static private IPk2File pk2File ;
 
 
     @BeforeAll
     static void init() {
+    	
         filePath =  "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019\\Media.pk2";
-        pk2File = new Pk2File(filePath);
+        pk2File = IPk2File.open(filePath);
 
 
     }
@@ -105,23 +110,23 @@ class Pk2CryptoUtilsTest {
                     }
                 });
     }
-    @Test
-    public void testExtractAnySkillDataEncText() {
-        String query  = "^.*enc.*$" ;
-
-        pk2File.find(query).stream().filter(file->file.getName().endsWith(".txt")).forEach((jmxFile)->{
-            Path p = Paths.get("src/test/resources/" + jmxFile.getName()) ;
-            try {
-                Files.deleteIfExists(p) ;
-                //   Files.createFile(p) ;
-                Files.copy(getInputStream(jmxFile) , p) ;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        });
-
-    }
+//    @Test
+//     void testExtractAnySkillDataEncText() {
+//        String query  = "^.*enc.*$" ;
+//
+//        pk2File.find(query).stream().filter(file->file.getName().endsWith(".txt")).forEach((jmxFile)->{
+//            Path p = Paths.get("src/test/resources/" + jmxFile.getName()) ;
+//            try {
+//                Files.deleteIfExists(p) ;
+//                //   Files.createFile(p) ;
+//                Files.copy(getInputStream(jmxFile) , p) ;
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        });
+//
+//    }
 
 
     @Test
@@ -144,13 +149,10 @@ class Pk2CryptoUtilsTest {
                     }
                 })
                 .map((f)->{
-                    try {
+                
                         log.info("Encrypted File {} " , f.getName());
                         totalSize.addAndGet(f.getSize()) ;
                         return getInputStream(f) ;
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
                 })
                 .reduce(InputStream.nullInputStream() ,
                         ( sequenceInputStream, jmxFileInputStream)->

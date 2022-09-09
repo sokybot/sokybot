@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CountingInputStream;
 import org.junit.jupiter.api.*;
-import org.soky.sro.pk2.JMXFile;
-import org.soky.sro.pk2.Pk2CryptoUtils;
-import org.soky.sro.pk2.Pk2File;
+import org.sokybot.pk2.IPk2File;
+import org.sokybot.pk2.JMXFile;
+import org.sokybot.pk2.Pk2CryptoUtils;
+import org.sokybot.pk2.Pk2File;
+import org.sokybot.pk2.io.Pk2IO;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -16,21 +18,21 @@ import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
-import static org.soky.sro.pk2.io.Pk2IO.* ;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.sokybot.pk2.io.Pk2IO.*;
 
 @Slf4j
 class Pk2IOTest {
 
 
     static private String filePath ;
-    static private Pk2File pk2File ;
+    static private IPk2File pk2File ;
 
 
     @BeforeAll
     static void init() {
         filePath =  "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019\\Media.pk2";
-        pk2File = new Pk2File(filePath);
+        pk2File = IPk2File.open(filePath);
 
 
     }
@@ -41,22 +43,25 @@ class Pk2IOTest {
     }
 
 
+    
+    
 
     @Test
     void testInputStream() {
 
+    	
         pk2File.find("itemdata.txt").forEach((itemDataFile)->{
 
             log.debug("Analyzing itemdata.txt file");
-            try {
 
-                Reader reader = new InputStreamReader( Pk2IO.getInputStream(itemDataFile) , StandardCharsets.UTF_16LE) ;
+                Reader reader = new InputStreamReader( Pk2IO.getInputStream(itemDataFile) , StandardCharsets.UTF_16) ;
 
                 BufferedReader br = new BufferedReader(reader) ;
                // Scanner      scanner = new Scanner( Pk2IO.getInputStream(itemDataFile) , StandardCharsets.UTF_16LE);
 
                 String regex = "(?i)ItemData_(\\d+)\\.txt$" ; //"(?i)itemdata_(\\d+).txt")
                 br.lines().forEach((l)->{
+                log.info(l) ;
                 boolean match =  l.matches(regex) ;
                  log.info("line {} {} matches {}" , l ,(match) ? "" : "not" ,  regex);
                   assertTrue(match);
@@ -71,9 +76,6 @@ class Pk2IOTest {
                    // assertTrue(line.equals("\uFEFFItemData_5000.txt"));
 
                // }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
 
         });
@@ -102,13 +104,10 @@ class Pk2IOTest {
 
        JMXFile jmxFile  =  pk2File.find(fileName , 1).stream().findFirst().orElseThrow() ;
 
-        try {
          InputStreamReader reader = new InputStreamReader( getInputStream(jmxFile));
        long lines =   new BufferedReader(reader).lines().count()  ;
        assertEquals(0 , lines);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+       
 
     }
     @Test
