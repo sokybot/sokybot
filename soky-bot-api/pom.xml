@@ -12,6 +12,7 @@
 
 	<artifactId>soky-bot-api</artifactId>
 	<packaging>bundle</packaging>
+	<name>sokybot-api</name>
 
 
 	<dependencies>
