@@ -6,32 +6,30 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import org.junit.jupiter.api.Test;
+import org.sokybot.domain.SkillEntity;
 import org.sokybot.domain.items.ItemEntity;
 import org.sokybot.pk2extractor.IPK2EntityExtractor;
+import org.sokybot.pk2extractor.Pk2ExtractorUtils;
 import org.sokybot.pk2extractor.Pk2Extractors;
 
 class Pk2ExtractorsTest {
 
 	@Test
-	void testRetriveExistsExtractors() {
+	void testRetriveItemEntityExtractor() {
 		IPK2EntityExtractor<ItemEntity> itemEntityExtractor = 
-				Pk2Extractors.getExtractorForEntity(ItemEntity.class) ; 
+				Pk2ExtractorUtils.getExtractorForEntity(ItemEntity.class) ; 
+
 		assertNotNull(itemEntityExtractor);
+	
 	}
 
 	@Test
-	void testRead() { 
+	void testRetriveSkillEntityExtractor() { 
+		IPK2EntityExtractor<SkillEntity> skillEntityExtractor = 
+				Pk2ExtractorUtils.getExtractorForEntity(SkillEntity.class) ; 
+
+		assertNotNull(skillEntityExtractor);
 		
-		String packName = Pk2Extractors.class.getPackage().getName().replaceAll("[.]", "/") ; 
-		 System.out.println("PackName : " + packName) ;
-		new BufferedReader(
-				new InputStreamReader(
-						
-						ClassLoader
-						.getSystemResourceAsStream(packName)))
-		.lines().forEach((line)->{
-			System.out.println(line) ;
-		});;
-		 
 	}
+
 }

@@ -3,19 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
+		<groupId>io.github.sokybot</groupId>
 		<artifactId>soky-bot</artifactId>
-		<groupId>org.sokybot</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
+	
+	
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>bundle</packaging>
 
 	<artifactId>soky-bot-core</artifactId>
-
-	<properties>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-	</properties>
+	<name>Sokybot Core Bundle</name>
 
 	<dependencies>
 
@@ -161,27 +159,23 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.sokybot</groupId>
-			<artifactId>mydoggy-api</artifactId>
-			<version>1.5.1</version>
-		</dependency>
+	
 
 		<dependency>
-			<groupId>org.sokybot</groupId>
+			<groupId>io.github.sokybot.mydoggy</groupId>
 			<artifactId>mydoggy-plaf</artifactId>
-			<version>1.5.1</version>
 		</dependency>
 
 
 		<!-- system plugins -->
 
 		<dependency>
-			<groupId>org.sokybot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>soky-bot-api</artifactId>
 		</dependency>
+		
 		<dependency>
-			<groupId>org.sokybot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>soky-bot-pk2-extractor</artifactId>
 		</dependency>
 

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.sokybot</groupId>
+	<groupId>io.github.sokybot</groupId>
 	<artifactId>soky-bot</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
@@ -15,8 +15,12 @@
 		<sokybot-product-dir>${sokybot-workspace}${file.separator}product</sokybot-product-dir>
 
 
+
 		<swingx-all.version>1.6.5-1</swingx-all.version>
+		<mydoggy.version>1.5.1</mydoggy.version>
 		<junit-jupiter-engine.version>5.9.0-M1</junit-jupiter-engine.version>
+		<dependency.mockito-core.version>4.8.0</dependency.mockito-core.version>
+		<dependency.mockito-junit-jupter.version>4.8.0</dependency.mockito-junit-jupter.version>
 		<vavr.version>0.10.4</vavr.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 		<commons-io.version>2.11.0</commons-io.version>
@@ -37,8 +41,8 @@
 
 	<modules>
 
-	<!-- <module>soky-bot-mydoggy</module>  -->	
-	
+		<!-- <module>soky-bot-mydoggy</module> -->
+
 		<module>soky-bot-launcher</module>
 		<module>soky-bot-api</module>
 		<module>soky-bot-core</module>
@@ -59,10 +63,10 @@
 			<id>sokybot-local-repo</id>
 			<name>sokybot-local-repo</name>
 			<url>file:///E:\CS\java-projects\soky-bot-1.1\sokybot-local-repo</url>
-			
+
 			<releases>
 				<enabled>true</enabled>
-				
+
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
@@ -77,34 +81,34 @@
 		<dependencies>
 
 			<dependency>
-				<groupId>org.sokybot</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>gc4s</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>org.sokybot</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>soky-bot-api</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
-				<groupId>org.sokybot</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>soky-bot-security</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
-				<groupId>org.sokybot</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>soky-bot-pk2</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
-				<groupId>org.sokybot</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>soky-bot-pk2-extractor</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
@@ -172,6 +176,11 @@
 				<version>${swingx-all.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>io.github.sokybot.mydoggy</groupId>
+				<artifactId>mydoggy-plaf</artifactId>
+				<version>${mydoggy.version}</version>
+			</dependency>
 			<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -188,14 +197,28 @@
 				<scope>test</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${dependency.mockito-core.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>${dependency.mockito-junit-jupter.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 
 
 	<build>
-		
-		
-		
+
+
+
 		<pluginManagement>
 
 			<plugins>

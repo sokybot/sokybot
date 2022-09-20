@@ -24,10 +24,10 @@ public class ItemEntityExtractor implements IPK2EntityExtractor<ItemEntity> {
 	public Stream<ItemEntity> extract(IPk2File pk2File) throws Pk2ExtractionException {
 		return toBufferedReader(
 				pk2File.findFirst("itemdata.txt")
-				.orElseThrow(() -> new Pk2MissedResourceException(null, null, null) ))
+				.orElseThrow(() -> new Pk2MissedResourceException("Colud not find itemdata.txt file", "itemdata.txt", null) ))
 				.lines()
 				.flatMap((itemFileName) -> pk2File.find("(?i)" + itemFileName).stream())
-				.flatMap(Failable.asFunction(Pk2ExtractorUtils::toCSVRecordStream))
+				.flatMap(Pk2ExtractorUtils::toCSVRecordStream)
 				.filter((record)->record.size() > 57 && !record.get(0).startsWith("//"))
 				.map(this::toItemEntity)
 				.distinct() ;

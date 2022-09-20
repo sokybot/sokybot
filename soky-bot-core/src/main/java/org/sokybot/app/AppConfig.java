@@ -17,7 +17,7 @@ import org.noos.xing.mydoggy.ToolWindowManager;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
 import org.sokybot.gamegroupbuilder.GameConfigInputDialog;
 import org.sokybot.mainframe.WindowPreparedEvent;
-import org.sokybot.pk2extractor.EntityExtractorFactory;
+import org.sokybot.pk2extractor.Pk2Extractors;
 import org.sokybot.pk2extractor.IEntityExtractorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,7 +57,7 @@ public class AppConfig {
 
 	@Bean
 	IEntityExtractorFactory gameEntityExtractorFactory() {
-		return new EntityExtractorFactory();
+		return new Pk2Extractors();
 	}
 
 	@Bean

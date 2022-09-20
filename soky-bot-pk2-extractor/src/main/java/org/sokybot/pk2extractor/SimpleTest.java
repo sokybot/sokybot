@@ -1,6 +1,7 @@
 package org.sokybot.pk2extractor;
 
 import org.apache.commons.io.Charsets;
+import org.apache.commons.lang3.Conversion;
 import org.apache.commons.lang3.Functions;
 import org.apache.commons.lang3.Streams.FailableStream;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -11,17 +12,13 @@ import org.sokybot.pk2extractor.exception.Pk2ExtractionException;
 import org.sokybot.pk2extractor.exception.Pk2InvalidResourceFormatException;
 import org.sokybot.pk2extractor.exception.Pk2MissedResourceException;
 
-import io.vavr.control.Try;
+
 
 import static org.sokybot.pk2extractor.Pk2ExtractorUtils.*;
 
 import java.io.BufferedReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 public class SimpleTest {
 
@@ -30,13 +27,26 @@ public class SimpleTest {
 	public static void main(String args[]) {
  
 			try {
-				test6() ;
+				test9() ;
 			} catch (Pk2ExtractionException e) {
 				System.out.println(e.getMessage()) ; 
 			}
 	
 	}
 
+	private static void test9() { 
+		String gamePath = "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019";
+		IMediaPk2 mediaPk2 = new Pk2Extractors().getMediaPk2(gamePath);
+		  mediaPk2.getItemEntities().forEach((item)->System.out.println(item));
+	}
+	private static void test8() { 
+		byte [] arr = {22, 1, 5, 0, 0, 0, 68, 73, 86, 48, 49, 0, 1, 14, 0, 0, 0, 55, 55, 46, 50, 50, 51, 46, 49, 53, 53, 46, 50, 52, 53, 0} ; 
+	}
+	private static void test7() { 
+		file.findFirst("divisioninfo.txt").ifPresent((jmx)->{
+		System.out.println(	Arrays.toString(Pk2ExtractorUtils.toByteArray(jmx)) ) ;	
+		});
+	}
 	private static void test6() throws Pk2ExtractionException { 
 	
 	 JMXFile jmxFile = file.findFirst("itemdatas.txt")
@@ -56,22 +66,7 @@ public class SimpleTest {
 				.orElseThrow(()->new Pk2MissedResourceException("Could not found itemdata.txt ", "itemdata.txt", null)));
 		
 	}
-	private static void test4() throws Pk2ExtractionException { 
-		 
-		Try.of(()->{
-			
-		JMXFile jmx = 	file.findFirst("itemdata.txt")
-			.orElseThrow(()->new Pk2MissedResourceException("Could not found itemdata.txt ", "itemdata.txt", null)) ; 
-			
-			return	toBufferedReader(jmx)
-					.lines()
-					.flatMap((theFileName)->file.find("(?i)"+theFileName).stream());
-		})
-		.get().forEach((jmx)->{
-			System.out.println(jmx) ; 
-		});  ; 
-		
-	}
+	
 	private static void test3() throws Pk2ExtractionException { 
 		
 		        
@@ -127,7 +122,7 @@ public class SimpleTest {
 
 					try {
 						String theItemdataFile = new String(toByteArray(jmx), Charsets.UTF_16LE);
-						Pk2ExtractorUtils.toString(jmx);
+						Pk2ExtractorUtils.toText(jmx);
 						System.out.println(theItemdataFile);
 					} catch (Pk2InvalidResourceFormatException ex) {
 						System.err.println(ex.getMessage());
@@ -135,25 +130,6 @@ public class SimpleTest {
 				});
 	}
 
-	private void test() throws Pk2ExtractionException {
-
-		Try.of(() -> {
-
-			return IPk2File.open(null).findFirst("itemdata.txt")
-
-					.map((jmx) -> {
-						return new String();
-					}).orElseThrow();
-
-		});
-
-		IPk2File.open("").findFirst("itemdata.txt").ifPresentOrElse((jmx) -> {
-			// toLines(jmx) ;
-		}, () -> {
-
-		});
-		// .map((itemDataFile)->toLines(itemDataFile))
-		// .orElseThrow(()->new Pk2MissedResourceException(null, null, null)) ;
-	}
+	
 
 }

@@ -3,6 +3,7 @@ package org.sokybot.pk2;
 import org.sokybot.pk2.exception.Pk2FileCorruptedException;
 
 import org.sokybot.pk2.exception.Pk2IOException;
+import org.sokybot.pk2.exception.Pk2InvalidJMXFileAttributeException;
 import org.sokybot.pk2.exception.Pk2InvalidKeyException;
 
 import java.io.Closeable;
@@ -52,6 +53,7 @@ public interface IPk2File extends Closeable {
 	 * @return file(s) with name matches input regex
 	 * @throws Pk2FileCorruptedException if the represented pk2 file is misformatted
 	 *                                   and could not read entries from it
+	 * @throws Pk2InvalidJMXFileAttributeException If encounter a jmx file stored with invalid attributes
 	 * 
 	 * 
 	 * 
@@ -71,6 +73,9 @@ public interface IPk2File extends Closeable {
 	 * 
 	 * @throws Pk2FileCorruptedException if the represented pk2 file is misformatted
 	 *                                   and could not read entries from it
+	 *                                   
+	 * @throws Pk2InvalidJMXFileAttributeException If encounter a jmx file stored with invalid attributes
+	 * 
 	 */
 	List<JMXFile> find(String regex, int limit);
 

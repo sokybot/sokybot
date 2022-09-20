@@ -27,4 +27,7 @@ public class Pk2FileCorruptedException extends UncheckedIOException {
 	    this.targetFile = targetFile ; 
 	    this.readingPosition = readingPos ; 
 	}
+	
+	
+	
 }

@@ -8,7 +8,7 @@ import org.sokybot.pk2.IPk2File;
 import org.sokybot.pk2.JMXFile;
 import org.sokybot.pk2.Pk2CryptoUtils;
 import org.sokybot.pk2.Pk2File;
-import org.sokybot.pk2.io.Pk2IO;
+import org.sokybot.pk2.Pk2IO;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.sokybot.pk2.io.Pk2IO.*;
+import static org.sokybot.pk2.Pk2IO.*;
 
 @Slf4j
 class Pk2IOTest {
