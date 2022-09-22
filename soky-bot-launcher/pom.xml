@@ -73,13 +73,13 @@
 						</goals>
 						<configuration>
 							<headerType>gui</headerType>
-							<outfile>${project.basedir}${file.separator}..${file.separator}soky-bot-static-resources\sokybot.exe</outfile>
+							<outfile>${project.basedir}${file.separator}..${file.separator}sokybot-static-resources\sokybot.exe</outfile>
 							<jar>target/sokybot.jar</jar>
 							<errTitle>sokybot-error</errTitle>
 							<downloadUrl>http://java.com/download</downloadUrl>
 							<stayAlive>false</stayAlive>
 							<restartOnCrash>false</restartOnCrash>
-							<icon>${project.basedir}${file.separator}..${file.separator}soky-bot-static-resources\robot2.ico</icon>
+							<icon>${project.basedir}${file.separator}..${file.separator}sokybot-static-resources\robot2.ico</icon>
 
 
 							<classPath>
