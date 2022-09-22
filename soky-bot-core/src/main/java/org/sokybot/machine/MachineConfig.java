@@ -16,7 +16,7 @@ public class MachineConfig extends StateMachineConfigurerAdapter<MachineState, M
 	
 	@Override
 	public void configure(StateMachineTransitionConfigurer<MachineState, MachineEvent> transitions) throws Exception {
-	     transitions.withEntry().source(null)
+	    
 		super.configure(transitions);
 	}
 	

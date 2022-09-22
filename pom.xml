@@ -9,18 +9,17 @@
 	<version>1.0-SNAPSHOT</version>
 
 	<properties>
-		<sokybot-workspace>${project.basedir}${file.separator}..${file.separator}..${file.separator}</sokybot-workspace>
-		<sokybot-static-resources>${sokybot-workspace}${file.separator}static-resources</sokybot-static-resources>
-		<sokybot-lib-dir>${sokybot-static-resources}${file.separator}lib</sokybot-lib-dir>
-		<sokybot-product-dir>${sokybot-workspace}${file.separator}product</sokybot-product-dir>
-
-
+		<!-- sokybot-workspace>${project.basedir}${file.separator}..${file.separator}..${file.separator}</sokybot-workspace -->
+		<!-- sokybot-static-resources>${${project.basedir}${file.separator}soky-bot-static-resources</sokybot-static-resources -->
+		<!-- sokybot-lib-dir>${sokybot-static-resources}${file.separator}lib</sokybot-lib-dir -->
+		<!-- sokybot-product-dir>${project.basedir}${file.separator}product</sokybot-product-dir -->
 
 		<swingx-all.version>1.6.5-1</swingx-all.version>
 		<mydoggy.version>1.5.1</mydoggy.version>
 		<junit-jupiter-engine.version>5.9.0-M1</junit-jupiter-engine.version>
 		<dependency.mockito-core.version>4.8.0</dependency.mockito-core.version>
 		<dependency.mockito-junit-jupter.version>4.8.0</dependency.mockito-junit-jupter.version>
+		<dependency.gc4s.version>1.6.0</dependency.gc4s.version>
 		<vavr.version>0.10.4</vavr.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 		<commons-io.version>2.11.0</commons-io.version>
@@ -50,7 +49,7 @@
 		<module>soky-bot-pk2</module>
 		<module>soky-bot-security</module>
 		<module>soky-bot-packet-sniffer</module>
-		<module>gc4s</module>
+
 
 	</modules>
 	<packaging>pom</packaging>
@@ -73,6 +72,13 @@
 			</snapshots>
 
 		</repository>
+
+		<!-- repository>
+			<id>sing-repository</id>
+			<name>SING repository</name>
+			<url>http://maven.sing-group.org/repository/maven/</url>
+		</repository-->
+
 	</repositories>
 
 
@@ -80,11 +86,18 @@
 
 		<dependencies>
 
-			<dependency>
-				<groupId>${project.groupId}</groupId>
+			<!-- dependency>
+				<groupId>org.sing_group</groupId>
 				<artifactId>gc4s</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+				<version>${dependency.gc4s.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.swinglabs.swingx</groupId>
+						<artifactId>swingx-all</artifactId>
+						
+					</exclusion>
+				</exclusions>
+			</dependency-->
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -210,7 +223,7 @@
 				<version>${dependency.mockito-junit-jupter.version}</version>
 				<scope>test</scope>
 			</dependency>
-			
+
 		</dependencies>
 	</dependencyManagement>
 

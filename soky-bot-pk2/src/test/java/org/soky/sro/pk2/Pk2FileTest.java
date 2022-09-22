@@ -171,12 +171,12 @@ public class Pk2FileTest {
 	
 	
 
-	@AfterAll
+	//@AfterAll
 	static void destroy() throws IOException {
 		pk2File.close();
 	}
 
-	@Test
+	//@Test
 	public void testPk2FileFindWithLimitMethod() {
 
 		List<JMXFile> files = pk2File.find("(?i)gateport.txt", 1);
@@ -186,7 +186,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+	//@Test
 	public void testQueryFilesMatchRegex() {
 		// query each file with name (itemdata_[0-9]+.txt)
 		String regex = "itemdata_[0-9]+.txt";
@@ -198,7 +198,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+	//@Test
 	void testQueryFileMatchRegex2() {
 		String regex = "skilldata_(\\d+)(enc)?.txt$";
 
@@ -210,7 +210,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+	//@Test
 	void testQueryEncryptedSkillDataFiles() {
 		String regex = "skilldata_(\\d+)(enc).txt$";
 
@@ -223,7 +223,7 @@ public class Pk2FileTest {
 	}
 
 	// this test case run correctly for LegionSRO_15_08_2019 Media.Pk2
-	@Test
+	//@Test
 	void testQueryCollectionAtParticularDir() {
 
 		String requiredFiels = "\\icon64\\premium\\avatar\\(^([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+\\.(ddj)$)";
@@ -234,7 +234,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+	//@Test
 	public void testQueryCollectionAtParticularDir2() {
 
 		String requiredFiels = "\\config\\(^([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+\\.(txt)$)";
@@ -245,7 +245,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+//	@Test
 	public void testQueryParticularFile() {
 		String requiredFile = "\\config\\mp.txt";
 		List<JMXFile> files = this.pk2File.find(requiredFile);
@@ -253,7 +253,7 @@ public class Pk2FileTest {
 		Assertions.assertTrue(files.size() == 1);
 	}
 
-	@Test
+	//@Test
 	public void testFindNotFound() {
 
 		List<JMXFile> files = this.pk2File.find("NotFoundFile.NotFound", -1);
@@ -263,7 +263,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+	//@Test
 	public void testFindWithLimit0() {
 
 		String initTest = "MyFile.txt";
@@ -276,7 +276,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+//	@Test
 	public void testFindWithLimit1() {
 
 		String initTest = "MyFile.txt";
@@ -289,7 +289,7 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+	//@Test
 	public void testFindWithLimit2() {
 
 		String initTest = "MyFile.txt";
@@ -302,17 +302,17 @@ public class Pk2FileTest {
 
 	}
 
-	@Test
+//	@Test
 	public void testPk2FileWithNullFilePath() {
 
 	}
 
-	@Test
+	//@Test
 	public void testPk2FileWithNotValidFilePath() {
 
 	}
 
-	@Test
+	//@Test
 	public void testPk2FileInterfaceWithNotPk2File() {
 
 	}

@@ -72,7 +72,8 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 		this.fileChooserPanel = JFileChooserPanelBuilder.createOpenJFileChooserPanel()
 				.withFileChooser(this.silkroadFileBrowser)
 				.withFileChooserSelectionMode(SelectionMode.DIRECTORIES).withLabel("Game Path ")
-				.withBrowseIcon(new FlatSearchIcon())
+				//TODO specify appropriate icon for the for the browse button.
+				//.withBrowseIcon(new FlatSearchIcon())
 				
 				.build();
         
@@ -113,8 +114,8 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 	@Override
 	protected void onOkButtonEvent(ActionEvent event) {
-		// TODO Auto-generated method stub
 
+		
 		// check if input is valid then forward request to super else display error
 		// message
 

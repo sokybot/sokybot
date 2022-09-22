@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockedStatic;
+
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.sokybot.domain.Division;
@@ -47,15 +47,12 @@ class MediaPk2Test {
 		JMXFile typeFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(Pk2File.class);
 		when(file.findFirst("type.txt")).thenReturn(Optional.of(typeFile));
+		when(typeFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
-			s	.when(() -> Pk2IO.getInputStream(typeFile))
-				.thenReturn(in);
-			MediaPk2 media = new MediaPk2(file, null);
-			SilkroadType t = media.extractType();
-			assertEquals(t.getLanguage(), "English");
-			assertEquals(t.getCountry(), "Egypt");
-		}
+		MediaPk2 media = new MediaPk2(file, null);
+		SilkroadType t = media.extractType();
+		assertEquals(t.getLanguage(), "English");
+		assertEquals(t.getCountry(), "Egypt");
 
 	}
 
@@ -74,14 +71,10 @@ class MediaPk2Test {
 		IPk2File pk2File = Mockito.mock(IPk2File.class);
 
 		when(pk2File.findFirst("type.txt")).thenReturn(Optional.of(jmxFile));
+		when(jmxFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> mockedIO = Mockito.mockStatic(Pk2IO.class)) {
-			mockedIO.when(() -> Pk2IO.getInputStream(jmxFile))
-					.thenReturn(in);
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
-			}).extractType());
-
-		}
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
+		}).extractType());
 
 	}
 
@@ -94,13 +87,9 @@ class MediaPk2Test {
 
 		when(pk2File.findFirst("type.txt")).thenReturn(Optional.of(jmxFile));
 
-		try (MockedStatic<Pk2IO> mockedIO = Mockito.mockStatic(Pk2IO.class)) {
-			mockedIO.when(() -> Pk2IO.getInputStream(jmxFile))
-					.thenReturn(in);
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
-			}).extractType());
-
-		}
+		when(jmxFile.getInputStream()).thenReturn(in);
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
+		}).extractType());
 
 	}
 
@@ -119,14 +108,10 @@ class MediaPk2Test {
 		JMXFile jmxFile = Mockito.mock(JMXFile.class);
 		IPk2File pk2File = Mockito.mock(IPk2File.class);
 		when(pk2File.findFirst("SV.T")).thenReturn(Optional.of(jmxFile));
+		when(jmxFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> mockedIO = Mockito.mockStatic(Pk2IO.class)) {
-			mockedIO.when(() -> Pk2IO.getInputStream(jmxFile))
-					.thenReturn(in);
-
-			assertEquals(123, new MediaPk2(pk2File, () -> {
-			}).extractVersion());
-		}
+		assertEquals(123, new MediaPk2(pk2File, () -> {
+		}).extractVersion());
 
 	}
 
@@ -154,14 +139,9 @@ class MediaPk2Test {
 		JMXFile jmxFile = Mockito.mock(JMXFile.class);
 		IPk2File pk2File = Mockito.mock(IPk2File.class);
 		when(pk2File.findFirst("SV.T")).thenReturn(Optional.of(jmxFile));
-
-		try (MockedStatic<Pk2IO> mockedIO = Mockito.mockStatic(Pk2IO.class)) {
-			mockedIO.when(() -> Pk2IO.getInputStream(jmxFile))
-					.thenReturn(in);
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
-			}).extractVersion());
-
-		}
+		when(jmxFile.getInputStream()).thenReturn(in);
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
+		}).extractVersion());
 
 	}
 
@@ -172,14 +152,10 @@ class MediaPk2Test {
 		JMXFile jmxFile = Mockito.mock(JMXFile.class);
 		IPk2File pk2File = Mockito.mock(IPk2File.class);
 		when(pk2File.findFirst("SV.T")).thenReturn(Optional.of(jmxFile));
+		when(jmxFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> mockedIO = Mockito.mockStatic(Pk2IO.class)) {
-			mockedIO.when(() -> Pk2IO.getInputStream(jmxFile))
-					.thenReturn(in);
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
-			}).extractVersion());
-
-		}
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(pk2File, () -> {
+		}).extractVersion());
 
 	}
 
@@ -190,15 +166,11 @@ class MediaPk2Test {
 		JMXFile portFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(Pk2File.class);
 		when(file.findFirst("(?i)gateport.txt")).thenReturn(Optional.of(portFile));
+		when(portFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
-
-			s	.when(() -> Pk2IO.getInputStream(portFile))
-				.thenReturn(in);
-			MediaPk2 media = new MediaPk2(file, null);
-			int port = media.extractPort();
-			assertEquals(15779, port);
-		}
+		MediaPk2 media = new MediaPk2(file, null);
+		int port = media.extractPort();
+		assertEquals(15779, port);
 
 	}
 
@@ -217,15 +189,10 @@ class MediaPk2Test {
 		JMXFile portFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(Pk2File.class);
 		when(file.findFirst("(?i)gateport.txt")).thenReturn(Optional.of(portFile));
+		when(portFile.getInputStream()).thenReturn(in);
+		MediaPk2 media = new MediaPk2(file, null);
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
-
-			s	.when(() -> Pk2IO.getInputStream(portFile))
-				.thenReturn(in);
-			MediaPk2 media = new MediaPk2(file, null);
-
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> media.extractPort());
-		}
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> media.extractPort());
 
 	}
 
@@ -237,14 +204,10 @@ class MediaPk2Test {
 		IPk2File file = Mockito.mock(Pk2File.class);
 		when(file.findFirst("(?i)gateport.txt")).thenReturn(Optional.of(portFile));
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
+		when(portFile.getInputStream()).thenReturn(in);
+		MediaPk2 media = new MediaPk2(file, null);
 
-			s	.when(() -> Pk2IO.getInputStream(portFile))
-				.thenReturn(in);
-			MediaPk2 media = new MediaPk2(file, null);
-
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> media.extractPort());
-		}
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> media.extractPort());
 
 	}
 
@@ -258,22 +221,18 @@ class MediaPk2Test {
 		JMXFile divInfoFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(IPk2File.class);
 		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
+		when(divInfoFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
-			s	.when(() -> Pk2IO.getInputStream(divInfoFile))
-				.thenReturn(in);
-
-			DivisionInfo info = new MediaPk2(file, null).extractDivisionInfo();
-			assertEquals(22, info.local);
-			List<Division> divs = info.getDivisions();
-			assertEquals(1, divs.size());
-			Division div = divs.get(0);
-			assertEquals("DIV01", div.name);
-			List<String> hosts = div.getHosts();
-			assertEquals(1, hosts.size());
-			String host = hosts.get(0);
-			assertEquals("77.223.155.245", host);
-		}
+		DivisionInfo info = new MediaPk2(file, null).extractDivisionInfo();
+		assertEquals(22, info.local);
+		List<Division> divs = info.getDivisions();
+		assertEquals(1, divs.size());
+		Division div = divs.get(0);
+		assertEquals("DIV01", div.name);
+		List<String> hosts = div.getHosts();
+		assertEquals(1, hosts.size());
+		String host = hosts.get(0);
+		assertEquals("77.223.155.245", host);
 
 	}
 
@@ -295,13 +254,9 @@ class MediaPk2Test {
 		JMXFile divInfoFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(IPk2File.class);
 		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
+		when(divInfoFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
-			s	.when(() -> Pk2IO.getInputStream(divInfoFile))
-				.thenReturn(in);
-
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
-		}
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
 
 	}
 
@@ -313,22 +268,19 @@ class MediaPk2Test {
 		JMXFile divInfoFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(IPk2File.class);
 		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
+		when(divInfoFile.getInputStream()).thenReturn(in);
 
-		try (MockedStatic<Pk2IO> s = Mockito.mockStatic(Pk2IO.class)) {
-			s	.when(() -> Pk2IO.getInputStream(divInfoFile))
-				.thenReturn(in);
-
-			assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
-		}
+		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
 
 	}
 
-	@Test
+	//@Test
 	void testExtractItems() {
 		String gamePath = "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019";
 
 		IMediaPk2 mediaPk2 = new Pk2Extractors().getMediaPk2(gamePath);
-		  mediaPk2.getItemEntities().forEach((item)->System.out.println(item));
+		mediaPk2.getItemEntities()
+				.forEach((item) -> System.out.println(item));
 	}
 
 }

@@ -73,13 +73,13 @@
 						</goals>
 						<configuration>
 							<headerType>gui</headerType>
-							<outfile>${sokybot-product-dir}/sokybot.exe</outfile>
+							<outfile>${project.basedir}${file.separator}..${file.separator}soky-bot-static-resources\sokybot.exe</outfile>
 							<jar>target/sokybot.jar</jar>
 							<errTitle>sokybot-error</errTitle>
 							<downloadUrl>http://java.com/download</downloadUrl>
 							<stayAlive>false</stayAlive>
 							<restartOnCrash>false</restartOnCrash>
-							<icon>${sokybot-static-resources}\robot2.ico</icon>
+							<icon>${project.basedir}${file.separator}..${file.separator}soky-bot-static-resources\robot2.ico</icon>
 
 
 							<classPath>
@@ -104,8 +104,7 @@
 							</jre>
 
 							<splash>
-								<file>${sokybot-static-resources}\splash\0_450x150_24bit.bmp</file>
-								<!-- <file>E:\CS\java-projects\test\osgi\osgi-extention-mechanism\static-resources\splash\0.bmp</file> -->
+								<file>${project.basedir}${file.separator}..${file.separator}soky-bot-static-resources\splash\0_450x150_24bit.bmp</file>
 								<waitForWindow>true</waitForWindow>
 								<timeout>300</timeout>
 								<timeoutErr>true</timeoutErr>
