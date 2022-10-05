@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.jdwp.agent
+atomos:boot:jrt:/jdk.jshell

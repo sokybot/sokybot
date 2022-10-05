@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.management.jfr
+atomos:boot:jrt:/jdk.nio.mapmode

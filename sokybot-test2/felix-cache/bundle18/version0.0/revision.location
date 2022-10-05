@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.prefs
+atomos:boot:jrt:/java.security.sasl

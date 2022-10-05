@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.nio.mapmode
+atomos:boot:jrt:/jdk.security.jgss

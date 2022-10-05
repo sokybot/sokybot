@@ -1,6 +1,6 @@
 15
-atomos:boot:jrt:/java.management.rmi
+atomos:boot:jrt:/java.rmi
 32
 1
-1664974708151
+1664999447491
 0

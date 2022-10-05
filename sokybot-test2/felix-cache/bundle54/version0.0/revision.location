@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.jstatd
+atomos:boot:jrt:/jdk.management.jfr

@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.javadoc
+atomos:boot:jrt:/jdk.jdwp.agent

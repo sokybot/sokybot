@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.transaction.xa
+atomos:boot:jrt:/jdk.attach

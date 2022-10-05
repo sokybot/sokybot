@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.crypto.mscapi
+atomos:boot:jrt:/jdk.internal.ed

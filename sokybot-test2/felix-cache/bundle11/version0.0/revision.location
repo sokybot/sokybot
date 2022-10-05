@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.desktop
+atomos:boot:jrt:/java.management.rmi

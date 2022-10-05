@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.net.http
+atomos:boot:jrt:/java.security.jgss

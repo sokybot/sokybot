@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.instrument
+atomos:boot:jrt:/java.naming

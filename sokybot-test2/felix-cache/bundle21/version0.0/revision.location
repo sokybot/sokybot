@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.security.jgss
+atomos:boot:jrt:/java.sql.rowset

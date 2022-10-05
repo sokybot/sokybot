@@ -1,1 +1,1 @@
-atomos:boot:jrt:/jdk.charsets
+atomos:boot:jrt:/jdk.crypto.mscapi

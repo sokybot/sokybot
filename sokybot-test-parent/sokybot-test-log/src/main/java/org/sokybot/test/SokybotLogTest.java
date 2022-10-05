@@ -1,4 +1,4 @@
-package org.sokybot.logtest;
+package org.sokybot.test;
 
 import java.util.Enumeration;
 import java.util.concurrent.Executors;

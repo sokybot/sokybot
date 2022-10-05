@@ -1,6 +1,6 @@
 54
-atomos:boot:jrt:/jdk.jstatd
+atomos:boot:jrt:/jdk.management.jfr
 32
 1
-1664974708217
+1664999447553
 0

@@ -1,1 +1,1 @@
-atomos:boot:jrt:/java.security.sasl
+atomos:boot:jrt:/java.transaction.xa
