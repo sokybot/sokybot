@@ -26,6 +26,7 @@
 		<dependency.h2-mvstore.version>2.1.214</dependency.h2-mvstore.version>
 
 		<dependency.objenesis.version>3.3</dependency.objenesis.version>
+		<launch4j-maven-plugin.version>2.1.2</launch4j-maven-plugin.version>
 	</properties>
 
 
@@ -157,12 +158,7 @@
 			<groupId>info.picocli</groupId>
 			<artifactId>picocli-spring-boot-starter</artifactId>
 			<version>4.6.3</version>
-			<!-- <exclusions> -->
-			<!-- <exclusion> -->
-			<!-- <groupId>org.springframework.boot</groupId> -->
-			<!-- <artifactId>spring-boot-starter-logging</artifactId> -->
-			<!-- </exclusion> -->
-			<!-- </exclusions> -->
+
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
@@ -210,9 +206,6 @@
 	</dependencies>
 
 
-
-
-
 	<build>
 
 
@@ -239,6 +232,84 @@
 		</plugins>
 
 	</build>
+
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.akathist.maven.plugins.launch4j</groupId>
+						<artifactId>launch4j-maven-plugin</artifactId>
+						<version>${launch4j-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>l4j-gui</id>
+								<phase>package</phase>
+								<goals>
+									<goal>launch4j</goal>
+								</goals>
+								<configuration>
+									<headerType>gui</headerType>
+									<outfile>${basedir}/../Sokybot-${project.version}/sokybot.exe</outfile>
+									<jar>target/${project.artifactId}-${project.version}.jar</jar>
+									<errTitle>sokybot-error</errTitle>
+									<downloadUrl>http://java.com/download</downloadUrl>
+									<stayAlive>false</stayAlive>
+									<restartOnCrash>false</restartOnCrash>
+									<icon>${project.basedir}${file.separator}..${file.separator}sokybot-static-resources\robot2.ico</icon>
+
+
+									<singleInstance>
+										<mutexName>soky-bot</mutexName>
+										<windowTitle>Sokybot</windowTitle>
+									</singleInstance>
+									<jre>
+										<path>runtime/bin</path>
+										<!-- <bundledJre64Bit>false</bundledJre64Bit> -->
+										<bundledJreAsFallback>true</bundledJreAsFallback>
+										<!-- <minVersion>, <maxVersion> format - Java < 9 , The traditional 
+											version scheme supported by launch4j is 1.x.x[_xxx] and requires at least 
+											3 parts -->
+										<minVersion>11</minVersion>
+										<!-- <maxVersion>17</maxVersion> -->
+										<!-- <maxVersion>11</maxVersion> -->
+										<!-- <jdkPreference>jdkOnly</jdkPreference> -->
+										<runtimeBits>64/32</runtimeBits>
+										<!-- <opts> -->
+										<!-- <opt>-Djava.endorsed.dirs=./endorsed</opt> -->
+										<!-- </opts> -->
+									</jre>
+
+									<splash>
+										<file>${project.basedir}${file.separator}..${file.separator}sokybot-static-resources\splash\0_450x150_24bit.bmp</file>
+										<waitForWindow>true</waitForWindow>
+										<timeout>300</timeout>
+										<timeoutErr>true</timeoutErr>
+
+									</splash>
+
+									<versionInfo>
+										<fileDescription>Bot For Silkroad Online Game </fileDescription>
+										<txtFileVersion>SNAPSHOT</txtFileVersion>
+										<fileVersion>1.0.0.0</fileVersion>
+										<copyright>Soky</copyright>
+										<productVersion>1.0.0.0</productVersion>
+										<txtProductVersion>txt product version</txtProductVersion>
+										<productName>Sokybot</productName>
+										<internalName>sokybot</internalName>
+										<originalFilename>sokybot.exe</originalFilename>
+									</versionInfo>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
 
 
 </project>
