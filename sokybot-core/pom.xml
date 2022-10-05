@@ -58,12 +58,12 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.osgi</groupId>
-			<artifactId>spring-osgi-io</artifactId>
-			<version>${dependency.spring-osgi-io.version}</version>
-			<scope>compile</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.osgi</groupId> -->
+		<!-- <artifactId>spring-osgi-io</artifactId> -->
+		<!-- <version>${dependency.spring-osgi-io.version}</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core -->
 		<dependency>
 			<groupId>org.springframework.statemachine</groupId>
@@ -196,7 +196,7 @@
 			<artifactId>vavr</artifactId>
 		</dependency>
 
-<!--  OSGI Libs  -->
+		<!-- OSGI Libs -->
 
 
 		<dependency>
@@ -205,7 +205,7 @@
 			<version>3.7.4</version>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.atomos -->
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.atomos -->
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.atomos</artifactId>
@@ -218,43 +218,66 @@
 			<artifactId>org.osgi.util.pushstream</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		
+
 
 	</dependencies>
 
 
-	<build>
 
-
-
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring-boot.version}</version>
-				<configuration>
-					<mainClass>org.sokybot.Driver</mainClass>
-
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-
-		</plugins>
-
-	</build>
 
 	<profiles>
 		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<id>dev</id>
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.runtime -->
+				<dependency>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>org.apache.felix.gogo.runtime</artifactId>
+					<version>1.1.6</version>
+					<scope>provided</scope>
+				</dependency>
+
+				<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.command -->
+				<dependency>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>org.apache.felix.gogo.command</artifactId>
+					<version>1.1.2</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.jline -->
+				<dependency>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>org.apache.felix.gogo.jline</artifactId>
+					<version>1.1.8</version>
+				</dependency>
+
+			</dependencies>
+		</profile>
+		<profile>
+
 			<id>prod</id>
 			<build>
+			  <finalName>sokybot</finalName>
 				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<version>${spring-boot.version}</version>
+						<configuration>
+							<mainClass>org.sokybot.Driver</mainClass>
+
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
 					<plugin>
 						<groupId>com.akathist.maven.plugins.launch4j</groupId>
 						<artifactId>launch4j-maven-plugin</artifactId>
@@ -269,7 +292,7 @@
 								<configuration>
 									<headerType>gui</headerType>
 									<outfile>${basedir}/../Sokybot-${project.version}/sokybot.exe</outfile>
-									<jar>target/${project.artifactId}-${project.version}.jar</jar>
+									<jar>target/sokybot.jar</jar>
 									<errTitle>sokybot-error</errTitle>
 									<downloadUrl>http://java.com/download</downloadUrl>
 									<stayAlive>false</stayAlive>

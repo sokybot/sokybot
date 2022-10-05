@@ -1,19 +1,39 @@
 package org.sokybot.app.logger;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import org.slf4j.LoggerFactory;
+import org.sokybot.app.mainframe.WindowPreparedEvent;
 import org.sokybot.common.ANSITextPane;
+import org.sokybot.service.IMainFrameConfigurator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.io.Resource;
+
+import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
+@Slf4j
 public class LogConfig {
 
+	@Autowired
+	private IMainFrameConfigurator configurator ;
+	
+	@Value("icons/log.png")
+	Resource icon ; 
+	
 	@Bean
 	PatternLayout patternLayout() {
 		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -37,8 +57,21 @@ public class LogConfig {
 		atp.setBackground(Color.BLACK);
 		atp.setFont(new Font("Consolas", Font.PLAIN, 15));
 		atp.setEditable(true);
-		
 		return atp;
 	}
+	
+	
+	@EventListener(WindowPreparedEvent.class)
+	void installLogToolWindow(WindowPreparedEvent event ) { 
+		
+		log.debug("installing log tool window");
+		JPanel  panel = new JPanel(new BorderLayout());
+		panel.add(new JScrollPane(ansiTextPane()), BorderLayout.CENTER);
+	
+		configurator.addExtraWindow("Log", "Sokybot log", new FlatSearchIcon(), panel);
+
+		
+	}
+	
 
 }

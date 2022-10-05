@@ -2,12 +2,15 @@ package org.sokybot.app;
 
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.util.Map;
+import java.util.ServiceLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.apache.felix.atomos.Atomos;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.NitriteBuilder;
 import org.dizitart.no2.common.mapper.JacksonMapperModule;
@@ -19,6 +22,11 @@ import org.noos.xing.mydoggy.TabbedContentManagerUI;
 import org.noos.xing.mydoggy.TabbedContentUI;
 import org.noos.xing.mydoggy.ToolWindowManager;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.Constants;
+import org.osgi.framework.connect.ConnectFrameworkFactory;
+import org.osgi.framework.launch.Framework;
 import org.slf4j.LoggerFactory;
 import org.sokybot.app.gamegroupbuilder.GameConfigInputDialog;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
@@ -32,6 +40,7 @@ import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -81,17 +90,28 @@ public class AppConfig {
 		return new Pk2Extractors();
 	}
 
+	
+	
 	@Bean
+	@Profile("dev")
+	JXFrame mainFrameForDev(@Value("${spring.application.name}") String appName) {
+	  log.info("creating main frame");
+		JXFrame frame = new JXFrame(appName, true);
+        
+		frame.setPreferredSize(new Dimension(400 , 400));
+        frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
+		
+		return frame;
+	}
+	
+	
+	@Bean
+	@Profile("prod")
 	JXFrame mainFrame(@Value("${spring.application.name}") String appName) {
 	  log.info("creating main frame");
 		JXFrame frame = new JXFrame(appName, true);
-        //frame.setPreferredSize(new Dimension(1000 , 700));
-        //frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
-		
-		//frame.setUndecorated(true);
-		
-		//frame.setExtendedState(JXFrame.MAXIMIZED_BOTH);
-       
+        
+		   frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);  
 		return frame;
 	}
 
@@ -129,5 +149,25 @@ public class AppConfig {
 		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\Sokybot.data").build();
 
 	}
+	
+	@Bean
+	Bundle systemBundle() { 
+		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
+	     ConnectFrameworkFactory factory = loader.findFirst().get();
+	     Framework framework = factory.newFramework(
+	                               Map.of(
+	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
+	                               Atomos.newAtomos().getModuleConnector());
+	     
+	     try {
+			framework.init();
+		} catch (BundleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     return framework ; 
+		
+	}
+	
 
 }
