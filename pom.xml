@@ -39,9 +39,6 @@
 
 
 	<modules>
-
-
-		<module>${project.artifactId}-launcher</module>
 		<module>${project.artifactId}-api</module>
 		<module>${project.artifactId}-core</module>
 		<module>${project.artifactId}-plugin-management</module>
@@ -210,8 +207,6 @@
 		<profile>
 			<id>env-prod</id>
 			<modules>
-
-				<module>${project.artifactId}-launcher</module>
 				<module>${project.artifactId}-api</module>
 				<module>${project.artifactId}-core</module>
 				<module>${project.artifactId}-plugin-management</module>
