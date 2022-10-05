@@ -196,12 +196,29 @@
 			<artifactId>vavr</artifactId>
 		</dependency>
 
+<!--  OSGI Libs  -->
+
+
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.fileinstall</artifactId>
 			<version>3.7.4</version>
-
 		</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.atomos -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.atomos</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.util.pushstream -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.util.pushstream</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		
 
 	</dependencies>
 
