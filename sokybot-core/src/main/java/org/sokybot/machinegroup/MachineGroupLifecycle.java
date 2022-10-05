@@ -10,7 +10,6 @@ import javax.swing.JSplitPane;
 
 import org.jdesktop.swingx.JXMultiSplitPane;
 import org.jdesktop.swingx.MultiSplitLayout;
-import org.sokybot.app.service.IGameDistributionMaintainer;
 import org.sokybot.machinegroup.navigationtree.INavTree;
 import org.sokybot.service.IMainFrameConfigurator;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +17,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 
 @Configuration
 public class MachineGroupLifecycle {
@@ -60,21 +58,7 @@ public class MachineGroupLifecycle {
 	}
 
 	
-	@Bean
-	ApplicationRunner checkGameVersion(IGameDistributionMaintainer gameVersionRegistryManager) { 
-		
-		return (args)->{
-			//	if(gameVersionRegistryManager.checkVersion(null)) { 
-				    // we must then extract data from media pk2 
-					// and update our db repositories and then update gameVersionRegistry
-					// extraction process involves the following operations  
-					// 1 - extract all items data from media pk2 and insert them into ItemEntityRepo 
-					// 2 - 
-					// finally extract current game version and use it to update game version registry 
-			//	}
-		};
-		
-	}
+	
 	
 	@Bean
 	@Order(1)

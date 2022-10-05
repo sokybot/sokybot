@@ -7,4 +7,5 @@
 	</parent>
 	
   <artifactId>sokybot-game-loader</artifactId>
+  <packaging>bundle</packaging>
 </project>

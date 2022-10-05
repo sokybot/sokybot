@@ -9,10 +9,10 @@
 	<version>1.0-SNAPSHOT</version>
 
 	<properties>
-		<!-- sokybot-workspace>${project.basedir}${file.separator}..${file.separator}..${file.separator}</sokybot-workspace -->
-		<!-- sokybot-static-resources>${${project.basedir}${file.separator}soky-bot-static-resources</sokybot-static-resources -->
-		<!-- sokybot-lib-dir>${sokybot-static-resources}${file.separator}lib</sokybot-lib-dir -->
-		<!-- sokybot-product-dir>${project.basedir}${file.separator}product</sokybot-product-dir -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 
 		<swingx-all.version>1.6.5-1</swingx-all.version>
 		<mydoggy.version>1.5.1</mydoggy.version>
@@ -20,65 +20,55 @@
 		<dependency.mockito-core.version>4.8.0</dependency.mockito-core.version>
 		<dependency.mockito-junit-jupter.version>4.8.0</dependency.mockito-junit-jupter.version>
 		<dependency.gc4s.version>1.6.0</dependency.gc4s.version>
+		<dependency.felix.version>7.0.5</dependency.felix.version>
 		<vavr.version>0.10.4</vavr.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 		<commons-io.version>2.11.0</commons-io.version>
 		<commons-csv.version>1.9.0</commons-csv.version>
-		<logback-classic.version>1.2.11</logback-classic.version>
+		<dependency.logback-classic.version>1.2.11</dependency.logback-classic.version>
+		<dependency.logback-core.version>1.2.11</dependency.logback-core.version>
+		<dependency.slf4j-api.version>1.7.36</dependency.slf4j-api.version>
 		<lombok.version>1.18.24</lombok.version>
-
 		<nitrite.version>4.1.0-SNAPSHOT</nitrite.version>
 		<nitrite-jackson-mapper.version>4.1.0-SNAPSHOT</nitrite-jackson-mapper.version>
 		<nitrite-mvstore-adapter.version>4.1.0-SNAPSHOT</nitrite-mvstore-adapter.version>
 
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-
+		<plugin.bundle.version>5.1.8</plugin.bundle.version>
 
 	</properties>
 
 
 	<modules>
 
-		<!-- <module>soky-bot-mydoggy</module> -->
 
-		<module>soky-bot-launcher</module>
-		<module>soky-bot-api</module>
-		<module>soky-bot-core</module>
-		<module>soky-bot-plugin-management</module>
-		<module>soky-bot-pk2</module>
-		<module>soky-bot-security</module>
-		<module>soky-bot-packet-sniffer</module>
-
-
+		<module>${project.artifactId}-launcher</module>
+		<module>${project.artifactId}-api</module>
+		<module>${project.artifactId}-core</module>
+		<module>${project.artifactId}-plugin-management</module>
+		<module>${project.artifactId}-pk2</module>
+		<module>${project.artifactId}-security</module>
+		<module>${project.artifactId}-pk2-extractor</module>
+		<module>${project.artifactId}-logger</module>
+		<module>sokybot-autodepoly-test</module>
+		<module>sokybot-log-test</module>
+		<module>sokybot-test2</module>
 	</modules>
 	<packaging>pom</packaging>
 
 
 
 	<repositories>
-
 		<repository>
-			<id>sokybot-local-repo</id>
-			<name>sokybot-local-repo</name>
-			<url>file:///E:\CS\java-projects\soky-bot-1.1\sokybot-local-repo</url>
-
-			<releases>
-				<enabled>true</enabled>
-
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-
-		</repository>
-
-		<!-- repository>
 			<id>sing-repository</id>
 			<name>SING repository</name>
 			<url>http://maven.sing-group.org/repository/maven/</url>
-		</repository-->
-
+		</repository>
+		<repository>
+			<id>sokybot-local-repo</id>
+			<name>sokybot repo</name>
+			<url>file://${maven.multiModuleProjectDirectory}/sokybot-static-resources/sokybot-local-repo</url>
+			<!-- url>file://E:/CS/java-projects/soky-bot-workspace/sokybot/sokybot-static-resources/sokybot-local-repo</url -->
+		</repository>
 	</repositories>
 
 
@@ -86,43 +76,34 @@
 
 		<dependencies>
 
-			<!-- dependency>
-				<groupId>org.sing_group</groupId>
-				<artifactId>gc4s</artifactId>
-				<version>${dependency.gc4s.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.swinglabs.swingx</groupId>
-						<artifactId>swingx-all</artifactId>
-						
-					</exclusion>
-				</exclusions>
-			</dependency-->
+			<!-- dependency> <groupId>org.sing_group</groupId> <artifactId>gc4s</artifactId> 
+				<version>${dependency.gc4s.version}</version> <exclusions> <exclusion> <groupId>org.swinglabs.swingx</groupId> 
+				<artifactId>swingx-all</artifactId> </exclusion> </exclusions> </dependency -->
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>soky-bot-api</artifactId>
+				<artifactId>sokybot-api</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>soky-bot-security</artifactId>
+				<artifactId>sokybot-security</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>soky-bot-pk2</artifactId>
+				<artifactId>sokybot-pk2</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>soky-bot-pk2-extractor</artifactId>
+				<artifactId>sokybot-pk2-extractor</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
@@ -131,7 +112,6 @@
 			<dependency>
 				<groupId>org.dizitart</groupId>
 				<artifactId>nitrite</artifactId>
-
 				<version>${nitrite.version}</version>
 			</dependency>
 
@@ -154,34 +134,7 @@
 				<scope>provided</scope>
 			</dependency>
 
-			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>${commons-io.version}</version>
-				<scope>provided</scope>
-			</dependency>
 
-			<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>${commons-lang3.version}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-csv</artifactId>
-				<version>${commons-csv.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>${lombok.version}</version>
-				<scope>provided</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.swinglabs.swingx</groupId>
@@ -194,69 +147,233 @@
 				<artifactId>mydoggy-plaf</artifactId>
 				<version>${mydoggy.version}</version>
 			</dependency>
-			<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>${logback-classic.version}</version>
-
-			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
-				<version>${junit-jupiter-engine.version}</version>
-				<scope>test</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-core</artifactId>
-				<version>${dependency.mockito-core.version}</version>
-				<scope>test</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-junit-jupiter</artifactId>
-				<version>${dependency.mockito-junit-jupter.version}</version>
-				<scope>test</scope>
-			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
 
-
 	<build>
-
-
-
 		<pluginManagement>
-
 			<plugins>
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
-					<version>5.1.8</version>
+					<version>${plugin.bundle.version}</version>
 					<extensions>true</extensions>
-					<!-- <configuration> -->
-					<!-- <instructions> -->
-					<!-- <Embed-Dependency>*;scope=compile|runtime;inline=true</Embed-Dependency> -->
-					<!-- <Embed-Transitive>true</Embed-Transitive> -->
-					<!-- <_nouses>false</_nouses> -->
-					<!-- <_noee>false</_noee> -->
-
-					<!-- <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName> -->
-
-					<!-- </instructions> -->
-					<!-- </configuration> -->
-					<!-- <executions> <execution> <id>bundle-manifest</id> <phase>process-classes</phase> 
-						<goals> <goal>manifest</goal> </goals> </execution> </executions> -->
 				</plugin>
-
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<maven.test.skip>true</maven.test.skip>
+			</properties>
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>maven-bundle-plugin</artifactId>
+						<extensions>true</extensions>
+					</plugin>
+				</plugins>
+
+
+			</build>
+
+
+		</profile>
+		<profile>
+			<id>env-prod</id>
+			<modules>
+
+				<module>${project.artifactId}-launcher</module>
+				<module>${project.artifactId}-api</module>
+				<module>${project.artifactId}-core</module>
+				<module>${project.artifactId}-plugin-management</module>
+				<module>${project.artifactId}-security</module>
+				<module>${project.artifactId}-pk2</module>
+				<module>${project.artifactId}-pk2-extractor</module>
+				<module>${project.artifactId}-logger</module>
+				<module>${project.artifactId}-packet-sniffer</module>
+
+			</modules>
+
+			<build>
+
+
+				<plugins>
+
+
+					<plugin>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>maven-bundle-plugin</artifactId>
+						<inherited>true</inherited>
+						<extensions>true</extensions>
+						<configuration>
+
+							<buildDirectory>
+								${maven.multiModuleProjectDirectory}/Sokybot-${project.version}/system
+							</buildDirectory>
+
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.3.0</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>install</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/Sokybot-${project.version}/system</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/sokybot-static-resources/sokybot-osgi-platform</directory>
+											<exclude>org.apache.felix.fileinstall-3.6.4.jar</exclude>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+	<dependencies>
+		<!-- platform provided dependencies -->
+
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- remove this -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>${commons-csv.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.framework</artifactId>
+			<version>7.0.5</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.component</artifactId>
+			<version>1.5.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.component.annotations</artifactId>
+			<version>1.5.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.log</artifactId>
+			<version>1.2.6</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+		<!-- <dependency> <groupId>org.osgi</groupId> <artifactId>org.osgi.service.metatype.annotations</artifactId> 
+			<version>1.3.0</version> </dependency> -->
+
+
+
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit-jupiter-engine.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${dependency.mockito-core.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>${dependency.mockito-junit-jupter.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- logging -->
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${dependency.logback-classic.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${dependency.logback-core.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${dependency.slf4j-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
 
 </project>

@@ -10,6 +10,8 @@ package org.sokybot.domain;
  * @author AMROO
  */
 public class SilkroadData  {
+	
+	
 	private DivisionInfo divisionInfo = null;
 	private SilkroadType silkroadType = null;
 	private int port;

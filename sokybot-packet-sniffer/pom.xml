@@ -10,12 +10,14 @@
 	</parent>
 
 	<artifactId>sokybot-packet-sniffer</artifactId>
-
+	<packaging>bundle</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>io.github.sokybot</groupId>
-			<artifactId>soky-bot-api</artifactId>
+			<artifactId>sokybot-api</artifactId>
 		</dependency>
 	</dependencies>
+	
+	
 </project>

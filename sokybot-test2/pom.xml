@@ -1,0 +1,204 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.github.sokybot</groupId>
+		<artifactId>sokybot</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>sokybot-test2</artifactId>
+
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.7.4</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-to-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jul-to-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.atomos -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.atomos</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.util.pushstream -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.util.pushstream</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.runtime -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.gogo.runtime</artifactId>
+			<version>1.1.6</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.command -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.gogo.command</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.jline -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.gogo.jline</artifactId>
+			<version>1.1.8</version>
+		</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>sokybot-api</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>sokybot-security</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>sokybot-pk2</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>sokybot-pk2-extractor</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+	</dependencies>
+
+
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+
+				<configuration>
+					<mainClass>org.sokybot.applauncher.SpringOsgiDriver</mainClass>
+					 
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+				<plugin>
+				<!-- https://mvnrepository.com/artifact/com.akathist.maven.plugins.launch4j/launch4j-maven-plugin -->
+
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>l4j-gui</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<outfile>${basedir}/../Sokybot-${project.version}/sokybot.exe</outfile>
+							<jar>target/sokybot-test2-1.0-SNAPSHOT.jar</jar>
+							<errTitle>sokybot-error</errTitle>
+							<downloadUrl>http://java.com/download</downloadUrl>
+							<stayAlive>false</stayAlive>
+							<restartOnCrash>false</restartOnCrash>
+							<icon>${project.basedir}${file.separator}..${file.separator}sokybot-static-resources\robot2.ico</icon>
+
+
+							<classPath>
+								<mainClass>org.springframework.boot.loader.JarLauncher</mainClass>
+							</classPath>
+
+							<singleInstance>
+								<mutexName>soky-bot</mutexName>
+								<windowTitle>Sokybot</windowTitle>
+							</singleInstance>
+							<jre>
+ 								<path>runtime/bin</path> 
+<!-- 								<bundledJre64Bit>false</bundledJre64Bit> -->
+								<bundledJreAsFallback>true</bundledJreAsFallback>
+ <!-- <minVersion>, <maxVersion> format - Java < 9 , 
+  The traditional version scheme supported by launch4j is 1.x.x[_xxx] and requires at least 3 parts -->
+								<minVersion>11</minVersion>
+<!-- 								<maxVersion>17</maxVersion>  -->
+<!-- 								<maxVersion>11</maxVersion> -->
+<!--  								<jdkPreference>jdkOnly</jdkPreference>  -->
+								<runtimeBits>64/32</runtimeBits>
+								<!-- <opts> -->
+								<!-- <opt>-Djava.endorsed.dirs=./endorsed</opt> -->
+								<!-- </opts> -->
+							</jre>
+
+							<splash>
+								<file>${project.basedir}${file.separator}..${file.separator}sokybot-static-resources\splash\0_450x150_24bit.bmp</file>
+								<waitForWindow>true</waitForWindow>
+								<timeout>300</timeout>
+								<timeoutErr>true</timeoutErr>
+
+							</splash>
+
+							<versionInfo>
+								<fileVersion>1.0.0.0</fileVersion>
+								<txtFileVersion>txt file version?</txtFileVersion>
+								<fileDescription>Bot For Silkroad Online Game </fileDescription>
+								<copyright>Soky</copyright>
+								<productVersion>1.0.0.0</productVersion>
+								<txtProductVersion>txt product version</txtProductVersion>
+								<productName>Sokybot</productName>
+								<internalName>sokybot</internalName>
+								<originalFilename>sokybot.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+	</build>
+</project>

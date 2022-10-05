@@ -24,16 +24,12 @@
 		<dependency.flatlaf-swingx.version>2.3</dependency.flatlaf-swingx.version>
 		<dependency.h2.version>2.1.214</dependency.h2.version>
 		<dependency.h2-mvstore.version>2.1.214</dependency.h2-mvstore.version>
+
 		<dependency.objenesis.version>3.3</dependency.objenesis.version>
 	</properties>
 
-	<repositories>
-		<repository>
-		<id>sing-repository</id>
-		<name>SING repository</name>
-		<url>http://maven.sing-group.org/repository/maven/</url>
-	</repository>
-	</repositories>
+
+
 
 	<dependencies>
 
@@ -52,12 +48,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot</artifactId>
 			<version>${dependency.spring-boot.version}</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-io</artifactId>
 			<version>${dependency.spring-osgi-io.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core -->
 		<dependency>
@@ -105,28 +109,6 @@
 
 		</dependency>
 
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.apache.felix</groupId> -->
-		<!-- <artifactId>org.apache.felix.framework</artifactId> -->
-		<!-- <version>7.0.5</version> -->
-		<!-- <scope>provided</scope> -->
-
-		<!-- </dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.main -->
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.apache.felix.main</artifactId>
-			<version>7.0.5</version>
-			<scope>provided</scope>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -145,12 +127,20 @@
 			<groupId>org.dizitart</groupId>
 			<artifactId>nitrite</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.dizitart</groupId>
+			<artifactId>nitrite-jackson-mapper</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.dizitart</groupId>
+			<artifactId>nitrite-mvstore-adapter</artifactId>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.objenesis/objenesis -->
 		<dependency>
 			<groupId>org.objenesis</groupId>
 			<artifactId>objenesis</artifactId>
-
 			<version>${dependency.objenesis.version}</version>
 		</dependency>
 
@@ -160,31 +150,22 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.13.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.dizitart</groupId>
-			<artifactId>nitrite-jackson-mapper</artifactId>
 
-		</dependency>
-
-		<dependency>
-			<groupId>org.dizitart</groupId>
-			<artifactId>nitrite-mvstore-adapter</artifactId>
-		</dependency>
 
 
 		<dependency>
 			<groupId>info.picocli</groupId>
 			<artifactId>picocli-spring-boot-starter</artifactId>
 			<version>4.6.3</version>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework.boot</groupId> -->
+<!-- 					<artifactId>spring-boot-starter-logging</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-
-
 
 
 		<dependency>
@@ -193,36 +174,52 @@
 		</dependency>
 
 
-		<!-- system plugins -->
-
+		<!-- system bundles -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>soky-bot-api</artifactId>
+			<artifactId>sokybot-security</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>soky-bot-pk2-extractor</artifactId>
+			<artifactId>sokybot-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${project.parent.artifactId}-pk2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${project.parent.artifactId}-pk2-extractor</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.fileinstall</artifactId>
+			<version>3.7.4</version>
+			
 		</dependency>
 
 	</dependencies>
 
 
 
+
+
 	<build>
+
 
 
 		<plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.0</version>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
-				</configuration>
-			</plugin>
+
 
 			<plugin>
 				<groupId>org.apache.felix</groupId>
@@ -231,16 +228,20 @@
 				<configuration>
 					<instructions>
 						<Bundle-Activator>org.sokybot.Driver</Bundle-Activator>
-						<!-- <Import-Package>org.sokybot.api</Import-Package> -->
-						<!-- <Import-Package>org.osgi.framework.*</Import-Package> -->
+
 						<Import-Package>
 							!org.springframework.*,
 							*;resolution:=optional
 						</Import-Package>
-						<!-- <Export-Package>org.sokybot</Export-Package> -->
+						<Embed-Dependency>
+							*;scope=compile;inline=true
+						</Embed-Dependency>
+						<Embed-Transitive>
+							true
+						</Embed-Transitive>
+
 					</instructions>
 
-					<buildDirectory>${sokybot-product-dir}/system</buildDirectory>
 
 
 				</configuration>

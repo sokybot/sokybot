@@ -16,51 +16,6 @@
 	<name>sokybot-api</name>
 
 
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-	</dependencies>
 
-	<build>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
-
-				<configuration>
-					<instructions>
-						<!-- <Embed-Dependency>*;scope=compile|runtime;inline=true</Embed-Dependency> -->
-						<!-- <Embed-Transitive>true</Embed-Transitive> -->
-						<!-- <_nouses>false</_nouses> -->
-						<!-- <_noee>false</_noee> -->
-
-						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-						<!-- <Import-Package>org.sokybot.api</Import-Package> -->
-						<!-- <Import-Package>org.osgi.framework.*</Import-Package> -->
-						<!-- <Import-Package> -->
-						<!-- !org.springframework.*, -->
-						<!-- *;resolution:=optional -->
-						<!-- </Import-Package> -->
-
-						<Export-Package>
-							org.sokybot.service
-						</Export-Package>
-					</instructions>
-
-					<buildDirectory>${sokybot-product-dir}/system</buildDirectory>
-
-				</configuration>
-				<!-- <executions> <execution> <id>bundle-manifest</id> <phase>process-classes</phase> 
-					<goals> <goal>manifest</goal> </goals> </execution> </executions> -->
-			</plugin>
-
-
-
-		</plugins>
-
-	</build>
+	
 </project>

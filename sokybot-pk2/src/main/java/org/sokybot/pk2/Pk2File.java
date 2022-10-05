@@ -124,6 +124,7 @@ public class Pk2File implements IPk2File {
 	}
 
 	private List<JMXFile> findFile(String regex, long pos, int limit) {
+		
 		List<JMXFile> res = new ArrayList<>();
 
 		if (limit == 0)
@@ -180,6 +181,7 @@ public class Pk2File implements IPk2File {
 		for (JMXDirectory jMXDirectory : jMXDirectories) {
 
 			List<JMXFile> children = findFile(regex, jMXDirectory.getPosition(), limit - res.size());
+			
 			res.addAll(children);
 			if (limit > 0 && res.size() == limit) {
 				return res;
@@ -222,7 +224,7 @@ public class Pk2File implements IPk2File {
 	}
 
 	private List<Pk2Entry> findDirEntry(long pos, String regex) {
-
+		log.debug("find dir entry {} " , regex);
 		EntryBlock block = readBlock(pos);
 		Iterator<Pk2Entry> ite = block.getIterator();
 		List<Pk2Entry> res = new ArrayList<>();
@@ -234,6 +236,7 @@ public class Pk2File implements IPk2File {
 				if (!entry.name.contains(".") && !entry.name.contains("..")) {
 
 					if (Pattern.matches(regex, entry.name)) {
+						log.debug("dir {} "  ,  entry.name);
 						res.add(entry);
 					}
 
@@ -373,6 +376,7 @@ public class Pk2File implements IPk2File {
 	}
 
 	private EntryBlock readBlock(long pos) {
+		
 		long startLocation = pos;
 
 		Pk2Entry[] block = new Pk2Entry[20];

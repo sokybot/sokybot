@@ -4,11 +4,14 @@ import lombok.Getter;
 
 /**
  * 
- * TODO write document
+ * This exception type designed to be a parent of any exception that occurs
+ * during extraction operations , so catch this exception if you need to handle
+ * any exception happens during extraction processes
+ * 
+ *  
  * 
  * @author Amr
  */
-
 @Getter
 public class Pk2ExtractionException extends RuntimeException {
 
@@ -20,18 +23,18 @@ public class Pk2ExtractionException extends RuntimeException {
 
 	}
 
-	public Pk2ExtractionException(String message , String resourceName) {
-		 super(message) ; 
-		 this.resourceName = resourceName ; 
+	public Pk2ExtractionException(String message, String resourceName) {
+		super(message);
+		this.resourceName = resourceName;
 	}
- 
-	public Pk2ExtractionException(String message , Throwable t) { 
-		super(message , t) ;
-		this.resourceName = "JOYMAX_RESOURCE" ; 
+
+	public Pk2ExtractionException(String message, Throwable t) {
+		super(message, t);
+		this.resourceName = "JOYMAX_RESOURCE";
 	}
-	
-	public Pk2ExtractionException(String message ) {
-	   super(message) ; 
+
+	public Pk2ExtractionException(String message) {
+		super(message);
 	}
-	
+
 }

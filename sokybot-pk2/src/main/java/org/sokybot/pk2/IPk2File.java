@@ -51,9 +51,12 @@ public interface IPk2File extends Closeable {
 	 * 
 	 * @param regex expression
 	 * @return file(s) with name matches input regex
-	 * @throws Pk2FileCorruptedException if the represented pk2 file is misformatted
-	 *                                   and could not read entries from it
-	 * @throws Pk2InvalidJMXFileAttributeException If encounter a jmx file stored with invalid attributes
+	 * @throws Pk2FileCorruptedException           if the represented pk2 file is
+	 *                                             misformatted and could not read
+	 *                                             entries from it
+	 *                                             
+	 * @throws Pk2InvalidJMXFileAttributeException If encounter a jmx file stored
+	 *                                             with invalid attributes
 	 * 
 	 * 
 	 * 
@@ -71,10 +74,12 @@ public interface IPk2File extends Closeable {
 	 * if there not exists file names matches the regex , this method will return
 	 * empty list
 	 * 
-	 * @throws Pk2FileCorruptedException if the represented pk2 file is misformatted
-	 *                                   and could not read entries from it
-	 *                                   
-	 * @throws Pk2InvalidJMXFileAttributeException If encounter a jmx file stored with invalid attributes
+	 * @throws Pk2FileCorruptedException           if the represented pk2 file is
+	 *                                             misformatted and could not read
+	 *                                             entries from it
+	 * 
+	 * @throws Pk2InvalidJMXFileAttributeException If encounter a jmx file stored
+	 *                                             with invalid attributes
 	 * 
 	 */
 	List<JMXFile> find(String regex, int limit);

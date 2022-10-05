@@ -1,6 +1,7 @@
 package org.sokybot.pk2extractor0;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -220,7 +221,7 @@ class MediaPk2Test {
 
 		JMXFile divInfoFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(IPk2File.class);
-		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
+		when(file.findFirst("(?i)divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
 		when(divInfoFile.getInputStream()).thenReturn(in);
 
 		DivisionInfo info = new MediaPk2(file, null).extractDivisionInfo();
@@ -239,7 +240,7 @@ class MediaPk2Test {
 	@Test
 	void testExtractDivInfoWhenMissed() {
 		IPk2File file = Mockito.mock(IPk2File.class);
-		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.empty());
+		when(file.findFirst("(?i)divisioninfo.txt")).thenReturn(Optional.empty());
 		assertThrows(Pk2MissedResourceException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
 	}
 
@@ -253,7 +254,7 @@ class MediaPk2Test {
 
 		JMXFile divInfoFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(IPk2File.class);
-		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
+		when(file.findFirst("(?i)divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
 		when(divInfoFile.getInputStream()).thenReturn(in);
 
 		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
@@ -267,20 +268,12 @@ class MediaPk2Test {
 
 		JMXFile divInfoFile = Mockito.mock(JMXFile.class);
 		IPk2File file = Mockito.mock(IPk2File.class);
-		when(file.findFirst("divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
+		when(file.findFirst("(?i)divisioninfo.txt")).thenReturn(Optional.of(divInfoFile));
 		when(divInfoFile.getInputStream()).thenReturn(in);
 
 		assertThrows(Pk2InvalidResourceFormatException.class, () -> new MediaPk2(file, null).extractDivisionInfo());
 
 	}
 
-	//@Test
-	void testExtractItems() {
-		String gamePath = "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019";
-
-		IMediaPk2 mediaPk2 = new Pk2Extractors().getMediaPk2(gamePath);
-		mediaPk2.getItemEntities()
-				.forEach((item) -> System.out.println(item));
-	}
 
 }

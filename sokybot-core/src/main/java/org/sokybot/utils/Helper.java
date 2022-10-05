@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,6 +19,11 @@ import java.util.Random;
  * @author AMROO
  */
 public class Helper {
+	
+
+
+	
+	
 	public static int getRandomInt() {
 		return (int) (Math.random() * (20000) + 1);
 	}
@@ -47,50 +54,6 @@ public class Helper {
 	}
 	
 	
-	public static  boolean isSilkraodDirectory(File directory) {
-		{
-			if (directory.isDirectory()) {
-
-				if (isContainsFile(directory, "SRO_Client.exe") && isContainsFile(directory, "Data.pk2")
-						&& isContainsFile(directory, "Map.pk2") && isContainsFile(directory, "Media.pk2")
-						&& isContainsFile(directory, "Music.pk2") && isContainsFile(directory, "Particles.pk2")
-						&& isContainsFile(directory, "GFXFileManager.dll")) {
-
-					return true;
-
-				}
-
-			}
-			return false;
-		}
-
-	}
-	
-	public static  boolean isContainsFile(File directory, String fileName) {
-
-		if (directory.isDirectory()) {
-			File[] fileList;
-			fileList = directory.listFiles(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return (name.equalsIgnoreCase(fileName));
-				}
-			});
-			if (fileList != null) {
-				for (File FileEntry : fileList) {
-					if (!FileEntry.isDirectory()) {
-
-						if (FileEntry.getName().equalsIgnoreCase(fileName)) {
-							return true;
-						}
-						// res = fileName.equalsIgnoreCase(FileEntry.getName()) ;
-					}
-				}
-			}
-
-		}
-		return false;
-	}
 
 
 	 public static String formatHexDump(byte[] array, int offset, int length) {

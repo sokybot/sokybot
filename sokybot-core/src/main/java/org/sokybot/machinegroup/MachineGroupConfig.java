@@ -1,15 +1,11 @@
 package org.sokybot.machinegroup;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.annotation.PostConstruct;
 import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,7 +17,6 @@ import com.formdev.flatlaf.icons.FlatSearchIcon;
 @ComponentScan(basePackages = { "org.sokybot.machinegroup" })
 public class MachineGroupConfig {
 
-	
 	@Bean
 	Icon gameIcon(@Value("${gamePath}") String gamePath) {
 
@@ -31,5 +26,6 @@ public class MachineGroupConfig {
 
 	}
 
+	
 
 }

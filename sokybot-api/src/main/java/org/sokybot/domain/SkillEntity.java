@@ -3,11 +3,13 @@ package org.sokybot.domain;
 import org.sokybot.domain.items.ItemType;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class SkillEntity {
+@EqualsAndHashCode(callSuper = true)
+public class SkillEntity extends SilkrodEntity {
 
-	private int refId;
+	
 	private String longId;
 	private SkillType type;
     private String name ; 
