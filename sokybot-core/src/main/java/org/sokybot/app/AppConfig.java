@@ -7,27 +7,17 @@ import java.util.ServiceLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import org.apache.felix.atomos.Atomos;
 import org.dizitart.no2.Nitrite;
-import org.dizitart.no2.NitriteBuilder;
 import org.dizitart.no2.common.mapper.JacksonMapperModule;
 import org.dizitart.no2.common.module.NitriteModule;
 import org.dizitart.no2.mvstore.MVStoreModule;
 import org.jdesktop.swingx.JXFrame;
 import org.noos.xing.mydoggy.ContentManagerUI;
 import org.noos.xing.mydoggy.TabbedContentManagerUI;
-import org.noos.xing.mydoggy.TabbedContentUI;
 import org.noos.xing.mydoggy.ToolWindowManager;
+import org.noos.xing.mydoggy.ToolWindowManagerDescriptor;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
-import org.osgi.framework.Constants;
-import org.osgi.framework.connect.ConnectFrameworkFactory;
-import org.osgi.framework.launch.Framework;
-import org.slf4j.LoggerFactory;
 import org.sokybot.app.gamegroupbuilder.GameConfigInputDialog;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
 import org.sokybot.pk2extractor.Pk2Extractors;
@@ -43,8 +33,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.PatternLayout;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
@@ -65,19 +53,7 @@ public class AppConfig {
 		event.getToolBar().add(btn);
 
 		btn.addActionListener((ev) -> {
-			SwingUtilities.invokeLater(()->{
-				ctx.getBean(GameConfigInputDialog.class).setVisible(true);
-				
-			});
-
-//			SwingUtilities.invokeLater(()->{
-//			GameConfigInputDialog dialog = 	 ; 
-//			
-//			
-//				dialog.setVisible(true) ; 
-
-			// });
-		});
+				ctx.getBean(GameConfigInputDialog.class).setVisible(true);});
 
 	}
 
@@ -92,18 +68,6 @@ public class AppConfig {
 
 	
 	
-	@Bean
-	@Profile("dev")
-	JXFrame mainFrameForDev(@Value("${spring.application.name}") String appName) {
-	  log.info("creating main frame");
-		JXFrame frame = new JXFrame(appName, true);
-        
-		frame.setPreferredSize(new Dimension(400 , 400));
-        frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
-		
-		return frame;
-	}
-	
 	
 	@Bean
 	@Profile("prod")
@@ -111,14 +75,34 @@ public class AppConfig {
 	  log.info("creating main frame");
 		JXFrame frame = new JXFrame(appName, true);
         
+
 		   frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);  
 		return frame;
 	}
+ 
+	@Bean
+	@Profile("dev")
+	JXFrame mainFrameForDev(@Value("${spring.application.name}") String appName) {
+	  log.info("creating main frame");
+		JXFrame frame = new JXFrame(appName, true);
+        frame.setPreferredSize(new Dimension(1000 , 700));
+        frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
+		
+		
+		frame.setExtendedState(JXFrame.MAXIMIZED_BOTH);
+       
+		return frame;
+	}
+ 	
 
+	
 	@Bean
 	ToolWindowManager toolWindowManager() {
 		ToolWindowManager toolWindowManager = new MyDoggyToolWindowManager();
 
+		ToolWindowManagerDescriptor toolWindowManagerDescriptor = toolWindowManager.getToolWindowManagerDescriptor(); 
+		toolWindowManagerDescriptor.setNumberingEnabled(false); 
+		//toolWindowManagerDescriptor.setCornerComponent(Corner.NORD_EAST, new JLabel("Hello World!!!"));
 		ContentManagerUI<?> contentManagerUI = toolWindowManager.getContentManager().getContentManagerUI();
 
 		contentManagerUI.setCloseable(false);
@@ -146,26 +130,27 @@ public class AppConfig {
 	}
 
 	private NitriteModule mvstoreModule() {
-		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\Sokybot.data").build();
+		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\sokybot.data").build();
 
 	}
 	
 	@Bean
 	Bundle systemBundle() { 
-		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
-	     ConnectFrameworkFactory factory = loader.findFirst().get();
-	     Framework framework = factory.newFramework(
-	                               Map.of(
-	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
-	                               Atomos.newAtomos().getModuleConnector());
-	     
-	     try {
-			framework.init();
-		} catch (BundleException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	     return framework ; 
+//		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
+//	     ConnectFrameworkFactory factory = loader.findFirst().get();
+//	     Framework framework = factory.newFramework(
+//	                               Map.of(
+//	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
+//	                               Atomos.newAtomos().getModuleConnector());
+//	     
+//	     try {
+//			framework.init();
+//		} catch (BundleException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	     return framework ; 
+		return null ; 
 		
 	}
 	

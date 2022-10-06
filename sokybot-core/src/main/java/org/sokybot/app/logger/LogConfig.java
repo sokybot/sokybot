@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.annotation.Resource;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -12,13 +14,10 @@ import org.sokybot.app.mainframe.WindowPreparedEvent;
 import org.sokybot.common.ANSITextPane;
 import org.sokybot.service.IMainFrameConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
-import org.springframework.core.io.Resource;
 
-import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
@@ -30,9 +29,10 @@ public class LogConfig {
 
 	@Autowired
 	private IMainFrameConfigurator configurator ;
-	
-	@Value("icons/log.png")
-	Resource icon ; 
+
+	 
+	@Resource(name="feed")
+	Icon logIcon ; 
 	
 	@Bean
 	PatternLayout patternLayout() {
@@ -62,14 +62,12 @@ public class LogConfig {
 	
 	
 	@EventListener(WindowPreparedEvent.class)
-	void installLogToolWindow(WindowPreparedEvent event ) { 
+	void installLogToolWindow(WindowPreparedEvent event  ) { 
 		
 		log.debug("installing log tool window");
 		JPanel  panel = new JPanel(new BorderLayout());
 		panel.add(new JScrollPane(ansiTextPane()), BorderLayout.CENTER);
-	
-		configurator.addExtraWindow("Log", "Sokybot log", new FlatSearchIcon(), panel);
-
+		configurator.addExtraWindow("Log", "Sokybot log",this.logIcon, panel);
 		
 	}
 	

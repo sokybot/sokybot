@@ -35,7 +35,6 @@ public class GuiAppender extends AppenderBase<ILoggingEvent> implements SmartLif
 	private PatternLayout pattern ; 
 
 	
-	
 	@Override
 	public boolean isRunning() {
 		  

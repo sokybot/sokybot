@@ -63,18 +63,17 @@ public class AppLifecycle {
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 			Logger root = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
 
+			AppenderWrapper wrapper = (AppenderWrapper) root.getAppender("WRAPPER") ; 
+			
 			Appender<ILoggingEvent> appender = ctx.getBean(GuiAppender.class);
 			appender.setContext(loggerContext);
  
-			AppenderWrapper wrapper =(AppenderWrapper) root.getAppender("wrapper") ; 
 			wrapper.origin(appender);
-			
 			root.setLevel(Level.INFO);
 			root.setAdditive(false);
 
 		};
 	}
-
 
 
 	// @Profile({"dev" , "test"})
@@ -89,6 +88,7 @@ public class AppLifecycle {
 
 		};
 	}
+
 
 	// @Bean
 	// @Profile({"osgi" , "prod"})
@@ -109,6 +109,7 @@ public class AppLifecycle {
 
 		};
 	}
+
 
 	@Bean
 	@Profile({ "init" })
@@ -188,11 +189,11 @@ public class AppLifecycle {
 			// .getScreenDevices()[0].setFullScreenWindow(mainFrame);
 
 			mainFrame.setVisible(true);
-
 		};
+
 	}
 
-	private JMenuBar getMenuBar(ApplicationContext ctx) {
+		private JMenuBar getMenuBar(ApplicationContext ctx) {
 		JMenuBar menuBar = ctx.getBean(JMenuBar.class);
 		menuBar.setHelpMenu(ctx.getBean("helpMenu", JMenu.class));
 
@@ -207,14 +208,5 @@ public class AppLifecycle {
 		};
 
 	}
-
-	//
-//    @Bean
-//    ApplicationRunner deploy(){
-//        return (arguments)->{
-//            JOptionPane.showMessageDialog(null , "Hello World!!");
-//        };
-//
-//    }
 
 }

@@ -28,7 +28,7 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 	public void addExtraWindow(String id, String title, Icon icon, Component comp) {
 
 		ToolWindow toolWindow = toolWindowManager.registerToolWindow(id, title, icon, comp, ToolWindowAnchor.BOTTOM);
-
+		
 		toolWindow.setAvailable(true);
 		// toolWindow.setVisible(true);
 

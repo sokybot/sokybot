@@ -1,9 +1,11 @@
 <configuration debug="true">
 
 
-  <appender name="wrapper" class="org.sokybot.app.logger.AppenderWrapper"/> 
+  <appender name="WRAPPER" class="org.sokybot.app.logger.AppenderWrapper"/>
+ 
         
   <root level="DEBUG">
-    <appender-ref ref="wrapper" />
+    <appender-ref ref="WRAPPER" />
   </root>
+  
 </configuration>

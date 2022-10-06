@@ -21,7 +21,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.osgi.io.OsgiBundleResourcePatternResolver;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;

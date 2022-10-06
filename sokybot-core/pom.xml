@@ -109,6 +109,11 @@
 			<version>${dependency.flatlaf.version}</version>
 
 		</dependency>
+		<dependency>
+			<groupId>com.formdev</groupId>
+			<artifactId>flatlaf-extras</artifactId>
+			<version>2.5</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
@@ -198,11 +203,18 @@
 
 		<!-- OSGI Libs -->
 
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.atomos -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.atomos</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.fileinstall</artifactId>
 			<version>3.7.4</version>
+
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.atomos -->
