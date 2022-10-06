@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -15,9 +16,12 @@ import org.dizitart.no2.common.module.NitriteModule;
 import org.dizitart.no2.mvstore.MVStoreModule;
 import org.jdesktop.swingx.JXFrame;
 import org.noos.xing.mydoggy.ContentManagerUI;
+import org.noos.xing.mydoggy.PushAwayMode;
 import org.noos.xing.mydoggy.TabbedContentManagerUI;
 import org.noos.xing.mydoggy.TabbedContentUI;
 import org.noos.xing.mydoggy.ToolWindowManager;
+import org.noos.xing.mydoggy.ToolWindowManagerDescriptor;
+import org.noos.xing.mydoggy.ToolWindowManagerDescriptor.Corner;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
 import org.slf4j.LoggerFactory;
 import org.sokybot.app.gamegroupbuilder.GameConfigInputDialog;
@@ -99,6 +103,9 @@ public class AppConfig {
 	ToolWindowManager toolWindowManager() {
 		ToolWindowManager toolWindowManager = new MyDoggyToolWindowManager();
 
+		ToolWindowManagerDescriptor toolWindowManagerDescriptor = toolWindowManager.getToolWindowManagerDescriptor(); 
+		toolWindowManagerDescriptor.setNumberingEnabled(false); 
+		//toolWindowManagerDescriptor.setCornerComponent(Corner.NORD_EAST, new JLabel("Hello World!!!"));
 		ContentManagerUI<?> contentManagerUI = toolWindowManager.getContentManager().getContentManagerUI();
 
 		contentManagerUI.setCloseable(false);
