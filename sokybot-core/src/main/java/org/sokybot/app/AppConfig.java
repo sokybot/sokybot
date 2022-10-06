@@ -7,6 +7,8 @@ import java.util.ServiceLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
+import org.apache.felix.atomos.Atomos;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.common.mapper.JacksonMapperModule;
 import org.dizitart.no2.common.module.NitriteModule;
@@ -18,6 +20,10 @@ import org.noos.xing.mydoggy.ToolWindowManager;
 import org.noos.xing.mydoggy.ToolWindowManagerDescriptor;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.Constants;
+import org.osgi.framework.connect.ConnectFrameworkFactory;
+import org.osgi.framework.launch.Framework;
 import org.sokybot.app.gamegroupbuilder.GameConfigInputDialog;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
 import org.sokybot.pk2extractor.Pk2Extractors;
@@ -136,21 +142,21 @@ public class AppConfig {
 	
 	@Bean
 	Bundle systemBundle() { 
-//		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
-//	     ConnectFrameworkFactory factory = loader.findFirst().get();
-//	     Framework framework = factory.newFramework(
-//	                               Map.of(
-//	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
-//	                               Atomos.newAtomos().getModuleConnector());
-//	     
-//	     try {
-//			framework.init();
-//		} catch (BundleException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	     return framework ; 
-		return null ; 
+		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
+	     ConnectFrameworkFactory factory = loader.findFirst().get();
+	     Framework framework = factory.newFramework(
+	                               Map.of(
+	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
+	                               Atomos.newAtomos().getModuleConnector());
+	     
+	     try {
+			framework.init();
+		} catch (BundleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     return framework ; 
+		
 		
 	}
 	

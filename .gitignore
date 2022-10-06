@@ -50,8 +50,8 @@ build/
 .DS_Store
 >>>>>>> soky-bot/master
 /.metadata/
-
 sokybot-core/sokybot.data
+sokybot-core/felix-cache
 Sokybot-1.0-SNAPSHOT
 sokybot-static-resources/felix-cache
 sokybot-static-resources/sokybot-osgi-platform
