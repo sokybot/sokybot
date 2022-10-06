@@ -2,6 +2,8 @@ package org.sokybot.app;
 
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.util.Map;
+import java.util.ServiceLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.apache.logging.log4j.util.Constants;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.NitriteBuilder;
 import org.dizitart.no2.common.mapper.JacksonMapperModule;
@@ -23,6 +26,10 @@ import org.noos.xing.mydoggy.ToolWindowManager;
 import org.noos.xing.mydoggy.ToolWindowManagerDescriptor;
 import org.noos.xing.mydoggy.ToolWindowManagerDescriptor.Corner;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.connect.ConnectFrameworkFactory;
+import org.osgi.framework.launch.Framework;
 import org.slf4j.LoggerFactory;
 import org.sokybot.app.gamegroupbuilder.GameConfigInputDialog;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
@@ -61,19 +68,7 @@ public class AppConfig {
 		event.getToolBar().add(btn);
 
 		btn.addActionListener((ev) -> {
-			SwingUtilities.invokeLater(()->{
-				ctx.getBean(GameConfigInputDialog.class).setVisible(true);
-				
-			});
-
-//			SwingUtilities.invokeLater(()->{
-//			GameConfigInputDialog dialog = 	 ; 
-//			
-//			
-//				dialog.setVisible(true) ; 
-
-			// });
-		});
+				ctx.getBean(GameConfigInputDialog.class).setVisible(true);});
 
 	}
 
@@ -109,6 +104,26 @@ public class AppConfig {
 		return frame;
 	}
  	
+
+	@Bean
+	Bundle systemBundle() { 
+		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
+	     ConnectFrameworkFactory factory = loader.findFirst().get();
+	     Framework framework = factory.newFramework(
+	                               Map.of(
+	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
+	                               Atomos.newAtomos().getModuleConnector());
+	     
+	     try {
+			framework.init();
+		} catch (BundleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     return framework ; 
+		
+	}
+	
 	@Bean
 	ToolWindowManager toolWindowManager() {
 		ToolWindowManager toolWindowManager = new MyDoggyToolWindowManager();
