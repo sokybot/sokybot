@@ -143,7 +143,7 @@ public class AppConfig {
 	}
 
 	private NitriteModule mvstoreModule() {
-		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\Sokybot.data").build();
+		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\sokybot.data").build();
 
 	}
 
