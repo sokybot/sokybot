@@ -202,7 +202,7 @@ public class AppLifecycle {
 			mainFrame.pack();
 			ctx.publishEvent(new WindowPreparedEvent(this, mainFrame, toolBar, menuBar));
 
-			GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].setFullScreenWindow(mainFrame);
+			//GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].setFullScreenWindow(mainFrame);
 
 			mainFrame.setVisible(true);
 

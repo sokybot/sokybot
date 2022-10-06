@@ -192,7 +192,7 @@ public class Driver implements BundleActivator {
                 .properties("spring.application.name:sokybot" , 
                  	//	"logging.config:classpath:org/sokybot/logback-prod.xml",
                 		"spring.output.ansi.enabled:always")
-                .profiles("dev" , "prod" )
+                .profiles("dev" )
                 .logStartupInfo(false)
                 .run() ; 
 

@@ -36,6 +36,7 @@ import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -86,19 +87,28 @@ public class AppConfig {
 	}
 
 	@Bean
+	@Profile("prod")
 	JXFrame mainFrame(@Value("${spring.application.name}") String appName) {
 	  log.info("creating main frame");
 		JXFrame frame = new JXFrame(appName, true);
-        //frame.setPreferredSize(new Dimension(1000 , 700));
-        //frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
+        
+		return frame;
+	}
+ 
+	@Bean
+	@Profile("dev")
+	JXFrame mainFrameForDev(@Value("${spring.application.name}") String appName) {
+	  log.info("creating main frame");
+		JXFrame frame = new JXFrame(appName, true);
+        frame.setPreferredSize(new Dimension(1000 , 700));
+        frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
 		
-		//frame.setUndecorated(true);
 		
-		//frame.setExtendedState(JXFrame.MAXIMIZED_BOTH);
+		frame.setExtendedState(JXFrame.MAXIMIZED_BOTH);
        
 		return frame;
 	}
-
+ 	
 	@Bean
 	ToolWindowManager toolWindowManager() {
 		ToolWindowManager toolWindowManager = new MyDoggyToolWindowManager();
