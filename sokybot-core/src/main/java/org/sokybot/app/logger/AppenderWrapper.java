@@ -10,7 +10,7 @@ import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.AppenderBase;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 
-public class AppenderWraper extends UnsynchronizedAppenderBase<ILoggingEvent> {
+public class AppenderWrapper extends UnsynchronizedAppenderBase<ILoggingEvent> {
 
 	private List<ILoggingEvent> buffer = new ArrayList<>(256);
 	private Appender<ILoggingEvent> origin;

@@ -42,31 +42,7 @@ public class GuiAppender extends AppenderBase<ILoggingEvent> implements SmartLif
 	@Autowired
 	private PatternLayout pattern ; 
 	
-	@Value("banner.txt")
-	private Resource banner ;
-	
-	@PostConstruct
-	private void init() { 
-		
-		
-		
-		try {
-			
 
-			System.out.println(this.banner.getFilename()) ; 
-			System.out.println(this.banner.getURI().toASCIIString()) ;
-			
-		  File file = 	banner.getFile() ; 
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file))) ; 
-					reader.lines()	
-					.collect(Collectors.joining("\n")) ;
-			textPane.append(Color.green, banner + "\n");
-			
-		} catch (IOException e) {
-			
-		}
-	}
 	
 	@Override
 	public boolean isRunning() {

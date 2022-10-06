@@ -17,7 +17,7 @@ import org.noos.xing.mydoggy.ToolWindowManager;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
-import org.sokybot.app.logger.AppenderWraper;
+import org.sokybot.app.logger.AppenderWrapper;
 import org.sokybot.app.logger.GuiAppender;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
 import org.sokybot.app.service.IBotMachineGroupService;
@@ -32,6 +32,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,45 +56,24 @@ public class AppLifecycle {
 //    }
 
 	@Bean
+	@Order(1)
 	ApplicationRunner configurLogger(ApplicationContext ctx) {
 		return args -> {
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 			Logger root = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
-
+ 
+			AppenderWrapper wrapper = (AppenderWrapper) root.getAppender("WRAPPER") ; 
+			
 			Appender<ILoggingEvent> appender = ctx.getBean(GuiAppender.class);
 			appender.setContext(loggerContext);
-
-			root.addAppender(appender);
+ 
+			wrapper.origin(appender);
 			root.setLevel(Level.INFO);
 			root.setAdditive(false);
 
 		};
 	}
 
-	// @Bean
-	ApplicationRunner configLogger2(ApplicationContext ctx) {
-		return args -> {
-			log.info("Configuring root logger");
-			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-
-			Logger root = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
-			AppenderWraper wrapper = (AppenderWraper) root.getAppender("d");
-
-			if (wrapper == null) {
-				System.out.println("Could not find wraper appender");
-			}
-			GuiAppender guiAppender = ctx.getBean(GuiAppender.class);
-			if (guiAppender == null) {
-				System.out.println("Could not create gui appender");
-			}
-			if (!guiAppender.isStarted()) {
-				System.out.println("Appender is not running");
-			}
-			wrapper.origin(ctx.getBean(GuiAppender.class));
-			System.out.println("After Configuer Logger");
-
-		};
-	}
 
 	// @Profile({"dev" , "test"})
 	@Bean
