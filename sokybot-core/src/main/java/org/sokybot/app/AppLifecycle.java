@@ -60,6 +60,7 @@ public class AppLifecycle {
 	@Order(1)
 	ApplicationRunner configurLogger(ApplicationContext ctx) {
 		return args -> {
+			log.debug("Confguring root logger");
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 			Logger root = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
 
@@ -75,6 +76,15 @@ public class AppLifecycle {
 		};
 	}
 
+	@Bean
+	@Order(2)
+	ApplicationRunner launchOsgiContainer(Bundle bundle) {
+		return args -> {
+			log.debug("Starting system bundle ");
+			bundle.start();
+		};
+
+	}
 
 	// @Profile({"dev" , "test"})
 	@Bean
@@ -200,13 +210,6 @@ public class AppLifecycle {
 		return menuBar;
 	}
 
-	@Bean
-	@Order(1)
-	ApplicationRunner launchOsgiContainer(Bundle bundle) {
-		return args -> {
-			bundle.start();
-		};
-
-	}
+	
 
 }

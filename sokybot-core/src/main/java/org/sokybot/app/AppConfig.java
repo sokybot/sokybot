@@ -2,7 +2,13 @@ package org.sokybot.app;
 
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ServiceLoader;
 
 import javax.swing.JButton;
@@ -38,6 +44,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +59,7 @@ public class AppConfig {
 
 	@EventListener
 	void registerCreateGameGroupBtn(WindowPreparedEvent event) {
- 
+
 		log.info("Registering tool btn ");
 
 		JButton btn = new JButton("Create Group");
@@ -59,56 +67,52 @@ public class AppConfig {
 		event.getToolBar().add(btn);
 
 		btn.addActionListener((ev) -> {
-				ctx.getBean(GameConfigInputDialog.class).setVisible(true);});
+			ctx.getBean(GameConfigInputDialog.class).setVisible(true);
+		});
 
 	}
 
 	@Bean
-	CacheManager cacheManager() { 
-		return new ConcurrentMapCacheManager("sokybot-cache") ; 
+	CacheManager cacheManager() {
+		return new ConcurrentMapCacheManager("sokybot-cache");
 	}
+
 	@Bean
 	IEntityExtractorFactory gameEntityExtractorFactory() {
 		return new Pk2Extractors();
 	}
 
-	
-	
-	
 	@Bean
 	@Profile("prod")
 	JXFrame mainFrame(@Value("${spring.application.name}") String appName) {
-	  log.info("creating main frame");
+		log.info("creating main frame");
 		JXFrame frame = new JXFrame(appName, true);
-        
 
-		   frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);  
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		return frame;
 	}
- 
+
 	@Bean
 	@Profile("dev")
 	JXFrame mainFrameForDev(@Value("${spring.application.name}") String appName) {
-	  log.info("creating main frame");
+		log.info("creating main frame");
 		JXFrame frame = new JXFrame(appName, true);
-        frame.setPreferredSize(new Dimension(1000 , 700));
-        frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
-		
-		
+		frame.setPreferredSize(new Dimension(1000, 700));
+		frame.setStartPosition(JXFrame.StartPosition.CenterInScreen);
+
 		frame.setExtendedState(JXFrame.MAXIMIZED_BOTH);
-       
+
 		return frame;
 	}
- 	
 
-	
 	@Bean
 	ToolWindowManager toolWindowManager() {
 		ToolWindowManager toolWindowManager = new MyDoggyToolWindowManager();
 
-		ToolWindowManagerDescriptor toolWindowManagerDescriptor = toolWindowManager.getToolWindowManagerDescriptor(); 
-		toolWindowManagerDescriptor.setNumberingEnabled(false); 
-		//toolWindowManagerDescriptor.setCornerComponent(Corner.NORD_EAST, new JLabel("Hello World!!!"));
+		ToolWindowManagerDescriptor toolWindowManagerDescriptor = toolWindowManager.getToolWindowManagerDescriptor();
+		toolWindowManagerDescriptor.setNumberingEnabled(false);
+		// toolWindowManagerDescriptor.setCornerComponent(Corner.NORD_EAST, new
+		// JLabel("Hello World!!!"));
 		ContentManagerUI<?> contentManagerUI = toolWindowManager.getContentManager().getContentManagerUI();
 
 		contentManagerUI.setCloseable(false);
@@ -124,13 +128,13 @@ public class AppConfig {
 		return toolWindowManager;
 
 	}
-	
-	
 
 	@Bean
 	Nitrite db() {
 
-		return Nitrite.builder().loadModule(mvstoreModule()).loadModule(new JacksonMapperModule())
+		return Nitrite.builder()
+				.loadModule(mvstoreModule())
+				.loadModule(new JacksonMapperModule())
 				.openOrCreate("soky", "soky");
 
 	}
@@ -139,26 +143,31 @@ public class AppConfig {
 		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\sokybot.data").build();
 
 	}
-	
+
 	@Bean
-	Bundle systemBundle() { 
+	Bundle systemBundle(@Value("classpath:osgi.properties") Resource configFile) throws IOException {
+
+		Properties prop = new Properties();
+		prop.load(configFile.getInputStream());
+
+		Map<String, String> config = new HashMap<>();
+		prop.forEach((k, v) -> {
+			config.put(String.valueOf(k), String.valueOf(v));
+		});
+
 		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
-	     ConnectFrameworkFactory factory = loader.findFirst().get();
-	     Framework framework = factory.newFramework(
-	                               Map.of(
-	                                  Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT),
-	                               Atomos.newAtomos().getModuleConnector());
-	     
-	     try {
+		ConnectFrameworkFactory factory = loader.findFirst().get();
+
+		Framework framework = factory.newFramework(config, Atomos.newAtomos().getModuleConnector());
+
+		try {
 			framework.init();
 		} catch (BundleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	     return framework ; 
-		
-		
+		return framework;
+
 	}
-	
 
 }
