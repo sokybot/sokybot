@@ -12,7 +12,10 @@ import org.sokybot.machinegroup.navigationtree.NavTreeSelectionEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class PageContainer extends JPanel {
 
 	
@@ -44,7 +47,7 @@ public class PageContainer extends JPanel {
     public void showPage(NavTreeSelectionEvent navTreeSelectionEvent ) { 
     	
     String path = 	navTreeSelectionEvent.getSelectedPath() ;
-    System.out.println("Main Page Container Recive Path : " + path) ; 
+    log.info("Main Page Container Recive Path {} " ,   path) ; 
     }
 	
 }

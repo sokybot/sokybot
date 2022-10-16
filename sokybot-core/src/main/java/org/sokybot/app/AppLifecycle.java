@@ -1,5 +1,8 @@
 package org.sokybot.app;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.extras.FlatInspector;
+import com.formdev.flatlaf.extras.FlatUIDefaultsInspector;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 import ch.qos.logback.classic.Level;
@@ -19,14 +22,15 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
 import org.sokybot.app.logger.AppenderWrapper;
-import org.sokybot.app.logger.GuiAppender;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
-import org.sokybot.app.service.IBotMachineGroupService;
+import org.sokybot.app.service.IMachineGroupService;
 import org.sokybot.common.ANSITextPane;
+import org.sokybot.common.GuiAppender;
 import org.sokybot.domain.SkillEntity;
 import org.sokybot.domain.items.ItemEntity;
 import org.sokybot.service.IMainFrameConfigurator;
 import org.springframework.beans.factory.BeanFactoryUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
@@ -35,6 +39,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 
+import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Files;
@@ -44,6 +49,9 @@ import java.util.stream.Collectors;
 @Configuration
 @Slf4j
 public class AppLifecycle {
+
+	@Autowired
+	ApplicationContext ctx;
 
 //
 //    ApplicationRunner loadPerspective(ToolWindowManager toolWindowManager) {
@@ -58,17 +66,18 @@ public class AppLifecycle {
 
 	@Bean
 	@Order(1)
-	ApplicationRunner configurLogger(ApplicationContext ctx) {
+	ApplicationRunner configurLogger() {
 		return args -> {
+
 			log.debug("Confguring root logger");
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 			Logger root = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
 
-			AppenderWrapper wrapper = (AppenderWrapper) root.getAppender("WRAPPER") ; 
-			
+			AppenderWrapper wrapper = (AppenderWrapper) root.getAppender("WRAPPER");
+
 			Appender<ILoggingEvent> appender = ctx.getBean(GuiAppender.class);
 			appender.setContext(loggerContext);
- 
+
 			wrapper.origin(appender);
 			root.setLevel(Level.INFO);
 			root.setAdditive(false);
@@ -78,48 +87,39 @@ public class AppLifecycle {
 
 	@Bean
 	@Order(2)
-	ApplicationRunner launchOsgiContainer(Bundle bundle) {
+	ApplicationRunner launchOsgiContainer() {
 		return args -> {
+
+			log.debug("deploying service to osgi container");
+
+			Bundle bundle = ctx.getBean(Bundle.class);
+
+			BundleContext bndCtx = bundle.getBundleContext();
+			JMenuBar menuBar = ctx.getBean(JMenuBar.class);
+			bndCtx.registerService(JMenuBar.class.getName(), menuBar, null);
+
+			IMainFrameConfigurator mainFrameConfigurator = ctx.getBean(IMainFrameConfigurator.class);
+			bndCtx.registerService(IMainFrameConfigurator.class.getName(), mainFrameConfigurator, null);
+
 			log.debug("Starting system bundle ");
 			bundle.start();
 		};
 
 	}
 
-	// @Profile({"dev" , "test"})
+	@Profile({"dev" , "test"})
 	@Bean
-	ApplicationRunner addSomeToolWindows(IMainFrameConfigurator configurator, ApplicationContext ctx) {
+	ApplicationRunner addSomeToolWindows(@Qualifier("feed")Icon logIcon ) {
 		return args -> {
 			log.info("adding console and log tool windows");
 			JPanel panel = new JPanel(new BorderLayout());
 			panel.add(new JScrollPane(new JTextArea()), BorderLayout.CENTER);
 
-			configurator.addExtraWindow("Console", "Sokybot console", new FlatSearchIcon(), panel);
+			this.ctx.getBean(IMainFrameConfigurator.class)
+					.addExtraWindow("Console", "Sokybot console", logIcon, panel);
 
 		};
 	}
-
-
-	// @Bean
-	// @Profile({"osgi" , "prod"})
-	ApplicationRunner deployServices(ApplicationContext ctx) {
-		return args -> {
-
-			log.info("deploying service to osgi container");
-			Bundle bundle = ctx.getBean(Bundle.class);
-
-			BundleContext bndCtx = bundle.getBundleContext();
-
-			JMenuBar menuBar = ctx.getBean(JMenuBar.class);
-			// bndCtx.registerService(JMenuBar.class.toString(), menuBar, null) ;
-			bndCtx.registerService(JMenuBar.class, menuBar, null);
-
-			IMainFrameConfigurator mainFrameConfigurator = ctx.getBean(IMainFrameConfigurator.class);
-			bndCtx.registerService(IMainFrameConfigurator.class.getName(), mainFrameConfigurator, null);
-
-		};
-	}
-
 
 	@Bean
 	@Profile({ "init" })
@@ -137,34 +137,7 @@ public class AppLifecycle {
 		};
 	}
 
-	/**
-	 * load all previously registered machine groups
-	 * 
-	 * 
-	 * @param botMachineGroupService
-	 * @param machineGroup
-	 * @return
-	 */
 
-	@Bean
-	ApplicationRunner loadGroups(IBotMachineGroupService botMachineGroupService,
-			@Qualifier("machineGroupRegister") NitriteCollection machineGroup) {
-
-		return (args) -> {
-			log.info("loading groups");
-
-			// iterate over groups doc and for each group try to check if game path need
-			// update
-			// if true then update our repositories related with this path
-			// wither true of false then create new group using IBotMachineGroupService
-			machineGroup.find().forEach((doc) -> {
-
-				botMachineGroupService.createNewGroup(doc.get("group-name", String.class),
-						doc.get("game-path", String.class));
-			});
-
-		};
-	}
 
 	// very last operation
 	@Bean
@@ -172,7 +145,7 @@ public class AppLifecycle {
 
 		return (args) -> {
 
-			log.info("displaying main frame");
+			log.debug("assembling frame components");
 			JXFrame mainFrame = ctx.getBean(JXFrame.class);
 
 			JXRootPane rootPane = mainFrame.getRootPaneExt();
@@ -198,18 +171,27 @@ public class AppLifecycle {
 			// GraphicsEnvironment.getLocalGraphicsEnvironment()
 			// .getScreenDevices()[0].setFullScreenWindow(mainFrame);
 
+		//	FlatDarkLaf.setup();
+		//	FlatDarkLaf.updateUI();
 			mainFrame.setVisible(true);
 		};
 
 	}
 
-		private JMenuBar getMenuBar(ApplicationContext ctx) {
+	private JMenuBar getMenuBar(ApplicationContext ctx) {
 		JMenuBar menuBar = ctx.getBean(JMenuBar.class);
 		menuBar.setHelpMenu(ctx.getBean("helpMenu", JMenu.class));
 
 		return menuBar;
 	}
 
-	
+	@Bean
+	@Profile("dev")
+	ApplicationRunner installWindowInspector() {
+		return args -> {
+			FlatInspector.install("alt shift 3");
+			FlatUIDefaultsInspector.install("alt shift 4");
+		};
+	}
 
 }

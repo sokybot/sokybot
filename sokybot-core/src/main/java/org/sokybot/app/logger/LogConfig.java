@@ -3,24 +3,31 @@ package org.sokybot.app.logger;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 
 import org.slf4j.LoggerFactory;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
 import org.sokybot.common.ANSITextPane;
+import org.sokybot.common.GuiAppender;
 import org.sokybot.service.IMainFrameConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 
+import com.formdev.flatlaf.FlatClientProperties;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.AppenderBase;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
@@ -28,12 +35,11 @@ import lombok.extern.slf4j.Slf4j;
 public class LogConfig {
 
 	@Autowired
-	private IMainFrameConfigurator configurator ;
+	private IMainFrameConfigurator configurator;
 
-	 
-	@Resource(name="feed")
-	Icon logIcon ; 
-	
+	@Resource(name = "feed")
+	Icon logIcon;
+
 	@Bean
 	PatternLayout patternLayout() {
 		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -53,23 +59,34 @@ public class LogConfig {
 
 	@Bean
 	ANSITextPane ansiTextPane() {
+
 		ANSITextPane atp = new ANSITextPane();
 		atp.setBackground(Color.BLACK);
 		atp.setFont(new Font("Consolas", Font.PLAIN, 15));
-		atp.setEditable(true);
+		atp.setEditable(false);
+
 		return atp;
 	}
-	
-	
-	@EventListener(WindowPreparedEvent.class)
-	void installLogToolWindow(WindowPreparedEvent event  ) { 
-		
-		log.debug("installing log tool window");
-		JPanel  panel = new JPanel(new BorderLayout());
-		panel.add(new JScrollPane(ansiTextPane()), BorderLayout.CENTER);
-		configurator.addExtraWindow("Log", "Sokybot log",this.logIcon, panel);
-		
+
+	@Bean
+	AppenderBase<ILoggingEvent> guiAppender() {
+		return GuiAppender
+				.builder()
+				.pattern(patternLayout())
+				.guiWriter(ansiTextPane())
+				.build() ; 
 	}
-	
+
+	@EventListener(WindowPreparedEvent.class)
+	void installLogToolWindow(WindowPreparedEvent event) {
+
+		log.debug("installing log tool window");
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(new JScrollPane(ansiTextPane()), BorderLayout.CENTER);
+		panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+
+		configurator.addExtraWindow("Log", "Sokybot log", this.logIcon, panel);
+
+	}
 
 }

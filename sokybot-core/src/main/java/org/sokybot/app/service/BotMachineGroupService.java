@@ -1,6 +1,9 @@
 package org.sokybot.app.service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -9,17 +12,20 @@ import javax.annotation.PostConstruct;
 
 import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.NitriteCollection;
+import org.dizitart.no2.filters.FluentFilter;
 import org.osgi.framework.Bundle;
 import org.sokybot.exception.InvalidGameReferenceException;
+import org.sokybot.exception.MachineGroupNotFoundException;
 import org.sokybot.exception.NameUniquenessConstraintViolationException;
 import org.sokybot.machinegroup.MachineGroupConfig;
+import org.sokybot.service.IGameDAO;
 import org.sokybot.utils.SilkroadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.Banner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import org.springframework.stereotype.Service;
@@ -29,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class BotMachineGroupService implements IBotMachineGroupService {
+public class BotMachineGroupService implements IMachineGroupService {
 
 	@Autowired
 	private ConfigurableApplicationContext ctx;
@@ -45,18 +51,67 @@ public class BotMachineGroupService implements IBotMachineGroupService {
 			@Qualifier("machineGroupRegister") NitriteCollection machineGroupRegister) {
 		this.ctx = ctx;
 		this.machineGroupRegister = machineGroupRegister;
-		
+
+	}
+
+	@PostConstruct
+	private void reload() {
+		log.info("Reloading groups...");
+		this.machineGroupRegister.find().forEach((doc) -> {
+
+			String name = doc.get("group-name", String.class);
+			String gamePath = doc.get("game-path", String.class);
+
+			createMachineGroup(name, gamePath);
+			log.info("Group {} has been loaded ", name);
+		});
 	}
 
 	private void saveOrUpdate(String name, String gamePath) {
-		Document doc = Document.createDocument("group-name", name).put("game-path", gamePath);
 
+		Document doc = this.machineGroupRegister.find(FluentFilter.where("group-name").eq(name)).firstOrNull();
+
+		if (doc == null) {
+			doc = Document.createDocument("group-name", name).put("game-path", gamePath);
+		} else {
+			doc.put("game-path", gamePath);
+		}
 		this.machineGroupRegister.update(doc, true);
+
 	}
 
 	@Override
-	public void createNewGroup(String name, String gamePath) {
-		log.info("Creating new machine group with name {} at {}" , name , gamePath);
+	public void createMachineGroup(String name, String gamePath) {
+		log.info("Creating new machine group with name {} at {}", name, gamePath);
+		check(name, gamePath);
+
+		try {
+
+			lock.lock();
+
+			ConfigurableApplicationContext newCtx = createNewContainer(name, gamePath);
+
+			newCtx.setId(name);
+			saveOrUpdate(name, gamePath);
+			ctxs.put(name, newCtx);
+
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	private ConfigurableApplicationContext createNewContainer(String name, String gamePath) {
+		return new SpringApplicationBuilder(MachineGroupConfig.class)
+				// .resourceLoader(bundleResourceLoader)
+				.parent(this.ctx)
+				.bannerMode(Banner.Mode.OFF)
+				.properties("groupName:" + name, "gamePath:" + gamePath)
+				.logStartupInfo(false)
+				.web(WebApplicationType.NONE)
+				.run();
+	}
+
+	private void check(String name, String gamePath) {
 		if (name.isBlank())
 			throw new IllegalArgumentException("Group name could not be blank");
 
@@ -69,31 +124,34 @@ public class BotMachineGroupService implements IBotMachineGroupService {
 
 		if (!SilkroadUtils.isValidSilkroadDirectory(gamePath))
 			throw new InvalidGameReferenceException("Invalid game directory " + gamePath, gamePath);
-		try {
 
-			lock.lock();
-			
+	}
 
-			//OsgiBundleResourcePatternResolver bundleResourceLoader = new OsgiBundleResourcePatternResolver(
-			//	this.ctx.getBean(Bundle.class));
-		
-			
-			ConfigurableApplicationContext ctx = new SpringApplicationBuilder(MachineGroupConfig.class)
-					//.resourceLoader(bundleResourceLoader)
-					.parent(this.ctx)
-					.bannerMode(Banner.Mode.OFF)
-					.properties("groupName:" + name, "gamePath:" + gamePath)
-					.logStartupInfo(false)
-					.web(WebApplicationType.NONE)
-					.run();
+	@Override
+	public Set<String> listGroups() {
+		return this.ctxs.keySet();
+	}
 
-			ctx.setId(name);
-			saveOrUpdate(name, gamePath);
-			ctxs.put(name, ctx);
-			
-		} finally {
-			lock.unlock();
+	@Override
+	public IGameDAO getGameDAO(String groupName) {
+
+		if (!this.ctxs.containsKey(groupName)) {
+			throw new MachineGroupNotFoundException("Could not find machine group with name " + groupName, groupName);
 		}
+
+		ConfigurableApplicationContext targetCtx = this.ctxs.get(groupName);
+
+		if (!targetCtx.isActive()) {
+			throw new IllegalStateException("Could not interact with inactive group context " + groupName);
+		}
+		return targetCtx.getBean(IGameDAO.class);
+
+	}
+
+	@Override
+	public void createMachine(String parentGroup, String trainerName) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -15,33 +15,8 @@ import org.jdesktop.swingx.search.ListSearchable;
 
 public class SilkroadUtils {
 
-	/*
-	public static  boolean isContainsFile(File directory, String fileName) {
-
-		if (directory.isDirectory()) {
-			File[] fileList;
-			fileList = directory.listFiles(new FilenameFilter() {
-				@Override
-				public boolean accept(File dir, String name) {
-					return (name.equalsIgnoreCase(fileName));
-				}
-			});
-			if (fileList != null) {
-				for (File FileEntry : fileList) {
-					if (!FileEntry.isDirectory()) {
-
-						if (FileEntry.getName().equalsIgnoreCase(fileName)) {
-							return true;
-						}
-						// res = fileName.equalsIgnoreCase(FileEntry.getName()) ;
-					}
-				}
-			}
-
-		}
-		return false;
-	}
-*/
+	
+	private SilkroadUtils() {}
 	
 	public static  boolean isSilkraodDirectory(File directory) {
 		

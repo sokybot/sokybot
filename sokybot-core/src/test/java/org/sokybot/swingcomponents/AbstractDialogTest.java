@@ -48,7 +48,7 @@ public class AbstractDialogTest {
 		protected InputJDialog(JFrame parent) {
 			super(parent);
 			 getDescriptionPane().setBackground(null);
-			
+			 super.okButton.setText("Create");
 		}
 		
 		 

@@ -10,6 +10,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
@@ -259,13 +260,14 @@ public class MediaPk2 implements IMediaPk2 {
 				.map(Pk2ExtractorUtils::toText)
 				.map(Pk2ExtractorUtils::toLines)
 				.map((lines) -> {
-					final SilkroadType type = new SilkroadType();
+					
+					Map<String, String> props = new HashMap<>() ; 
 					AtomicBoolean isEmpty = new AtomicBoolean(true);
 					lines.filter(line -> line.contains("="))
 
 							.forEach((line) -> {
 								String parts[] = StringUtils.split(line, "=");
-								type.addProperty(parts[0].trim(), parts[1].replace("\"", " ").trim());
+								props.put(parts[0].trim(), parts[1].replace("\"", " ").trim());
 								isEmpty.set(false);
 							});
 
@@ -274,7 +276,7 @@ public class MediaPk2 implements IMediaPk2 {
 								"type.txt");
 					}
 
-					return type;
+					return  new SilkroadType(props);
 				})
 				.orElseThrow(() -> new Pk2MissedResourceException("Could not find joymax file  type.txt", "type.txt"));
 

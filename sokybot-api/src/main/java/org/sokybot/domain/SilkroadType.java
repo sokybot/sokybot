@@ -5,7 +5,7 @@
  */
 package org.sokybot.domain;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import lombok.ToString;
 
@@ -15,17 +15,12 @@ import lombok.ToString;
  */
 @ToString
 public class SilkroadType {
-    private HashMap<String , String > properties = new HashMap<>() ; 
+    private Map<String , String > properties  ;  
+     
+    public SilkroadType(Map<String, String> props) {
+    	 this.properties = props ; 
+    }
     
-    public void addProperty(String name , String value) {
-        this.properties.put(name, value) ; 
-    }
-    public void setLanguage(String language) {
-        this.properties.put("Language", language) ; 
-    }
-    public void setCountry(String Country) {
-        this.properties.put("Country", Country) ; 
-    }
     public String getLanguage() {
     	return this.properties.getOrDefault("Language", "UNKNOWN") ;
       //  return this.properties.get("Language") ; 
@@ -33,4 +28,10 @@ public class SilkroadType {
     public String getCountry() {
         return this.properties.getOrDefault("Country" , "UNKNOWN"); 
     }
+    
+    public String getProperty(String propertyName) { 
+    	return this.properties.get(propertyName) ; 
+    }
+    
+    
 }

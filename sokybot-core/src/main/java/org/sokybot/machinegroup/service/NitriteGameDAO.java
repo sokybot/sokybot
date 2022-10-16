@@ -159,4 +159,9 @@ public class NitriteGameDAO implements IGameDAO {
 		return this.divisionInfo;
 	}
 
+	@Override
+	public SilkroadType getGameType() {
+		return this.silkroadType ; 
+	}
+
 }

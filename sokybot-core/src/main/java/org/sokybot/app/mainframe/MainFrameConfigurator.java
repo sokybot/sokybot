@@ -27,17 +27,16 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 	@Override
 	public void addExtraWindow(String id, String title, Icon icon, Component comp) {
 
-		ToolWindow toolWindow = toolWindowManager.registerToolWindow(id, title, icon, comp, ToolWindowAnchor.BOTTOM);
+		ToolWindow toolWindow = toolWindowManager.registerToolWindow(id , title, icon, comp, ToolWindowAnchor.BOTTOM);
 		
 		toolWindow.setAvailable(true);
 		// toolWindow.setVisible(true);
-
 		// RepresentativeAnchorDescriptor
 		RepresentativeAnchorDescriptor representativeAnchorDescriptor = toolWindow.getRepresentativeAnchorDescriptor();
 		representativeAnchorDescriptor.setPreviewEnabled(true);
 		representativeAnchorDescriptor.setPreviewDelay(1500);
 		representativeAnchorDescriptor.setPreviewTransparentRatio(0.4f);
-
+		
 		// DockedTypeDescriptor
 		DockedTypeDescriptor dockedTypeDescriptor = (DockedTypeDescriptor) toolWindow
 				.getTypeDescriptor(ToolWindowType.DOCKED);
@@ -46,7 +45,8 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 		dockedTypeDescriptor.setDockLength(300);
 		dockedTypeDescriptor.setPopupMenuEnabled(true);
 		dockedTypeDescriptor.setIdVisibleOnTitleBar(false);
-
+		
+		
 		JMenu toolsMenu = dockedTypeDescriptor.getToolsMenu();
 		toolsMenu.add(new AbstractAction("Hello World!!!") {
 			public void actionPerformed(ActionEvent e) {
@@ -55,8 +55,9 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 		});
 		dockedTypeDescriptor.setToolWindowActionHandler(new ToolWindowActionHandler() {
 			public void onHideButtonClick(ToolWindow toolWindow) {
-				JOptionPane.showMessageDialog(null, "Hiding...");
-				toolWindow.setVisible(false);
+			//	JOptionPane.showMessageDialog(null, "Hiding...");
+				toolWindow.setType(ToolWindowType.SLIDING);
+				//toolWindow.setVisible(false);
 			}
 		});
 
@@ -65,13 +66,13 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 		// SlidingTypeDescriptor
 		SlidingTypeDescriptor slidingTypeDescriptor = (SlidingTypeDescriptor) toolWindow
 				.getTypeDescriptor(ToolWindowType.SLIDING);
-		slidingTypeDescriptor.setEnabled(false);
+		slidingTypeDescriptor.setEnabled(true);
 		slidingTypeDescriptor.setTransparentMode(true);
 		slidingTypeDescriptor.setTransparentRatio(0.8f);
 		slidingTypeDescriptor.setTransparentDelay(0);
 		slidingTypeDescriptor.setAnimating(true);
 		slidingTypeDescriptor.setIdVisibleOnTitleBar(false);
-
+		
 		// FloatingTypeDescriptor
 		FloatingTypeDescriptor floatingTypeDescriptor = (FloatingTypeDescriptor) toolWindow
 				.getTypeDescriptor(ToolWindowType.FLOATING);

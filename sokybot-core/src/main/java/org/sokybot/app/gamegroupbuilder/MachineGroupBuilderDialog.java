@@ -23,7 +23,7 @@ import org.sing_group.gc4s.input.filechooser.JFileChooserPanel;
 import org.sing_group.gc4s.input.filechooser.JFileChooserPanelBuilder;
 import org.sing_group.gc4s.input.filechooser.SelectionMode;
 import org.sing_group.gc4s.input.text.BindJXTextField;
-import org.sokybot.app.service.IBotMachineGroupService;
+import org.sokybot.app.service.IMachineGroupService;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Scope;
@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Scope("prototype")
 @Slf4j
-public class GameConfigInputDialog extends AbstractInputJDialog {
+public class MachineGroupBuilderDialog extends AbstractInputJDialog {
 
 	private Dimension lblDim;
 	private JFileChooserPanel fileChooserPanel;
@@ -48,11 +48,11 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 	private Box page;
 
-	private IBotMachineGroupService botMachineGroupService  ; 
+	private IMachineGroupService botMachineGroupService  ; 
 
 	private SilkroadFileBrowser silkroadFileBrowser ; 
 	
-	public GameConfigInputDialog(  JFrame mainFrame ,SilkroadFileBrowser silkroadFileBrowser  ,  IBotMachineGroupService botMachineGroup ) {
+	public MachineGroupBuilderDialog(  JFrame mainFrame ,SilkroadFileBrowser silkroadFileBrowser  ,  IMachineGroupService botMachineGroup ) {
 			super(mainFrame); 
 			this.botMachineGroupService = botMachineGroup ; 
 			this.silkroadFileBrowser  = silkroadFileBrowser ; 
@@ -125,7 +125,7 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 		if (isValidInputs()) {
 			// create new bot group using groupService and then forward request to super
 			//System.out.println("creating new bot group ........") ; 
-			this.botMachineGroupService.createNewGroup(this.txtGroupName.getText(),
+			this.botMachineGroupService.createMachineGroup(this.txtGroupName.getText(),
 					this.fileChooserPanel.getSelectedFile().getAbsolutePath());
 			super.onOkButtonEvent(event);
 		} else {
@@ -174,10 +174,10 @@ public class GameConfigInputDialog extends AbstractInputJDialog {
 
 		SwingUtilities.invokeLater(() -> {
 
-			GameConfigInputDialog dialog = new SpringApplicationBuilder()
-					.sources(GameConfigInputDialog.class, SilkroadFileBrowser.class).headless(false)
+			MachineGroupBuilderDialog dialog = new SpringApplicationBuilder()
+					.sources(MachineGroupBuilderDialog.class, SilkroadFileBrowser.class).headless(false)
 					.web(WebApplicationType.NONE).properties("spring.application.name:sokybot").profiles("dev", "test")
-					.logStartupInfo(false).run(args).getBean(GameConfigInputDialog.class);
+					.logStartupInfo(false).run(args).getBean(MachineGroupBuilderDialog.class);
 
 			dialog.setVisible(true);
 			if (dialog.isCanceled()) {

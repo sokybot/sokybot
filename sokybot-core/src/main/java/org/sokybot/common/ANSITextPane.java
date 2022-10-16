@@ -13,13 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import org.springframework.stereotype.Component;
 
-public class ANSITextPane extends JTextPane {
+public class ANSITextPane extends JTextPane  implements Appendable{
 
 	static final Color D_Black = Color.getHSBColor(0.000f, 0.000f, 0.000f);
 	static final Color D_Red = Color.getHSBColor(0.000f, 1.000f, 0.502f);
@@ -39,76 +39,88 @@ public class ANSITextPane extends JTextPane {
 	static final Color B_White = Color.getHSBColor(0.000f, 0.000f, 1.000f);
 	static final Color cReset = Color.getHSBColor(0.000f, 0.000f, 1.000f);
 	static Color colorCurrent = cReset;
-	private String remaining = "" ; 
+	private String remaining = "";
+
+//	public void append(Color color , String str) { 
+//		StyleContext sc = StyleContext.getDefaultStyleContext();
+//	    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
+//	    int len = getDocument().getLength(); // same value as getText().length();
+//	    setCaretPosition(len);  // place caret at the end (with no selection)
+//	    setCharacterAttributes(aset, false);
+//	    replaceSelection(str); // there is no selection, so inserts at caret
+//	}
+//	
 	
-	 
-	public void append(Color color , String str) { 
+	@Override
+	public void append(Color c, String s) {
 		StyleContext sc = StyleContext.getDefaultStyleContext();
-	    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
-	    int len = getDocument().getLength(); // same value as getText().length();
-	    setCaretPosition(len);  // place caret at the end (with no selection)
-	    setCharacterAttributes(aset, false);
-	    replaceSelection(str); // there is no selection, so inserts at caret
+		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+		int len = getDocument().getLength();
+		try {
+			getDocument().insertString(len, s, aset);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	public void appendAnsi(String str) { 
-		int aPos = 0;   // current char position in addString
-	    int aIndex = 0; // index of next Escape sequence
-	    int mIndex = 0; // index of "m" terminating Escape sequence
-	    String tmpString = "";
-	    boolean stillSearching = true; // true until no more Escape sequences
-	    String addString = remaining + str;
-	    remaining = "";
 
-	    if (addString.length() > 0) {
-	      aIndex = addString.indexOf("\u001B"); // find first escape
-	      if (aIndex == -1) { // no escape/color change in this string, so just send it with current color
-	        append(colorCurrent,addString);
-	        return;
-	      }
-	// otherwise There is an escape character in the string, so we must process it
+	@Override
+	public void appendAnsi(String str) {
+		int aPos = 0; // current char position in addString
+		int aIndex = 0; // index of next Escape sequence
+		int mIndex = 0; // index of "m" terminating Escape sequence
+		String tmpString = "";
+		boolean stillSearching = true; // true until no more Escape sequences
+		String addString = remaining + str;
+		remaining = "";
 
-	      if (aIndex > 0) { // Escape is not first char, so send text up to first escape
-	        tmpString = addString.substring(0,aIndex);
-	        append(colorCurrent, tmpString);
-	        aPos = aIndex;
-	      }
-	// aPos is now at the beginning of the first escape sequence
+		if (addString.length() > 0) {
+			aIndex = addString.indexOf("\u001B"); // find first escape
+			if (aIndex == -1) { // no escape/color change in this string, so just send it with current color
+				append(colorCurrent, addString);
+				return;
+			}
+			// otherwise There is an escape character in the string, so we must process it
 
-	      stillSearching = true;
-	      while (stillSearching) {
-	        mIndex = addString.indexOf("m",aPos); // find the end of the escape sequence
-	        if (mIndex < 0) { // the buffer ends halfway through the ansi string!
-	          remaining = addString.substring(aPos,addString.length());
-	          stillSearching = false;
-	          continue;
-	        }
-	        else {
-	          tmpString = addString.substring(aPos,mIndex+1);
-	          colorCurrent = getANSIColor(tmpString);
-	        }
-	        aPos = mIndex + 1;
-	// now we have the color, send text that is in that color (up to next escape)
+			if (aIndex > 0) { // Escape is not first char, so send text up to first escape
+				tmpString = addString.substring(0, aIndex);
+				append(colorCurrent, tmpString);
+				aPos = aIndex;
+			}
+			// aPos is now at the beginning of the first escape sequence
 
-	        aIndex = addString.indexOf("\u001B", aPos);
+			stillSearching = true;
+			while (stillSearching) {
+				mIndex = addString.indexOf("m", aPos); // find the end of the escape sequence
+				if (mIndex < 0) { // the buffer ends halfway through the ansi string!
+					remaining = addString.substring(aPos, addString.length());
+					stillSearching = false;
+					continue;
+				} else {
+					tmpString = addString.substring(aPos, mIndex + 1);
+					colorCurrent = getANSIColor(tmpString);
+				}
+				aPos = mIndex + 1;
+				// now we have the color, send text that is in that color (up to next escape)
 
-	        if (aIndex == -1) { // if that was the last sequence of the input, send remaining text
-	          tmpString = addString.substring(aPos,addString.length());
-	          append(colorCurrent, tmpString);
-	          stillSearching = false;
-	          continue; // jump out of loop early, as the whole string has been sent now
-	        }
+				aIndex = addString.indexOf("\u001B", aPos);
 
-	        // there is another escape sequence, so send part of the string and prepare for the next
-	        tmpString = addString.substring(aPos,aIndex);
-	        aPos = aIndex;
-	        append(colorCurrent, tmpString);
+				if (aIndex == -1) { // if that was the last sequence of the input, send remaining text
+					tmpString = addString.substring(aPos, addString.length());
+					append(colorCurrent, tmpString);
+					stillSearching = false;
+					continue; // jump out of loop early, as the whole string has been sent now
+				}
 
-	      } // while there's text in the input buffer
-	    }
-		
+				// there is another escape sequence, so send part of the string and prepare for
+				// the next
+				tmpString = addString.substring(aPos, aIndex);
+				aPos = aIndex;
+				append(colorCurrent, tmpString);
+
+			} // while there's text in the input buffer
+		}
+
 	}
-	
 
 	public Color getANSIColor(String ANSIColor) {
 		if (ANSIColor.equals("\u001B[30m")) {
@@ -166,33 +178,31 @@ public class ANSITextPane extends JTextPane {
 		}
 	}
 
-	public static void main(String args[]) throws IOException { 
-		
-		JFrame frame = new JFrame() ; 
-		JPanel mainCont =(JPanel) frame.getContentPane();
+	public static void main(String args[]) throws IOException {
+
+		JFrame frame = new JFrame();
+		JPanel mainCont = (JPanel) frame.getContentPane();
 		mainCont.setLayout(new BorderLayout());
-		
-		ANSITextPane ansi = new ANSITextPane() ; 
-		//ansi.setEditable(false);
-		mainCont.add(ansi , BorderLayout.CENTER) ; 
-		
-		String banner =  Files.lines(Paths.get("src" , "main" , "resources" , "banner.txt"))				
-		.collect(Collectors.joining("\n")) ;
-		System.out.println(banner) ; 
-		ansi.setFont(new Font("Consolas" , Font.PLAIN , 15));
+
+		ANSITextPane ansi = new ANSITextPane();
+		// ansi.setEditable(false);
+		mainCont.add(ansi, BorderLayout.CENTER);
+
+		String banner = Files.lines(Paths.get("src", "main", "resources", "banner.txt"))
+				.collect(Collectors.joining("\n"));
+		System.out.println(banner);
+		ansi.setFont(new Font("Consolas", Font.PLAIN, 15));
 		ansi.setEditable(true);
 		ansi.setBackground(Color.BLACK);
 		ansi.appendAnsi(banner);
 		ansi.appendAnsi("\u001B[1;36m asdsad \n");
-		ansi.appendAnsi("\u001B[1;31m Hello World , \u001B[1;30m hello amr") ;
-		
+		ansi.appendAnsi("\u001B[1;31m Hello World , \u001B[1;30m hello amr");
+
 		frame.setLocationRelativeTo(null);
 		frame.setPreferredSize(new Dimension(400, 400));
-		frame.pack();  
-		frame.setVisible(true); 
+		frame.pack();
+		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		
+
 	}
 }
