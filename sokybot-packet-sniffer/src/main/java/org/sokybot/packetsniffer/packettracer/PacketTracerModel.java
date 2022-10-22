@@ -6,7 +6,7 @@ import sokybot.bot.network.packets.PacketDirection;
 
 public class PacketTracerModel {
 
-	private PacketDirection source ; 
+	private NetworkPeer source ; 
 	private String name ; 
 	private boolean ignored ;
 	
@@ -18,10 +18,10 @@ public class PacketTracerModel {
 	
 	
 	
-	public PacketDirection getSource() {
+	public NetworkPeer getSource() {
 		return source;
 	}
-	public void setSource(PacketDirection source) {
+	public void setSource(NetworkPeer source) {
 		this.source = source;
 	}
 	public String getName() {

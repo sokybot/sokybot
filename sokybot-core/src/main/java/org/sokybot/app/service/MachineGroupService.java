@@ -10,19 +10,23 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PostConstruct;
 
+import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.NitriteCollection;
 import org.dizitart.no2.filters.FluentFilter;
 import org.osgi.framework.Bundle;
+import org.sokybot.app.Constants;
 import org.sokybot.exception.InvalidGameReferenceException;
 import org.sokybot.exception.MachineGroupNotFoundException;
 import org.sokybot.exception.NameUniquenessConstraintViolationException;
 import org.sokybot.machinegroup.MachineGroupConfig;
+import org.sokybot.machinegroup.service.IMachineService;
 import org.sokybot.service.IGameDAO;
 import org.sokybot.utils.SilkroadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.Banner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -35,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class BotMachineGroupService implements IMachineGroupService {
+public class MachineGroupService implements IMachineGroupService {
 
 	@Autowired
 	private ConfigurableApplicationContext ctx;
@@ -47,10 +51,10 @@ public class BotMachineGroupService implements IMachineGroupService {
 	private Map<String, ConfigurableApplicationContext> ctxs = new ConcurrentHashMap<String, ConfigurableApplicationContext>();
 
 	@Autowired
-	public BotMachineGroupService(ConfigurableApplicationContext ctx,
-			@Qualifier("machineGroupRegister") NitriteCollection machineGroupRegister) {
+	public MachineGroupService(ConfigurableApplicationContext ctx,
+			Nitrite db ) {
 		this.ctx = ctx;
-		this.machineGroupRegister = machineGroupRegister;
+		this.machineGroupRegister = db.getCollection(Constants.MACHINE_GROUP_REGISTER_NAME);
 
 	}
 
@@ -59,8 +63,8 @@ public class BotMachineGroupService implements IMachineGroupService {
 		log.info("Reloading groups...");
 		this.machineGroupRegister.find().forEach((doc) -> {
 
-			String name = doc.get("group-name", String.class);
-			String gamePath = doc.get("game-path", String.class);
+			String name = doc.get(Constants.GROUP_NAME_KEY, String.class);
+			String gamePath = doc.get(Constants.GAME_PATH_KEY, String.class);
 
 			createMachineGroup(name, gamePath);
 			log.info("Group {} has been loaded ", name);
@@ -69,12 +73,12 @@ public class BotMachineGroupService implements IMachineGroupService {
 
 	private void saveOrUpdate(String name, String gamePath) {
 
-		Document doc = this.machineGroupRegister.find(FluentFilter.where("group-name").eq(name)).firstOrNull();
+		Document doc = this.machineGroupRegister.find(FluentFilter.where(Constants.GROUP_NAME_KEY).eq(name)).firstOrNull();
 
 		if (doc == null) {
-			doc = Document.createDocument("group-name", name).put("game-path", gamePath);
+			doc = Document.createDocument(Constants.GROUP_NAME_KEY, name).put(Constants.GAME_PATH_KEY, gamePath);
 		} else {
-			doc.put("game-path", gamePath);
+			doc.put(Constants.GAME_PATH_KEY, gamePath);
 		}
 		this.machineGroupRegister.update(doc, true);
 
@@ -101,13 +105,16 @@ public class BotMachineGroupService implements IMachineGroupService {
 	}
 
 	private ConfigurableApplicationContext createNewContainer(String name, String gamePath) {
+		
 		return new SpringApplicationBuilder(MachineGroupConfig.class)
 				// .resourceLoader(bundleResourceLoader)
 				.parent(this.ctx)
-				.bannerMode(Banner.Mode.OFF)
-				.properties("groupName:" + name, "gamePath:" + gamePath)
-				.logStartupInfo(false)
-				.web(WebApplicationType.NONE)
+				//.bannerMode(Banner.Mode.OFF)
+				.properties("groupName:" + name, "gamePath:" + gamePath , "spring.config.location:classpath:machine-group-ctx.properties")
+				
+				//.logStartupInfo(false)
+				//.web(WebApplicationType.NONE)
+				
 				.run();
 	}
 
@@ -135,6 +142,23 @@ public class BotMachineGroupService implements IMachineGroupService {
 	@Override
 	public IGameDAO getGameDAO(String groupName) {
 
+
+		return getActiveGroupCtx(groupName).getBean(IGameDAO.class);
+
+	}
+
+	@Override
+	public void createMachine(String parentGroup, String trainerName) {
+ 
+		ApplicationContext ctx = getActiveGroupCtx(parentGroup) ; 
+		
+		IMachineService machineService = ctx.getBean(IMachineService.class) ;
+		
+		machineService.createBotMachine(trainerName);
+		
+	}
+	
+	private ConfigurableApplicationContext getActiveGroupCtx(String groupName) { 
 		if (!this.ctxs.containsKey(groupName)) {
 			throw new MachineGroupNotFoundException("Could not find machine group with name " + groupName, groupName);
 		}
@@ -144,14 +168,9 @@ public class BotMachineGroupService implements IMachineGroupService {
 		if (!targetCtx.isActive()) {
 			throw new IllegalStateException("Could not interact with inactive group context " + groupName);
 		}
-		return targetCtx.getBean(IGameDAO.class);
-
-	}
-
-	@Override
-	public void createMachine(String parentGroup, String trainerName) {
-		// TODO Auto-generated method stub
 		
+		return targetCtx ; 
+				
 	}
 
 }

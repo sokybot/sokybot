@@ -29,7 +29,6 @@ public class PageContainer extends JPanel {
 		
 		setLayout(this.cardLayout);
 		setBorder(BorderFactory.createEtchedBorder()) ; 
-		setBackground(Color.yellow);
 		
 		
 	}
@@ -46,7 +45,8 @@ public class PageContainer extends JPanel {
 	@EventListener
     public void showPage(NavTreeSelectionEvent navTreeSelectionEvent ) { 
     	
-    String path = 	navTreeSelectionEvent.getSelectedPath() ;
+     String path = 	navTreeSelectionEvent.getSelectedPath() ;
+     cardLayout.show(this, path);
     log.info("Main Page Container Recive Path {} " ,   path) ; 
     }
 	

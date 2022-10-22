@@ -56,6 +56,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoop;
+import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
@@ -89,6 +92,10 @@ public class AppConfig {
 
 	}
 
+	@Bean
+	EventLoopGroup eventLoopGroup() { 
+		return new NioEventLoopGroup() ; 
+	}
 	@Bean
 	CacheManager cacheManager() {
 		return new ConcurrentMapCacheManager("sokybot-cache");

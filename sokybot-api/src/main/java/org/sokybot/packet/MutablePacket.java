@@ -48,7 +48,7 @@ public class MutablePacket extends Packet {
 	}
 	
 	
-	public void setPacketSource(PacketDirection dir) { 
+	public void setPacketSource(NetworkPeer dir) { 
 		this.source = dir ; 
 	}
     

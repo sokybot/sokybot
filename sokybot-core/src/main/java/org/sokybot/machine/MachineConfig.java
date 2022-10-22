@@ -9,7 +9,7 @@ import org.springframework.statemachine.config.builders.StateMachineTransitionCo
 
 @Configuration
 @ComponentScan({"org.sokybot.machine"})
-@EnableStateMachine
+//@EnableStateMachine
 public class MachineConfig extends StateMachineConfigurerAdapter<MachineState, MachineEvent> {
 
 	

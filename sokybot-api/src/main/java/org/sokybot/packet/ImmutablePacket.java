@@ -39,7 +39,7 @@ public class ImmutablePacket extends Packet{
 		packet.dataEncoding = dataEncoding ; 
 		return packet ; 
 	}
-	public static ImmutablePacket wrap(byte[] buffer ,PacketDirection source  ,  Encoding dataEncoding) { 
+	public static ImmutablePacket wrap(byte[] buffer  ,  Encoding dataEncoding , NetworkPeer source) { 
 		ImmutablePacket packet = new ImmutablePacket(ByteBuffer.wrap(buffer)) ;
 		packet.dataEncoding = dataEncoding ; 
 		packet.source = source ; 

@@ -1,99 +1,84 @@
 package org.sokybot.gameloader;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
+import org.sokybot.service.IGameLoader;
+import org.sokybot.utils.SilkroadUtils;
 
-import sokybot.bot.IBotContext;
-import sokybot.bot.model.BotModel;
-import sokybot.logger.ILogger;
-import sokybot.preferences.GeneralPreferencesDAO;
-import sokybot.silkroadgroups.ISilkroadGroupContext;
-import utilities.Helper;
-
-@Component
 public class GameLoader implements IGameLoader {
 
-	
-	@Autowired
-	private ApplicationContext ctx ; 
-	
 	private IProcessLoader processLoader;
-	
-	public GameLoader() { 
-	 
-		this.processLoader = ProcessLoader.createInstance() ; 
+
+	public GameLoader() {
+
+		this.processLoader = ProcessLoader.createInstance();
 	}
 
 	@Override
-	public void launch(IBotContext botCtx) {
+	public long launch(String clientPath) {
 
-		BotModel model = botCtx.getModel();
-		ILogger logger = botCtx.getLogger();
+		return launch(clientPath, "0 /" + 22 + " 0 0");
+
+	}
+
+	@Override
+	public long launch(String clientPath, String command) {
+
+		if (!Files.exists(Paths.get(clientPath)) || !clientPath.endsWith(".exe")) {
+			throw new IllegalArgumentException("Invalid client path");
+		}
+
+		String dllRef = System.getProperty("user.dir").concat("\\").concat("sokybotpatch.dll");
+
+
+		Path dllPath = Paths.get(dllRef);
+
+		if (!Files.exists(dllPath)) {
+			try {
+				Files.copy(getClass().getClassLoader().getResourceAsStream(".\\sokybotpatch.dll"), dllPath);
+			} catch (IOException e) {
+				throw new UncheckedIOException(e);
+			}
+		}
 		
-		ISilkroadGroupContext group = this.ctx.getBean(model.getParrentGroup() , ISilkroadGroupContext.class) ; 
+		String shellRef = System.getProperty("user.dir").concat("\\").concat("shell.txt") ; 
+		Path shellPath = Paths.get(shellRef) ; 
 		
-
-		if (group == null) {
-			logger.log("Could not find silkroad info for bot ' " + model.getBotName() + " ' ");
-			return ; 
+		if(!Files.exists(shellPath)) { 
+			try {
+				Files.copy(getClass().getClassLoader().getResourceAsStream(".\\shell.txt"), shellPath);
+			} catch (IOException e) {
+				throw new UncheckedIOException(e);
+			}
 		}
+				
 
-		String silkroadPath = group.getGamePath();
+		return this.processLoader.loadProcessImage(clientPath, command, dllRef, shellRef);
 
-		if (silkroadPath == null || silkroadPath.isBlank() || !Helper.isSilkraodDirectory(new File(silkroadPath))) {
-			logger.log("Invalid silkroad path");
-			return;
-		}
-		silkroadPath+="\\sro_client.exe" ; 
-		/*
-		
-		JMXFile file = new JMXFile(silkroadPath);
+	}
 
-		if (!file.exists()) {
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-			logger.log("Silkroad path ' " + silkroadPath + " ' is not exists");
-			return;
-		}
-       */
-		
-		GeneralPreferencesDAO generalPreferencesDAO = this.ctx.getBean(GeneralPreferencesDAO.class) ; 
-		String dllPath = generalPreferencesDAO.getPatchPath(null);
+	@Override
+	public Integer minimumVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		if (dllPath == null || dllPath.isBlank()) {
-			logger.log("Invalid patch path");
-			return;
-		}
-
-		File file = new File(dllPath);
-
-		if (!file.exists()) {
-			logger.log("Game Loader patch is not exists");
-			return;
-		}
-
-		String shellPath = generalPreferencesDAO.getShellPath();
-
-		if (shellPath == null || shellPath.isBlank()) {
-			logger.log("Invalid shell path");
-			return;
-		}
-
-		file = new File(shellPath);
-
-		if (!file.exists()) {
-			logger.log("Could not find shell code file");
-			return;
-		}
-
-		String command = "0 /" + group.getGameModel().getSilkroadData().getLocal() + " 0 0";
-
-		long phandle = this.processLoader.loadProcessImage(silkroadPath, command, dllPath, shellPath);
- 
-		model.setClientHandle(phandle);
-		
-
+	@Override
+	public Integer maximumVersion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

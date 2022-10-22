@@ -69,7 +69,7 @@ public class PacketMonitorTableModel extends AbstractTableModel {
 
 		switch (columnIndex) {
 		case 0:
-			return PacketDirection.class;
+			return NetworkPeer.class;
 		case 1:
 			return Encoding.class;
 

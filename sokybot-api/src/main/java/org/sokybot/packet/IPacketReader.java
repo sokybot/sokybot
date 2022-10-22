@@ -13,13 +13,15 @@ package org.sokybot.packet;
 public interface IPacketReader {
     
    
-	 public byte[] readBytes(int pos ) throws IndexOutOfBoundsException; 
-    public byte[] readBytes(int pos  , int length) throws IndexOutOfBoundsException; 
-    public byte readByte(int pos )throws IndexOutOfBoundsException ; 
-    public short readShort(int pos) throws IndexOutOfBoundsException; 
-    public int readInt(int pos)throws IndexOutOfBoundsException ; 
-    public long readLong(int pos) throws IndexOutOfBoundsException;
-    public int remainingBytes(int offset)throws IndexOutOfBoundsException ; 
+	
+	public byte[] readFully() ; 
+	public byte[] readBytes(int pos ) ; 
+    public byte[] readBytes(int pos  , int length) ; 
+    public byte readByte(int pos ); 
+    public short readShort(int pos) ; 
+    public int readInt(int pos); 
+    public long readLong(int pos) ;
+    public int remainingBytes(int offset) ; 
     
     public IStreamReader asStreamReader() ; 
     

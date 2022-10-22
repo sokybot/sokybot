@@ -27,7 +27,13 @@ public class PacketReader implements IPacketReader {
 	}
 
 	@Override
-	public byte[] readBytes(int pos) throws IndexOutOfBoundsException {
+	public byte[] readFully() {
+	
+		return readBytes(0) ; 
+	}
+	
+	@Override
+	public byte[] readBytes(int pos)  {
 
 		
 		if(pos < 0) throw new IndexOutOfBoundsException(pos);
@@ -51,7 +57,7 @@ public class PacketReader implements IPacketReader {
 		
 	}
 	@Override
-	public byte[] readBytes(int pos, int length) throws IndexOutOfBoundsException {
+	public byte[] readBytes(int pos, int length)  {
 		
 		if(pos < 0) throw new IndexOutOfBoundsException(pos);
 		
@@ -72,26 +78,26 @@ public class PacketReader implements IPacketReader {
 
 	
 	@Override
-	public byte readByte(int pos) throws IndexOutOfBoundsException{
+	public byte readByte(int pos) {
 		pos += 6 ; 
 		return this.buffer.get(pos);
 	
 	}
 
 	@Override
-	public short readShort(int pos) throws IndexOutOfBoundsException {
+	public short readShort(int pos)  {
 		pos += 6 ; 
 		return this.buffer.getShort(pos);
 	}
 
 	@Override
-	public int readInt(int pos)throws IndexOutOfBoundsException {
+	public int readInt(int pos) {
 		pos += 6 ; 
 		return this.buffer.getInt(pos);
 	}
 
 	@Override
-	public long readLong(int pos) throws IndexOutOfBoundsException {
+	public long readLong(int pos) {
 		pos += 6 ; 
 		return this.buffer.getLong(pos) ; 
 	}

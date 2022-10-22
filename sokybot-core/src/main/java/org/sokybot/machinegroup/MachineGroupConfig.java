@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 @Configuration
@@ -22,10 +24,13 @@ public class MachineGroupConfig {
 
 		// here we must load game icon from game path and resize it to
 		// this statement for test
+		// use FlatSVGIcon
+		
 		return new FlatSearchIcon();
 
 	}
 
+	
 	
 
 }

@@ -1,6 +1,6 @@
 package org.sokybot.packet;
 
-public enum PacketDirection {
+public enum NetworkPeer {
 
 	CLIENT , SERVER , BOT 
 }

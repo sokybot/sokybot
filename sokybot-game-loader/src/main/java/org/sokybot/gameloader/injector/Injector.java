@@ -7,7 +7,7 @@ import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
-import sokybot.gameloader.ProcessIO;
+import org.sokybot.gameloader.ProcessIO;
 
 
 

@@ -128,7 +128,7 @@ public class PacketTracerTableModel extends AbstractTableModel {
 		case 0:
 			return Boolean.class;
 		case 1:
-			return PacketDirection.class;
+			return NetworkPeer.class;
 		case 2:
 
 		case 3:

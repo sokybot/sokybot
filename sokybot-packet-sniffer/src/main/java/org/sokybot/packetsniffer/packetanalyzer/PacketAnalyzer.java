@@ -53,7 +53,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.TableView;
 
-import org.sokybot.packet.PacketDirection;
+import org.sokybot.packet.NetworkPeer;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 
@@ -455,11 +455,11 @@ public class PacketAnalyzer extends JFrame {
 
 		appendLine(this.lineDoc, "Source", this.boldAttr);
 
-		PacketDirection source = packet.getPacket().getPacketSource();
+		NetworkPeer source = packet.getPacket().getPacketSource();
 
-		if (source == PacketDirection.SERVER) {
+		if (source == NetworkPeer.SERVER) {
 			StyleConstants.setForeground(this.sourceAttr, new Color(0xECAC5D));
-		} else if (source == PacketDirection.CLIENT || source == PacketDirection.BOT) {
+		} else if (source == NetworkPeer.CLIENT || source == NetworkPeer.BOT) {
 			StyleConstants.setForeground(this.sourceAttr, new Color(178, 64, 128));
 
 		}

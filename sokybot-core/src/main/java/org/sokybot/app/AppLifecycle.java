@@ -69,6 +69,7 @@ public class AppLifecycle {
 	ApplicationRunner configurLogger() {
 		return args -> {
 
+			
 			log.debug("Confguring root logger");
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 			Logger root = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);

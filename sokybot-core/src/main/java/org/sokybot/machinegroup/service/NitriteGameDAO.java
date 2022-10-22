@@ -10,6 +10,7 @@ import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.NitriteCollection;
 import org.dizitart.no2.filters.FluentFilter;
 import org.dizitart.no2.repository.ObjectRepository;
+import org.sokybot.app.Constants;
 import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.SilkroadType;
 import org.sokybot.domain.SkillEntity;
@@ -42,10 +43,9 @@ public class NitriteGameDAO implements IGameDAO {
 
 	@Autowired
 	public NitriteGameDAO(@Value("${gamePath}") String gamePath, Nitrite db,
-			@Qualifier("gameVersionRegister") NitriteCollection gameVersionRegister,
 			IEntityExtractorFactory entityExtractorFactory) {
 		this.gamePath = gamePath;
-		this.gameVersionRegister = gameVersionRegister;
+		this.gameVersionRegister = db.getCollection(Constants.GAME_VERSION_REGISTER_NAME);
 		this.entityExtractorFactory = entityExtractorFactory;
 		this.itemEntities = db.repository(ItemEntity.class).hasKey(gamePath).withTypeId("refId").get();
 		this.skillEntities = db.repository(SkillEntity.class).hasKey(gamePath).withTypeId("refId").get();

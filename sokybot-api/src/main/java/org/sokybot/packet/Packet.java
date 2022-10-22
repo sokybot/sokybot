@@ -19,9 +19,9 @@ public  class Packet{
 
 	ByteBuffer  buffer ; 
 	 
-	protected Encoding dataEncoding ; 
+	protected Encoding dataEncoding  = Encoding.PLAIN; 
 	
-	protected PacketDirection source  = PacketDirection.BOT; 
+	protected NetworkPeer source  = NetworkPeer.BOT; 
 	
 	
 	
@@ -63,10 +63,44 @@ public  class Packet{
 	   return this.dataEncoding ; 
 	}
 	
-	public PacketDirection getPacketSource() { 
+	public NetworkPeer getPacketSource() { 
 		return this.source ; 
 	}
 	
 	
+    @Override
+    public String toString() {
+     
+    	StringBuilder sb = new StringBuilder() ; 
+    	sb.append("Packet 0x" + Integer.toHexString(getOpcode()) + " { ")
+    	.append("\nSize : " + getPacketSize()) 
+    	.append("\nSource : " + getPacketSource())
+    	.append("\nEncoding : " + getPacketEncoding());
+    	
+    	char[] hexArray = "0123456789ABCDEF".toCharArray();
+    	int len = this.buffer.limit() ; 
+    	byte [] bytes = null ; 
+    	
+    	if(this.buffer.hasArray()) { 
+    		bytes = this.buffer.array() ; 
+    	}else { 
+    		bytes = new byte[len] ; 
+    		this.buffer.mark() ; 
+    		this.buffer.get(bytes);
+    		this.buffer.reset() ; 
+    	}
+    	
+    	char[] hexChars = new char[len * 2];
+		for (int j = 0; j < len; j++) {
+			int v = bytes[j] & 0xFF;
+			hexChars[j * 2] = hexArray[v >>> 4];
+			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+		}
+		sb.append("\nPayload : ".concat(new String(hexChars)))
+		.append("\n}") ; 
+		
+		return sb.toString() ; 
+    }
+    
     
 }

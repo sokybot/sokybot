@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.formdev.flatlaf.icons.FlatSearchIcon;
+
 @Component
 public class MachinePageViewer implements IMachinePageViewer{
 
@@ -26,12 +28,20 @@ public class MachinePageViewer implements IMachinePageViewer{
 	@Value("${groupName}")
 	private String groupName;
 
-	public void registerPage(String parent, String name, Icon icon, JComponent page) {
+	
+	@Override
+	public void registerPage(String parentNode, String name, Icon icon, JComponent page) {
 
-		String path = groupName + "." + parent ;
-		navTree.putLeafNode(path, TreeNode.makeTreeNode(name, icon));
+		String path = groupName + "." + parentNode ;
+		navTree.putLeafNode(path, TreeNode.makeTreeNode(name, new FlatSearchIcon()));
 		this.pageContainer.addPage(path + "." + name, page);
 		
+	}
+	@Override
+	public void registerPage(String name , Icon icon , JComponent comp) { 
+	 
+		navTree.putNode(groupName, TreeNode.makeTreeNode(name, icon));
+		this.pageContainer.add(groupName + "." + name , comp) ; 
 	}
 	
 

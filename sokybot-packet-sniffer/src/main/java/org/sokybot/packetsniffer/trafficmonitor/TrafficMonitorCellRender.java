@@ -29,12 +29,12 @@ public class TrafficMonitorCellRender extends DefaultTableCellRenderer {
 
 		if (!isSelected) {
 
-			if (value == PacketDirection.SERVER) {
+			if (value == NetworkPeer.SERVER) {
 				// rgb(178, 64, 128)
 
 				// c.setForeground(new Color(0xFFF9B2));
 				c.setForeground(new Color(0xECAC5D));
-			} else if (value == PacketDirection.CLIENT) {
+			} else if (value == NetworkPeer.CLIENT) {
 				c.setForeground(new Color(178, 64, 128));
 
 			} else if (column == 1) { // 0x3E215D
