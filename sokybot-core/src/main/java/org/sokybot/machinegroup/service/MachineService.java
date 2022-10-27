@@ -10,15 +10,20 @@ import javax.annotation.PostConstruct;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.NitriteCollection;
+import org.dizitart.no2.common.WriteResult;
 import org.dizitart.no2.filters.FluentFilter;
+import org.dizitart.no2.repository.ObjectRepository;
 import org.sokybot.app.Constants;
 import org.sokybot.exception.NameUniquenessConstraintViolationException;
 import org.sokybot.machine.MachineConfig;
+import org.sokybot.machine.UserConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
+
+import io.vavr.collection.List.Cons;
 
 // This is just initial implementation , it is currently not suitable for production 
 @Service
@@ -27,25 +32,26 @@ public class MachineService implements IMachineService {
 	private ConfigurableApplicationContext groupCtx;
 
 	private NitriteCollection machineRegister;
+	// private ObjectRepository<UserConfig> userConfigRepo;
 
 	private Map<String, ConfigurableApplicationContext> machines = new ConcurrentHashMap<>();
 
-	@Value("${" + Constants.GROUP_NAME_KEY + "}")
+	@Value("${" + Constants.GROUP_NAME + "}")
 	private String groupName;
 
 	@Autowired
 	public MachineService(ConfigurableApplicationContext groupCtx, Nitrite db) {
 
 		this.groupCtx = groupCtx;
-		this.machineRegister = db.getCollection(Constants.MACHINE_REGISTER_NAME);
-
+		this.machineRegister = db.getCollection(Constants.MACHINE_REGISTER);
+		// this.userConfigRepo = db.getRepository(UserConfig.class);
 	}
 
 	@PostConstruct
 	private void load() {
 
-		this.machineRegister.find(FluentFilter.where(Constants.GROUP_NAME_KEY).eq(groupName)).forEach((doc) -> {
-			createBotMachine(doc.get(Constants.MACHINE_NAME_KEY, String.class));
+		this.machineRegister.find(FluentFilter.where(Constants.GROUP_NAME).eq(groupName)).forEach((doc) -> {
+			createBotMachine(doc.get(Constants.MACHINE_NAME, String.class));
 		});
 	}
 
@@ -62,26 +68,41 @@ public class MachineService implements IMachineService {
 	}
 
 	@Override
-	public void createBotMachine(String name) {
-
+	public void createBotMachine(String name, String... options) {
 		check(name);
 
+		 getMachineDoc(name);
+
 		new SpringApplicationBuilder(MachineConfig.class)
-		      .properties(Map.of("machineName", name , "spring.config.location" , "classpath:machine.properties"))
+				.properties(Map.of(Constants.MACHINE_NAME, name, Constants.GROUP_NAME, this.groupName,
+						"spring.config.location", "classpath:machine.properties"))
 				.parent(groupCtx)
 				.build()
-				.run();
+				.run(options);
 
-		Document machineDoc = this.machineRegister
-				.find(FluentFilter.where(Constants.GROUP_NAME_KEY).eq(this.groupName)
-				  .and(FluentFilter.where(Constants.MACHINE_NAME_KEY).eq(name)))
-				.firstOrNull();
+	}
+
+	@Override
+	public void createBotMachine(String name) {
+		createBotMachine(name , new String[] {}); // here we can pass some initial options to the container 
+	}
+
+	private Document getMachineDoc(String name) {
+		Document machineDoc = this.machineRegister.find(FluentFilter.where(Constants.GROUP_NAME)
+				.eq(this.groupName)
+				.and(FluentFilter.where(Constants.MACHINE_NAME).eq(name))).firstOrNull();
 		if (machineDoc == null) {
-			this.machineRegister.insert(Document.createDocument()
-					.put(Constants.GROUP_NAME_KEY, this.groupName)
-					.put(Constants.MACHINE_NAME_KEY, name)) ;
-			
+
+			machineDoc = Document.createDocument()
+					.put(Constants.GROUP_NAME, this.groupName)
+					.put(Constants.MACHINE_NAME, name);
+			// .put(Constants.MACHINE_USER_CONFIG, userConfig);
+
+			this.machineRegister.insert(machineDoc);
+
 		}
+
+		return machineDoc;
 
 	}
 

@@ -70,6 +70,7 @@ public class MachineGroupLifecycle {
 				
 			ctx.getBean(IMainFrameConfigurator.class).addPage(groupName, gameIcon, 
 					groupName, createDefaultMainContainer(ctx));
+			
 
 		};
 

@@ -1,6 +1,6 @@
 package org.sokybot.packetsniffer;
 
-import org.sokybot.packet.ImmutablePacket;
+import org.sokybot.network.packet.ImmutablePacket;
 import org.sokybot.packetsniffer.packettracer.PacketTracerModel;
 
 public interface IPacketSnifferService {

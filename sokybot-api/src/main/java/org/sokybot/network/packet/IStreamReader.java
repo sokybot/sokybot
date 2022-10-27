@@ -1,4 +1,4 @@
-package org.sokybot.packet;
+package org.sokybot.network.packet;
 
 public interface IStreamReader {
 

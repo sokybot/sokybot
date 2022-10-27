@@ -19,7 +19,7 @@
 	<properties>
 		<spring-boot.version>2.7.0</spring-boot.version>
 		<dependency.spring-osgi-io.version>1.2.1</dependency.spring-osgi-io.version>
-		<dependency.spring-statemachine-core.version>3.2.0</dependency.spring-statemachine-core.version>
+		<dependency.spring-statemachine-core.version>2.5.1</dependency.spring-statemachine-core.version>
 		<dependency.flatlaf.version>2.3</dependency.flatlaf.version>
 		<dependency.flatlaf-swingx.version>2.3</dependency.flatlaf-swingx.version>
 		<dependency.h2.version>2.1.214</dependency.h2.version>
@@ -56,6 +56,11 @@
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+			<version>${spring-boot.version}</version>
 		</dependency>
 
 		<!-- <dependency> -->
@@ -195,6 +200,10 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>${project.parent.artifactId}-pk2-extractor</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${project.parent.artifactId}-game-loader</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>io.vavr</groupId>
@@ -271,7 +280,7 @@
 
 			<id>prod</id>
 			<build>
-			  <finalName>sokybot</finalName>
+				<finalName>sokybot</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.springframework.boot</groupId>

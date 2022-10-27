@@ -45,7 +45,7 @@ public class NitriteGameDAO implements IGameDAO {
 	public NitriteGameDAO(@Value("${gamePath}") String gamePath, Nitrite db,
 			IEntityExtractorFactory entityExtractorFactory) {
 		this.gamePath = gamePath;
-		this.gameVersionRegister = db.getCollection(Constants.GAME_VERSION_REGISTER_NAME);
+		this.gameVersionRegister = db.getCollection(Constants.GAME_VERSION_REGISTER);
 		this.entityExtractorFactory = entityExtractorFactory;
 		this.itemEntities = db.repository(ItemEntity.class).hasKey(gamePath).withTypeId("refId").get();
 		this.skillEntities = db.repository(SkillEntity.class).hasKey(gamePath).withTypeId("refId").get();
@@ -106,6 +106,7 @@ public class NitriteGameDAO implements IGameDAO {
 				this.gameVersionRegister.find(FluentFilter.where("game-path").eq(this.gamePath)).firstOrNull())
 				.ifPresentOrElse((doc) -> doc.put("game-version", this.version), () -> this.gameVersionRegister.insert(
 						Document.createDocument(Map.of("game-path", this.gamePath, "game-version", this.version))));
+		
 	}
 
 	private int getRegisteredVersion(String gamePath) {

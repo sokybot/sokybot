@@ -21,6 +21,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import org.sing_group.gc4s.dialog.AbstractInputJDialog;
+import org.sokybot.app.Constants;
 import org.sokybot.app.service.IMachineGroupService;
 import org.sokybot.domain.Division;
 import org.sokybot.domain.DivisionInfo;
@@ -146,9 +147,11 @@ public class MachineBuilderDialog extends AbstractInputJDialog implements ItemLi
 		
 		String selectedGroup =(String) this.cmbGroups.getSelectedItem() ; 
 		String trainer = this.machineDataPanel.getTrainerName() ; 
+		String targetHost = this.gameDataPanel.getSelectedHost() ; 
 		
 		if(!trainer.isBlank()) { 
-			this.machineGroupService.createMachine(selectedGroup, trainer);
+			String[]  opts = {"--" + Constants.MACHINE_TARGET_HOST + "=" +targetHost} ; 
+			this.machineGroupService.createMachine(selectedGroup, trainer  , opts);
 			
 			super.onOkButtonEvent(event);
 		}
@@ -176,9 +179,10 @@ public class MachineBuilderDialog extends AbstractInputJDialog implements ItemLi
 	private static class MockMachineGroupService implements IMachineGroupService {
 
 		
-		@Override
-		public void createMachine(String parentGroup, String trainerName) {
 		
+		@Override
+		public void createMachine(String parentGroup, String trainerName, String... options) {
+		 
 			
 		}
 		@Override

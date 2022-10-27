@@ -3,11 +3,12 @@ package org.sokybot.machine.network ;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import org.sokybot.packet.Encoding;
-import org.sokybot.packet.IPacketReader;
-import org.sokybot.packet.ImmutablePacket;
-import org.sokybot.packet.MutablePacket;
-import org.sokybot.packet.NetworkPeer;
+import org.sokybot.app.Constants;
+import org.sokybot.network.NetworkPeer;
+import org.sokybot.network.packet.Encoding;
+import org.sokybot.network.packet.IPacketReader;
+import org.sokybot.network.packet.ImmutablePacket;
+import org.sokybot.network.packet.MutablePacket;
 import org.sokybot.security.IBlowfish;
 import org.sokybot.security.ICRCSecurity;
 import org.sokybot.security.ICountSecurity;
@@ -19,6 +20,7 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Component
@@ -39,7 +41,6 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<ImmutablePacke
 	private int sharedSecret;
 	private final int RND = 0x33;
 	
-	private final String MODULE_NAME = "SR_Client" ; 
 
 	private byte[] finalKey = null;
 
@@ -195,11 +196,11 @@ private void challengeServer(IPacketReader reader) {
 				//	PacketDirection.BOT, true);
 			log.debug("Final Blowfish Key : " + ByteBufUtil.hexDump(this.finalKey));
 			
-			int packetSize = MODULE_NAME.length() + 3;
+			int packetSize = Constants.CLIENT_MODULE_NAME.length() + 3;
 
 			MutablePacket moduleIdentification = MutablePacket.getBuilder(packetSize)
-					.putShort((short) MODULE_NAME.length())
-					.putBytes(MODULE_NAME.getBytes()).put((byte) 0x00).build();
+					.putShort((short) Constants.CLIENT_MODULE_NAME.length())
+					.putBytes(Constants.CLIENT_MODULE_NAME.getBytes()).put((byte) 0x00).build();
 
 			moduleIdentification.setPacketSource(NetworkPeer.BOT);
 			moduleIdentification.setPacketEncoding(Encoding.ENCRYPTED);

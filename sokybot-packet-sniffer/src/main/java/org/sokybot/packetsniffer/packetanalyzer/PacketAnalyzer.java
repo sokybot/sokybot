@@ -49,11 +49,12 @@ import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
+
+import org.sokybot.network.NetworkPeer;
+
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.TableView;
-
-import org.sokybot.packet.NetworkPeer;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 

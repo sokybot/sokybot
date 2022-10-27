@@ -1,4 +1,4 @@
-package org.sokybot.packet;
+package org.sokybot.network;
 
 public enum NetworkPeer {
 

@@ -5,8 +5,10 @@ import java.awt.Font;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sokybot.app.Constants;
 import org.sokybot.common.ANSITextPane;
 import org.sokybot.common.GuiAppender;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -58,13 +60,15 @@ public class MachineLogConfig {
 
 
 	@Bean
-	Logger insallMachineLogger(@Value("${machineName}")String machineName) { 
+	@Qualifier
+	Logger machineLogger(@Value("${"+Constants.MACHINE_NAME+"}")String machineName) { 
 				
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 			ch.qos.logback.classic.Logger logger = loggerContext.getLogger(machineName);
 
 
 			Appender<ILoggingEvent> appender = machineLogAppender();
+			appender.start();
 			appender.setContext(loggerContext);
 
 			logger.addAppender(appender);

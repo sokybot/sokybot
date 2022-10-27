@@ -3,8 +3,8 @@ package org.sokybot.machinegroup;
 
 import javax.swing.Icon;
 
-
-
+import org.sokybot.gameloader.GameLoader;
+import org.sokybot.service.IGameLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +31,13 @@ public class MachineGroupConfig {
 	}
 
 	
+	@Bean 
+	IGameLoader gameLoader() { 
+		// now we depend on specific implementation 
+	    // but we must get a target instance from GameLoaderRegistry service 
+		// according to user configuration 
+		return new GameLoader() ; 
+	}
 	
 
 }

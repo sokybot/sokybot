@@ -46,6 +46,7 @@
 		<module>${project.artifactId}-security</module>
 		<module>${project.artifactId}-pk2-extractor</module>
 		<module>${project.artifactId}-logger</module>
+		<module>${project.artifactId}-game-loader</module>
 		<module>sokybot-autodepoly-test</module>
 		<module>sokybot-log-test</module>
 		<module>sokybot-test2</module>
@@ -82,7 +83,7 @@
 				<groupId>${project.groupId}</groupId>
 				<artifactId>sokybot-api</artifactId>
 				<version>${project.version}</version>
-				<scope>provided</scope>
+
 			</dependency>
 
 			<dependency>
@@ -102,6 +103,13 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>sokybot-pk2-extractor</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>sokybot-game-loader</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
@@ -212,6 +220,7 @@
 				<module>${project.artifactId}-core</module>
 				<module>${project.artifactId}-plugin-management</module>
 				<module>${project.artifactId}-security</module>
+				<module>${project.artifactId}-game-loader</module>
 				<module>${project.artifactId}-pk2</module>
 				<module>${project.artifactId}-pk2-extractor</module>
 				<module>${project.artifactId}-logger</module>
@@ -326,7 +335,7 @@
 		</dependency>
 
 
-		
+
 
 
 		<!-- <dependency> <groupId>org.osgi</groupId> <artifactId>org.osgi.service.metatype.annotations</artifactId> 

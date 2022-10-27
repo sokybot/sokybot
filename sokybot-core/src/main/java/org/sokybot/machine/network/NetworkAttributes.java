@@ -1,6 +1,6 @@
 package org.sokybot.machine.network ; 
 
-import org.sokybot.packet.NetworkPeer;
+import org.sokybot.network.NetworkPeer;
 
 import io.netty.util.AttributeKey;
 

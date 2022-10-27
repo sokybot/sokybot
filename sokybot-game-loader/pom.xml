@@ -13,6 +13,7 @@
 
 
 	<dependencies>
+
 		<dependency>
 			<groupId>io.github.sokybot</groupId>
 			<artifactId>sokybot-api</artifactId>

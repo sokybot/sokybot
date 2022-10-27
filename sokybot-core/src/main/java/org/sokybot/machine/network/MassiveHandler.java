@@ -1,11 +1,8 @@
 package org.sokybot.machine.network ; 
 
-import java.util.Map;
 
-import org.sokybot.packet.Encoding;
-import org.sokybot.packet.IPacketReader;
-import org.sokybot.packet.IStreamReader;
-import org.sokybot.packet.ImmutablePacket;
+import org.sokybot.network.packet.Encoding;
+import org.sokybot.network.packet.ImmutablePacket;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

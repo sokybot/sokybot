@@ -3,8 +3,8 @@ package org.sokybot.machine.network ;
 import java.util.Arrays;
 import java.util.List;
 
-import org.sokybot.packet.Encoding;
-import org.sokybot.packet.ImmutablePacket;
+import org.sokybot.network.packet.Encoding;
+import org.sokybot.network.packet.ImmutablePacket;
 import org.sokybot.security.IBlowfish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,7 +29,6 @@ public class PacketDecoder extends ByteToMessageDecoder {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 
-		log.info("Start decoding new packet data");
 		if (in.readableBytes() < 2) {
 			return;
 		}
@@ -86,10 +85,8 @@ public class PacketDecoder extends ByteToMessageDecoder {
 		}
 		
 		
-		String hex = ByteBufUtil.hexDump(buffer) ; 
-		log.info("Recived Packet {} " , hex);
-		; 
-		out.add(ImmutablePacket.wrap(buffer, Encoding.PLAIN, ctx.channel().attr(NetworkAttributes.TRANSPORT).get()));
+		
+		out.add(ImmutablePacket.wrap(buffer,Encoding.PLAIN ,  ctx.channel().attr(NetworkAttributes.TRANSPORT).get()));
 		
 	}
 

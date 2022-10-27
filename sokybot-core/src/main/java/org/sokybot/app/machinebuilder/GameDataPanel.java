@@ -150,8 +150,9 @@ public class GameDataPanel extends JPanel implements ItemListener {
 
 			String selectedDiv = (String) this.cmbDivs.getSelectedItem();
 			Division div = divInfo.getDivision(selectedDiv);
-			if(div != null)setHosts(div.getHosts());
-			
+			if (div != null)
+				setHosts(div.getHosts());
+
 		}
 
 	}
@@ -215,10 +216,18 @@ public class GameDataPanel extends JPanel implements ItemListener {
 		this.lblVer.setText(String.valueOf(ver));
 	}
 
+	public String getSelectedHost() {
+		Object obj = this.cmbHosts.getSelectedItem() ; 
+		
+		return (String)((obj== null) ? "" : obj);
+	}
+
 	public static void main(String args[]) {
 		FlatDarkLaf.setup();
 		GameDataPanel panel = new GameDataPanel();
 		panel.init();
+		
+		System.out.println(panel.getSelectedHost()) ; 
 
 		VisualizationUtils.showComponent(panel);
 	}

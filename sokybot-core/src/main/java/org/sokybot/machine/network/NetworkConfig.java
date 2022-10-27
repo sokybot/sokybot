@@ -24,6 +24,7 @@ public class NetworkConfig {
 		return new CRCSecurity() ; 
 	}
 	
+	@Bean
 	ICountSecurity countSecurity() { 
 		return new CountSecurity() ; 
 	}

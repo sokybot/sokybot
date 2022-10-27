@@ -3,5 +3,7 @@ package org.sokybot.machine;
 public enum MachineEvent {
 
 	CONNECT  , 
-	DISCONNECT 
+	DISCONNECT  , 
+	CONFIG_COMMIT  , 
+	CONFIG_MODIFIED  
 }

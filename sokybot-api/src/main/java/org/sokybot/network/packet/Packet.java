@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.sokybot.packet;
+package org.sokybot.network.packet;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import org.sokybot.network.NetworkPeer;
 
 
 

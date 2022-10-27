@@ -29,6 +29,8 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 
 		ToolWindow toolWindow = toolWindowManager.registerToolWindow(id , title, icon, comp, ToolWindowAnchor.BOTTOM);
 		
+	//	toolWindow.setAggregateMode(true);
+	
 		toolWindow.setAvailable(true);
 		// toolWindow.setVisible(true);
 		// RepresentativeAnchorDescriptor
@@ -73,6 +75,7 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 		slidingTypeDescriptor.setAnimating(true);
 		slidingTypeDescriptor.setIdVisibleOnTitleBar(false);
 		
+		
 		// FloatingTypeDescriptor
 		FloatingTypeDescriptor floatingTypeDescriptor = (FloatingTypeDescriptor) toolWindow
 				.getTypeDescriptor(ToolWindowType.FLOATING);
@@ -104,6 +107,7 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 			//	.getContentManagerUI();
 
 		Content content = contentManager.addContent(pageId, title, icon, component);
+		
 		ContentUI contentUI = contentManager.getContentManagerUI().getContentUI(content);
 
 //		contentUI.setCloseable(false);
@@ -113,6 +117,7 @@ public class MainFrameConfigurator implements IMainFrameConfigurator {
 		contentUI.setTransparentMode(false);
 		contentUI.setTransparentRatio(0.7f);
 		contentUI.setTransparentDelay(1000);
+		
 		
 
 	}

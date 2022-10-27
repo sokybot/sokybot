@@ -43,6 +43,11 @@ public class MachinePageViewer implements IMachinePageViewer{
 		navTree.putNode(groupName, TreeNode.makeTreeNode(name, icon));
 		this.pageContainer.add(groupName + "." + name , comp) ; 
 	}
-	
+	 @Override
+	public void registerDashborad(String name, JComponent content) {
+	 
+		 this.dashboardContainer.addPage(groupName + "." + name, content);
+		 
+	}
 
 }

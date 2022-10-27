@@ -25,6 +25,7 @@ import org.dizitart.no2.mvstore.MVStoreModule;
 import org.jdesktop.swingx.JXFrame;
 import org.noos.xing.mydoggy.ContentManagerUI;
 import org.noos.xing.mydoggy.TabbedContentManagerUI;
+import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.noos.xing.mydoggy.ToolWindowManager;
 import org.noos.xing.mydoggy.ToolWindowManagerDescriptor;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
@@ -72,7 +73,6 @@ public class AppConfig {
 	@EventListener
 	void registerCreateGameGroupBtn(WindowPreparedEvent event) {
 
-		log.info("Registering tool btn ");
 
 		JToolBar toolBar = event.getToolBar() ; 
 		
@@ -134,6 +134,7 @@ public class AppConfig {
 
 		ToolWindowManager toolWindowManager = new MyDoggyToolWindowManager();
 
+		
 		ToolWindowManagerDescriptor toolWindowManagerDescriptor = toolWindowManager.getToolWindowManagerDescriptor();
 		toolWindowManagerDescriptor.setNumberingEnabled(false);
 		toolWindowManagerDescriptor.setPreviewEnabled(false);
@@ -146,7 +147,7 @@ public class AppConfig {
 		contentManagerUI.setDetachable(false);
 		contentManagerUI.setMinimizable(false);
 		contentManagerUI.setMaximizable(false);
-
+		
 		if (contentManagerUI instanceof TabbedContentManagerUI) {
 			TabbedContentManagerUI<?> tabbedContentManagerUI = (TabbedContentManagerUI<?>) contentManagerUI;
 			tabbedContentManagerUI.setShowAlwaysTab(true);
@@ -172,47 +173,19 @@ public class AppConfig {
 		return Nitrite.builder()
 				.loadModule(mvstoreModule())
 				.loadModule(new JacksonMapperModule())
-				.openOrCreate("soky", "soky");
+				.openOrCreate("soky", "soky")
+				;
 
 	}
 
 	private NitriteModule mvstoreModule() {
-		return MVStoreModule.withConfig().filePath(System.getProperty("user.dir") + "\\sokybot.data").build();
+		return MVStoreModule.withConfig()
+				.filePath(System.getProperty("user.dir") + "\\sokybot.data")
+				.autoCommit(true).build();
 
 	}
 
-	@Bean("osgiConfig")
-	@Profile("dev")
-	@Scope("prototype")
-	Map<String, String> osgiConfigDev(@Value("classpath:osgi-dev.properties") Resource configFile) throws IOException {
 
-		return SokybotIOUtils.readProperties(configFile.getInputStream());
-	}
 
-	@Bean("osgiConfig")
-	@Profile("prod")
-	@Scope("prototype")
-	Map<String, String> osgiConfig(@Value("classpath:osgi.properties") Resource configFile) throws IOException {
-
-		return SokybotIOUtils.readProperties(configFile.getInputStream());
-	}
-
-	@Bean
-	Bundle systemBundle(@Qualifier("osgiConfig") Map<String, String> config) {
-
-		ServiceLoader<ConnectFrameworkFactory> loader = ServiceLoader.load(ConnectFrameworkFactory.class);
-		ConnectFrameworkFactory factory = loader.findFirst().get();
-
-		Framework framework = factory.newFramework(config, Atomos.newAtomos().getModuleConnector());
-
-		try {
-			framework.init();
-		} catch (BundleException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return framework;
-
-	}
 
 }

@@ -51,10 +51,9 @@ public class MachineGroupService implements IMachineGroupService {
 	private Map<String, ConfigurableApplicationContext> ctxs = new ConcurrentHashMap<String, ConfigurableApplicationContext>();
 
 	@Autowired
-	public MachineGroupService(ConfigurableApplicationContext ctx,
-			Nitrite db ) {
+	public MachineGroupService(ConfigurableApplicationContext ctx, Nitrite db) {
 		this.ctx = ctx;
-		this.machineGroupRegister = db.getCollection(Constants.MACHINE_GROUP_REGISTER_NAME);
+		this.machineGroupRegister = db.getCollection(Constants.MACHINE_GROUP_REGISTER);
 
 	}
 
@@ -63,8 +62,8 @@ public class MachineGroupService implements IMachineGroupService {
 		log.info("Reloading groups...");
 		this.machineGroupRegister.find().forEach((doc) -> {
 
-			String name = doc.get(Constants.GROUP_NAME_KEY, String.class);
-			String gamePath = doc.get(Constants.GAME_PATH_KEY, String.class);
+			String name = doc.get(Constants.GROUP_NAME, String.class);
+			String gamePath = doc.get(Constants.GAME_PATH, String.class);
 
 			createMachineGroup(name, gamePath);
 			log.info("Group {} has been loaded ", name);
@@ -73,12 +72,12 @@ public class MachineGroupService implements IMachineGroupService {
 
 	private void saveOrUpdate(String name, String gamePath) {
 
-		Document doc = this.machineGroupRegister.find(FluentFilter.where(Constants.GROUP_NAME_KEY).eq(name)).firstOrNull();
+		Document doc = this.machineGroupRegister.find(FluentFilter.where(Constants.GROUP_NAME).eq(name)).firstOrNull();
 
 		if (doc == null) {
-			doc = Document.createDocument(Constants.GROUP_NAME_KEY, name).put(Constants.GAME_PATH_KEY, gamePath);
+			doc = Document.createDocument(Constants.GROUP_NAME, name).put(Constants.GAME_PATH, gamePath);
 		} else {
-			doc.put(Constants.GAME_PATH_KEY, gamePath);
+			doc.put(Constants.GAME_PATH, gamePath);
 		}
 		this.machineGroupRegister.update(doc, true);
 
@@ -104,17 +103,21 @@ public class MachineGroupService implements IMachineGroupService {
 		}
 	}
 
+
+
+
 	private ConfigurableApplicationContext createNewContainer(String name, String gamePath) {
-		
+
 		return new SpringApplicationBuilder(MachineGroupConfig.class)
 				// .resourceLoader(bundleResourceLoader)
 				.parent(this.ctx)
-				//.bannerMode(Banner.Mode.OFF)
-				.properties("groupName:" + name, "gamePath:" + gamePath , "spring.config.location:classpath:machine-group-ctx.properties")
-				
-				//.logStartupInfo(false)
-				//.web(WebApplicationType.NONE)
-				
+				// .bannerMode(Banner.Mode.OFF)
+				.properties("groupName:" + name, "gamePath:" + gamePath,
+						"spring.config.location:classpath:machine-group-ctx.properties")
+
+				// .logStartupInfo(false)
+				// .web(WebApplicationType.NONE)
+
 				.run();
 	}
 
@@ -142,23 +145,24 @@ public class MachineGroupService implements IMachineGroupService {
 	@Override
 	public IGameDAO getGameDAO(String groupName) {
 
-
 		return getActiveGroupCtx(groupName).getBean(IGameDAO.class);
 
 	}
 
+	
+	
 	@Override
-	public void createMachine(String parentGroup, String trainerName) {
+	public void createMachine(String parentGroup, String trainerName, String... options) {
+		ApplicationContext ctx = getActiveGroupCtx(parentGroup);
+
+		IMachineService machineService = ctx.getBean(IMachineService.class);
+
+		machineService.createBotMachine(trainerName , options);
  
-		ApplicationContext ctx = getActiveGroupCtx(parentGroup) ; 
-		
-		IMachineService machineService = ctx.getBean(IMachineService.class) ;
-		
-		machineService.createBotMachine(trainerName);
 		
 	}
-	
-	private ConfigurableApplicationContext getActiveGroupCtx(String groupName) { 
+
+	private ConfigurableApplicationContext getActiveGroupCtx(String groupName) {
 		if (!this.ctxs.containsKey(groupName)) {
 			throw new MachineGroupNotFoundException("Could not find machine group with name " + groupName, groupName);
 		}
@@ -168,9 +172,9 @@ public class MachineGroupService implements IMachineGroupService {
 		if (!targetCtx.isActive()) {
 			throw new IllegalStateException("Could not interact with inactive group context " + groupName);
 		}
-		
-		return targetCtx ; 
-				
+
+		return targetCtx;
+
 	}
 
 }

@@ -1,7 +1,9 @@
-package org.sokybot.packet;
+package org.sokybot.network.packet;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
+import org.sokybot.network.NetworkPeer;
 
 public class ImmutablePacket extends Packet{
 

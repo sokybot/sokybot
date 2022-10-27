@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.sokybot.service.IGameLoader;
-import org.sokybot.utils.SilkroadUtils;
+
 
 public class GameLoader implements IGameLoader {
 
@@ -20,6 +20,7 @@ public class GameLoader implements IGameLoader {
 
 		this.processLoader = ProcessLoader.createInstance();
 	}
+	
 
 	@Override
 	public long launch(String clientPath) {
@@ -42,7 +43,7 @@ public class GameLoader implements IGameLoader {
 
 		if (!Files.exists(dllPath)) {
 			try {
-				Files.copy(getClass().getClassLoader().getResourceAsStream(".\\sokybotpatch.dll"), dllPath);
+				Files.copy(getClass().getClassLoader().getResourceAsStream("sokybotpatch.dll"), dllPath);
 			} catch (IOException e) {
 				throw new UncheckedIOException(e);
 			}
@@ -53,7 +54,7 @@ public class GameLoader implements IGameLoader {
 		
 		if(!Files.exists(shellPath)) { 
 			try {
-				Files.copy(getClass().getClassLoader().getResourceAsStream(".\\shell.txt"), shellPath);
+				Files.copy(getClass().getClassLoader().getResourceAsStream("shell.txt"), shellPath);
 			} catch (IOException e) {
 				throw new UncheckedIOException(e);
 			}

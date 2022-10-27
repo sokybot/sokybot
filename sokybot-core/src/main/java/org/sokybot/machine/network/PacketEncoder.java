@@ -1,8 +1,8 @@
 package org.sokybot.machine.network ; 
 
-import org.sokybot.packet.Encoding;
-import org.sokybot.packet.MutablePacket;
-import org.sokybot.packet.NetworkPeer;
+import org.sokybot.network.NetworkPeer;
+import org.sokybot.network.packet.Encoding;
+import org.sokybot.network.packet.MutablePacket;
 import org.sokybot.security.IBlowfish;
 import org.sokybot.security.ICRCSecurity;
 import org.sokybot.security.ICountSecurity;
@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
@@ -44,9 +45,10 @@ public class PacketEncoder extends MessageToByteEncoder<MutablePacket> {
 		}
 	
 		if (packet.getPacketEncoding() == Encoding.ENCRYPTED)
-			if (packet.getDataEncoding() == Encoding.PLAIN) 
+			if (packet.getDataEncoding() == Encoding.PLAIN) {
 			  packetArr = this.blowfish.encode(2, packetArr) ; 
-			  
+			   System.out.println("Encrepted Packet : " + ByteBufUtil.hexDump(packetArr) ); 
+			}
 		
 		
 		out.writeBytes(packetArr) ; 

@@ -1,16 +1,13 @@
 package org.sokybot.app;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.extras.FlatInspector;
 import com.formdev.flatlaf.extras.FlatUIDefaultsInspector;
-import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
-import ch.qos.logback.core.joran.action.AppenderRefAction;
 import lombok.extern.slf4j.Slf4j;
 
 import org.dizitart.no2.Nitrite;
@@ -23,13 +20,10 @@ import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
 import org.sokybot.app.logger.AppenderWrapper;
 import org.sokybot.app.mainframe.WindowPreparedEvent;
-import org.sokybot.app.service.IMachineGroupService;
-import org.sokybot.common.ANSITextPane;
 import org.sokybot.common.GuiAppender;
 import org.sokybot.domain.SkillEntity;
 import org.sokybot.domain.items.ItemEntity;
 import org.sokybot.service.IMainFrameConfigurator;
-import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationRunner;
@@ -39,12 +33,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 
-import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
 
 @Configuration
 @Slf4j
@@ -175,6 +165,7 @@ public class AppLifecycle {
 		//	FlatDarkLaf.setup();
 		//	FlatDarkLaf.updateUI();
 			mainFrame.setVisible(true);
+			
 		};
 
 	}

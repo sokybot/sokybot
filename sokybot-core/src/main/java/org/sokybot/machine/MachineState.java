@@ -2,5 +2,6 @@ package org.sokybot.machine;
 
 public enum MachineState {
 
-	DISCONNECTED ,  CONNECTED
+	DISCONNECTED ,  CONNECTED , 
+	CONFIG_UNCOMMITTED , CONFIG_COMMITTED
 }
