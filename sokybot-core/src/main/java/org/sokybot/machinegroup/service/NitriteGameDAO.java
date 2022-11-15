@@ -10,22 +10,25 @@ import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.NitriteCollection;
 import org.dizitart.no2.filters.FluentFilter;
 import org.dizitart.no2.repository.ObjectRepository;
+
 import org.sokybot.app.Constants;
 import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.SilkroadType;
-import org.sokybot.domain.SkillEntity;
-import org.sokybot.domain.items.ItemEntity;
+import org.sokybot.domain.item.ItemEntity;
+import org.sokybot.domain.skill.SkillEntity;
 import org.sokybot.exception.InvalidGameException;
 import org.sokybot.pk2extractor.IEntityExtractorFactory;
 import org.sokybot.pk2extractor.IMediaPk2;
 import org.sokybot.pk2extractor.exception.Pk2ExtractionException;
 import org.sokybot.service.IGameDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class NitriteGameDAO implements IGameDAO {
 
 	private final NitriteCollection gameVersionRegister;
@@ -38,6 +41,7 @@ public class NitriteGameDAO implements IGameDAO {
 	private SilkroadType silkroadType;
 	private int port;
 	private int version;
+	
 
 	// private SilkroadData sroData;
 
@@ -49,7 +53,6 @@ public class NitriteGameDAO implements IGameDAO {
 		this.entityExtractorFactory = entityExtractorFactory;
 		this.itemEntities = db.repository(ItemEntity.class).hasKey(gamePath).withTypeId("refId").get();
 		this.skillEntities = db.repository(SkillEntity.class).hasKey(gamePath).withTypeId("refId").get();
-
 	}
 
 	/**
@@ -76,6 +79,7 @@ public class NitriteGameDAO implements IGameDAO {
 			this.version = mediaPk2.extractVersion();
 
 			int registeredVer = getRegisteredVersion(this.gamePath);
+			log.debug("Game {} Registered Version {} , Actual version {} " , this.gamePath , registeredVer , this.version);
 			if (registeredVer == -1 || registeredVer != this.version) {
 				transfer(mediaPk2);
 				saveVersion();
@@ -98,14 +102,23 @@ public class NitriteGameDAO implements IGameDAO {
 		this.gameVersionRegister.remove(FluentFilter.where("game-path").eq(this.gamePath));
 		this.itemEntities.clear();
 		this.skillEntities.clear();
+		
 
 	}
 
 	private void saveVersion() {
-		Optional.ofNullable(
-				this.gameVersionRegister.find(FluentFilter.where("game-path").eq(this.gamePath)).firstOrNull())
-				.ifPresentOrElse((doc) -> doc.put("game-version", this.version), () -> this.gameVersionRegister.insert(
-						Document.createDocument(Map.of("game-path", this.gamePath, "game-version", this.version))));
+		
+		Document gameDoc = this.gameVersionRegister.find(FluentFilter.where("game-path").eq(this.gamePath)).firstOrNull() ; 
+		
+		if(gameDoc == null) { 
+			gameDoc = Document.createDocument(Map.of("game-path", this.gamePath, "game-version", this.version)) ; 
+		}else { 
+
+			gameDoc.put("game-version", this.version);
+		}
+		
+		this.gameVersionRegister.update(gameDoc, true) ; 
+		
 		
 	}
 
@@ -165,4 +178,17 @@ public class NitriteGameDAO implements IGameDAO {
 		return this.silkroadType ; 
 	}
 
+	@Override
+	public String getGamePath() {
+		return this.gamePath ; 
+	}
+	
+	@Override
+	public Byte getLocal() {
+	
+		return getDivisionInfo().local ; 
+	}
+	
+	
+	
 }

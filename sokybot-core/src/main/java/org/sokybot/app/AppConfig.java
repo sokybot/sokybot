@@ -11,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ServiceLoader;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,6 +58,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoop;
@@ -65,6 +68,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableCaching
 @Slf4j
+@EnableAsync
 public class AppConfig {
 
 	@Autowired
@@ -104,6 +108,11 @@ public class AppConfig {
 	@Bean
 	IEntityExtractorFactory gameEntityExtractorFactory() {
 		return new Pk2Extractors();
+	}
+	
+	@Bean(name = "cachedThreadPool")
+	Executor cachedExecutor() { 
+		return Executors.newCachedThreadPool() ; 
 	}
 
 	@Bean

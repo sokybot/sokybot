@@ -65,6 +65,9 @@ public class MassiveHandler extends SimpleChannelInboundHandler<ImmutablePacket>
 				
 			  ctx.fireChannelRead(ImmutablePacket.wrap(dataArr, Encoding.PLAIN, ctx.channel().attr(NetworkAttributes.TRANSPORT).get()));
 			}
+		}else { 
+
+			ctx.fireChannelRead(packet);
 		}
 
 	}

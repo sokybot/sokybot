@@ -40,8 +40,8 @@ public  class Packet{
 		return (short) (this.buffer.getShort(0) & 0x7fff );
 	}
 	
-	public short getOpcode() { 
-		return this.buffer.getShort(2) ; 
+	public int getOpcode() { 
+		return this.buffer.getShort(2)& 0xffff ; 
 	}
 	
 	public byte getCount() { 

@@ -1,5 +1,6 @@
 package org.sokybot.machine.network ; 
 
+import org.slf4j.Logger;
 import org.sokybot.network.NetworkPeer;
 import org.sokybot.network.packet.Encoding;
 import org.sokybot.network.packet.MutablePacket;
@@ -28,6 +29,8 @@ public class PacketEncoder extends MessageToByteEncoder<MutablePacket> {
 	@Autowired
 	private IBlowfish blowfish ; 
 	
+	@Autowired
+	private Logger log ; 
 	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, MutablePacket packet, ByteBuf out) throws Exception {
@@ -47,7 +50,6 @@ public class PacketEncoder extends MessageToByteEncoder<MutablePacket> {
 		if (packet.getPacketEncoding() == Encoding.ENCRYPTED)
 			if (packet.getDataEncoding() == Encoding.PLAIN) {
 			  packetArr = this.blowfish.encode(2, packetArr) ; 
-			   System.out.println("Encrepted Packet : " + ByteBufUtil.hexDump(packetArr) ); 
 			}
 		
 		

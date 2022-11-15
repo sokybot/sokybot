@@ -1,14 +1,12 @@
 package org.sokybot;
 
-import java.util.concurrent.Flow.Publisher;
 
-import org.sokybot.network.packet.ImmutablePacket;
+import org.sokybot.network.IPacketPublisher;
 
 public interface IMachineContext {
 
 	
 	
 
-	Publisher<ImmutablePacket> clientPacketPublisher() ; 
-	Publisher<ImmutablePacket> serverPacketPublisher() ; 
+	IPacketPublisher packetPublisher() ; 
 }

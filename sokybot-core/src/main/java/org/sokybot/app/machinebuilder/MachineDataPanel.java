@@ -78,7 +78,7 @@ public class MachineDataPanel extends JPanel implements ItemListener {
 
 		this.chkAutoLogin.setSelected(false);
 		this.chkAutoLogin.addItemListener(this);
-		this.chkAutoLogin.setEnabled(false); // enable it when add support for auto login
+		
 		this.accountInfoPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		this.lblTrainerErr.setPreferredSize(new Dimension(120 , 20));
 		this.lblTrainerErr.setForeground(new Color(255 , 51 , 51));
@@ -155,6 +155,22 @@ public class MachineDataPanel extends JPanel implements ItemListener {
 		return this.txtTrainerName.getText();
 	}
 
+	public boolean isAutoLogin() { 
+		return this.chkAutoLogin.isSelected() ; 
+	}
+	public String getUsername() {
+		return this.accountInfoPanel.getUserName() ; 
+	}
+	public String getPassword() { 
+		return this.accountInfoPanel.getPassword() ; 
+	}
+	public String getPasscode() { 
+		return this.accountInfoPanel.getPasscode() ; 
+	}
+	public String getAgentServerName() { 
+		return this.accountInfoPanel.getAgentServerName() ; 
+	}
+	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 

@@ -10,7 +10,10 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -19,7 +22,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 
-public class ANSITextPane extends JTextPane  implements Appendable{
+public class ANSITextPane extends JTextPane  implements Appendable {
 
 	static final Color D_Black = Color.getHSBColor(0.000f, 0.000f, 0.000f);
 	static final Color D_Red = Color.getHSBColor(0.000f, 1.000f, 0.502f);
@@ -41,6 +44,19 @@ public class ANSITextPane extends JTextPane  implements Appendable{
 	static Color colorCurrent = cReset;
 	private String remaining = "";
 
+	
+	private JPopupMenu jPopupMenu ; 
+	
+	public ANSITextPane() {
+	
+		this.jPopupMenu = new JPopupMenu() ; 
+		JMenuItem clear = new JMenuItem("Clear") ; 
+		clear.addActionListener((ev)->this.setText(""));
+		this.jPopupMenu.add(clear) ; 
+		this.setComponentPopupMenu(jPopupMenu);
+		
+	}
+	
 //	public void append(Color color , String str) { 
 //		StyleContext sc = StyleContext.getDefaultStyleContext();
 //	    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);

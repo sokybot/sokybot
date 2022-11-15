@@ -8,7 +8,8 @@ class LoaderTest {
 
 	public static void main(String args[]) {
 		
-
+ 
+		
 		//String sro_client_path = "E:\\Amroo\\Silkroad Games\\Silkroad\\sro_client.exe"  ; 
 	      String sro_client_path = "E:\\Amroo\\Silkroad Games\\LegionSRO_15_08_2019\\sro_client.exe" ; 
 		String shell_path = "C:\\Users\\root\\Desktop\\TEST2\\shell.txt" ; 

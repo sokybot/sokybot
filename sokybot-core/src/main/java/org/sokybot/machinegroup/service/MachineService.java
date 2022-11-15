@@ -1,6 +1,5 @@
 package org.sokybot.machinegroup.service;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,20 +9,16 @@ import javax.annotation.PostConstruct;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.NitriteCollection;
-import org.dizitart.no2.common.WriteResult;
 import org.dizitart.no2.filters.FluentFilter;
-import org.dizitart.no2.repository.ObjectRepository;
 import org.sokybot.app.Constants;
 import org.sokybot.exception.NameUniquenessConstraintViolationException;
 import org.sokybot.machine.MachineConfig;
-import org.sokybot.machine.UserConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
-import io.vavr.collection.List.Cons;
 
 // This is just initial implementation , it is currently not suitable for production 
 @Service
@@ -98,7 +93,7 @@ public class MachineService implements IMachineService {
 					.put(Constants.MACHINE_NAME, name);
 			// .put(Constants.MACHINE_USER_CONFIG, userConfig);
 
-			this.machineRegister.insert(machineDoc);
+			this.machineRegister.update(machineDoc , true);
 
 		}
 

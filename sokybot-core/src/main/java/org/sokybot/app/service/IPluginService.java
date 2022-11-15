@@ -3,9 +3,15 @@ package org.sokybot.app.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceReference;
+
 public interface IPluginService {
 
-	
-	
-	public <T> List<T> findService(Class<T> serviceType) ; 
+	<T> List<T> findService(Class<T> serviceType);
+
+	void addServiceListener(ServiceListener listener, Class<?> targetType);
+
+	public <T> Optional<T> getService(ServiceReference<T> ref);
+			
 }

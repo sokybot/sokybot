@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import org.sokybot.IKernel32;
 import org.sokybot.gameloader.injector.IInjector;
 import org.sokybot.gameloader.injector.Injector;
 import org.sokybot.gameloader.injector.shellcode.IShellCode;
@@ -26,7 +27,7 @@ public class ProcessLoader implements IProcessLoader {
 	
 	
 	@Override
-	public long loadProcessImage(String imagePath,String command ,  String dllPath , String shellCodePath) {
+	public int loadProcessImage(String imagePath,String command ,  String dllPath , String shellCodePath) {
 		
 		PROCESS_INFORMATION pi = openProcess("\"" + imagePath + "\""  + command) ; 
 		int imageEntryPoint;
@@ -80,8 +81,9 @@ public class ProcessLoader implements IProcessLoader {
 		IKernel32.INSTANCE.ResumeThread(pi.hProcess) ; 
 	    IKernel32.INSTANCE.ResumeThread(pi.hThread) ; 
 		
+	   return pi.dwProcessId.shortValue() ;
 	   
-		return Pointer.nativeValue(pi.hProcess.getPointer());
+		//return Pointer.nativeValue(pi.hProcess.getPointer());
 	}
 	
 	

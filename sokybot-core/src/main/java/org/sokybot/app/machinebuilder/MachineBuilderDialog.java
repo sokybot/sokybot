@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,8 +28,9 @@ import org.sokybot.app.service.IMachineGroupService;
 import org.sokybot.domain.Division;
 import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.SilkroadType;
-import org.sokybot.domain.SkillEntity;
-import org.sokybot.domain.items.ItemEntity;
+import org.sokybot.domain.item.ItemEntity;
+import org.sokybot.domain.skill.SkillEntity;
+import org.sokybot.machine.service.AgentServerList;
 import org.sokybot.service.IGameDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -148,10 +151,21 @@ public class MachineBuilderDialog extends AbstractInputJDialog implements ItemLi
 		String selectedGroup =(String) this.cmbGroups.getSelectedItem() ; 
 		String trainer = this.machineDataPanel.getTrainerName() ; 
 		String targetHost = this.gameDataPanel.getSelectedHost() ; 
+		List<String> optList = new ArrayList<>() ; 
 		
 		if(!trainer.isBlank()) { 
-			String[]  opts = {"--" + Constants.MACHINE_TARGET_HOST + "=" +targetHost} ; 
-			this.machineGroupService.createMachine(selectedGroup, trainer  , opts);
+			optList.add(Constants.MACHINE_TARGET_GATEWAY + "=" + targetHost) ; 
+			
+			if(this.machineDataPanel.isAutoLogin()) { 
+				optList.add("--" + Constants.MACHINE_AUTO_LOGIN) ; 
+				optList.add(Constants.MACHINE_USER_NAME + "=" + this.machineDataPanel.getUsername()) ; 
+				optList.add(Constants.MACHINE_PASSWORD + "=" + this.machineDataPanel.getPassword()) ; 
+				optList.add(Constants.MACHINE_PASSCODE + "=" + this.machineDataPanel.getPasscode()) ; 
+				optList.add(Constants.MACHINE_TARGET_AGENT + "=" + this.machineDataPanel.getAgentServerName()); 
+				
+			}
+			this.machineGroupService.createMachine(selectedGroup, trainer  ,
+					optList.toArray(String[]::new));
 			
 			super.onOkButtonEvent(event);
 		}
@@ -255,11 +269,24 @@ public class MachineBuilderDialog extends AbstractInputJDialog implements ItemLi
 		private Integer version  = 5000; 
 		private DivisionInfo div = new DivisionInfo()  ; 
 		
+		
+		 @Override
+		public Byte getLocal() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 		@Override
 		public Integer getVersion() {
 			return this.port;
 		}
 
+		
+		@Override
+		public String getGamePath() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		@Override
 		public Integer getPort() {
 			return  this.version;

@@ -2,14 +2,18 @@ package org.sokybot.service;
 
 import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.SilkroadType;
-import org.sokybot.domain.SkillEntity;
-import org.sokybot.domain.items.ItemEntity;
+import org.sokybot.domain.item.ItemEntity;
+import org.sokybot.domain.skill.SkillEntity;
 
 public interface IGameDAO {
 
+
+	
+	String getGamePath() ; 
+
+	Byte getLocal() ; 
 	
 	Integer getVersion();
-
 
 	SilkroadType getGameType() ;
 	
@@ -17,6 +21,7 @@ public interface IGameDAO {
 
 	String getRndHost();
 
+	
 	DivisionInfo getDivisionInfo();
 
 	ItemEntity getItem(int refId);

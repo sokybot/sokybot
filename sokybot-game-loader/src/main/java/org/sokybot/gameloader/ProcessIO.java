@@ -1,5 +1,7 @@
 package org.sokybot.gameloader;
 
+import org.sokybot.IKernel32;
+
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.DWORD;

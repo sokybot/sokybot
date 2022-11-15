@@ -10,6 +10,7 @@ import javax.swing.JSplitPane;
 
 import org.jdesktop.swingx.JXMultiSplitPane;
 import org.jdesktop.swingx.MultiSplitLayout;
+import org.sokybot.app.service.IGameLoaderService;
 import org.sokybot.machinegroup.navigationtree.INavTree;
 import org.sokybot.service.IMainFrameConfigurator;
 import org.springframework.boot.ApplicationRunner;
@@ -60,6 +61,7 @@ public class MachineGroupLifecycle {
 	
 	
 	
+	
 	@Bean
 	@Order(1)
 	ApplicationRunner installGUI(ApplicationContext ctx,
@@ -76,18 +78,5 @@ public class MachineGroupLifecycle {
 
 	}
 
-	/*
-	 * Last operation , the aim of this operation is to save group information so
-	 * let us retrieve and re-create this group at system startup stage
-	 * 
-	 */
-	@Bean
-	@Order(100)
-	ApplicationRunner save() {
-		return (arg) -> {
-			
-			System.out.println("Saving group configuration.....");
-		};
-	}
 
 }

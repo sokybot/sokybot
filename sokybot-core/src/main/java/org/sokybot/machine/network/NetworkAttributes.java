@@ -6,5 +6,5 @@ import io.netty.util.AttributeKey;
 
 public class NetworkAttributes {
 
-	static final AttributeKey<NetworkPeer> TRANSPORT = AttributeKey.newInstance("transport") ;  
+	public static final AttributeKey<NetworkPeer> TRANSPORT = AttributeKey.newInstance("transport") ;  
 }

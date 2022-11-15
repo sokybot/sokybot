@@ -13,9 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 
 import javax.annotation.PostConstruct;
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -53,7 +55,8 @@ public class AccountInfoPanel extends JPanel {
 	private FlatTextField username;
 	private FlatPasswordField password;
 	private FlatPasswordField passcode;
-	private FlatComboBox<String> agentServer;
+	private FlatTextField agentServer ; 
+	//private FlatComboBox<String> agentServer;
 	//private FlatTextField charName;
 	private ImageIcon loadingIcon;
 
@@ -64,7 +67,8 @@ public class AccountInfoPanel extends JPanel {
 		this.username = new FlatTextField();
 		this.password = new FlatPasswordField();
 		this.passcode = new FlatPasswordField();
-		this.agentServer = new FlatComboBox<String>();
+		//this.agentServer = new FlatComboBox<String>();
+		this.agentServer = new FlatTextField() ; 
 		this.iconCont = new JXBusyLabel();
 
 	//	this.charName = new FlatTextField();
@@ -90,7 +94,10 @@ public class AccountInfoPanel extends JPanel {
 		this.password.putClientProperty( FlatClientProperties.STYLE, "showRevealButton: true" );
 		this.passcode.putClientProperty( FlatClientProperties.STYLE, "showRevealButton: true" );
 		this.username.setLeadingIcon(new FlatSVGIcon("icons/user.svg"));
-
+		this.password.setLeadingIcon(new FlatSVGIcon("icons/key.svg"));
+		this.passcode.setLeadingIcon(new FlatSVGIcon("icons/key.svg"));
+		this.agentServer.setLeadingIcon(new FlatSVGIcon("icons/lan.svg")) ; 
+		
 		this.username.setPreferredSize(new Dimension(190, 20));
 		this.password.setPreferredSize(new Dimension(190, 20));
 		this.passcode.setPreferredSize(new Dimension(190, 20));
@@ -137,7 +144,8 @@ public class AccountInfoPanel extends JPanel {
 	//}
 
 	public String getAgentServerName() {
-		return (String) this.agentServer.getSelectedItem();
+		//return (String) this.agentServer.getSelectedItem();
+		return this.agentServer.getText() ; 
 	}
 
 	public void hideLoadingImage() {
@@ -149,18 +157,19 @@ public class AccountInfoPanel extends JPanel {
 		this.iconCont.setBusy(true);
 		this.iconCont.setVisible(true);
 	}
-
-	public void setAgentServerNames(String[] sNames) {
-		// this.agentServer.removeAll();
-		this.agentServer.removeAllItems();
-		for (int i = 0; i < sNames.length; i++) {
-			this.agentServer.addItem((String) sNames[i]);
-		}
-	}
 	
-	public String getSelectedAgent() { 
-	  return(String)this.agentServer.getSelectedItem();
-	}
+
+//	public void setAgentServerNames(String[] sNames) {
+//		// this.agentServer.removeAll();
+//		this.agentServer.removeAllItems();
+//		for (int i = 0; i < sNames.length; i++) {
+//			this.agentServer.addItem((String) sNames[i]);
+//		}
+//	}
+//	
+	//public String getSelectedAgent() { 
+	 // return(String)this.agentServer.getSelectedItem();
+	//}
 
 	public static void main(String args[]) {
 		FlatDarkLaf.setup();

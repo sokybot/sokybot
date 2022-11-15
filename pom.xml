@@ -14,6 +14,7 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 
+		<jna.version>5.12.1</jna.version>
 		<swingx-all.version>1.6.5-1</swingx-all.version>
 		<mydoggy.version>1.5.2</mydoggy.version>
 		<junit-jupiter-engine.version>5.9.0-M1</junit-jupiter-engine.version>
@@ -285,6 +286,23 @@
 
 		<!-- platform provided dependencies -->
 
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>${jna.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform -->
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>${jna.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+
+
 
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -308,6 +326,22 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.service.cm -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.cm</artifactId>
+			<version>1.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.service.metatype -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.metatype</artifactId>
+			<version>1.4.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.framework</artifactId>
@@ -321,6 +355,15 @@
 			<version>1.5.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.scr -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr</artifactId>
+			<version>2.2.4</version>
+			<scope>provided</scope>
+
+		</dependency>
+
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>

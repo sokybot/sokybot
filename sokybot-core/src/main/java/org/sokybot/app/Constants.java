@@ -11,10 +11,22 @@ public class Constants {
 	
 	public static final String MACHINE_NAME = "machine-name" ; 
 	public static final String MACHINE_USER_CONFIG = "user-config" ; 
-	public static final String MACHINE_TARGET_HOST = "targethost" ; 
+	public static final String MACHINE_TARGET_GATEWAY = "target-gateway" ; 
+	public static final String MACHINE_AUTO_LOGIN = "auto-login" ; 
+  	public static final String MACHINE_USER_NAME = "user-name" ; 
+  	public static final String MACHINE_PASSWORD = "password" ; 
+  	public static final String MACHINE_PASSCODE = "passcode" ; 
+  	public static final String MACHINE_TARGET_AGENT = "target-agent" ; 
+  	
+	public static final String MACHINE_AGENT_HOST = "agent-host" ; 
+	public static final String MACHINE_AGENT_PORT = "agent-port" ; 
+	public static final String MACHINE_LOGIN_ID = "login-id" ; 
 	
 	public static  final String CLIENT_MODULE_NAME = "SR_Client" ; 
 	public static final Integer CLIENT_DEFAULT_PORT  = 15000 ; 
+	public static final String CLIENT_DEFAULT_LOADER = "Default" ;
+	public static final String CLIENT_PID  = "client-pid" ; 
+	
 	
 	
 }

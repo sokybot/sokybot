@@ -76,11 +76,20 @@
 			<version>${dependency.spring-statemachine-core.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.netty/netty-transport -->
 		<dependency>
 			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-			<version>4.1.77.Final</version>
+			<artifactId>netty-transport</artifactId>
+			<version>4.1.85.Final</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.netty/netty-handler -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-handler</artifactId>
+			<version>4.1.85.Final</version>
+		</dependency>
+
+
 
 
 		<dependency>
@@ -200,11 +209,8 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>${project.parent.artifactId}-pk2-extractor</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>${project.parent.artifactId}-game-loader</artifactId>
-		</dependency>
-
+		<!-- <dependency> <groupId>${project.groupId}</groupId> <artifactId>${project.parent.artifactId}-game-loader</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>io.vavr</groupId>
 			<artifactId>vavr</artifactId>
@@ -240,6 +246,12 @@
 			<version>1.0.2</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${project.parent.artifactId}-game-loader</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 

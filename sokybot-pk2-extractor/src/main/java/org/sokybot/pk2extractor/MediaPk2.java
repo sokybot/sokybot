@@ -28,10 +28,11 @@ import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.Gender;
 import org.sokybot.domain.Race;
 import org.sokybot.domain.SilkroadType;
-import org.sokybot.domain.SkillEntity;
-import org.sokybot.domain.SkillType;
-import org.sokybot.domain.items.ItemEntity;
-import org.sokybot.domain.items.ItemType;
+import org.sokybot.domain.item.ItemEntity;
+import org.sokybot.domain.item.ItemType;
+import org.sokybot.domain.item.ItemEntity.ItemEntityBuilder;
+import org.sokybot.domain.skill.SkillEntity;
+import org.sokybot.domain.skill.SkillType;
 import org.sokybot.pk2.IPk2File;
 
 import org.sokybot.pk2extractor.exception.Pk2InvalidResourceFormatException;
@@ -155,8 +156,8 @@ public class MediaPk2 implements IMediaPk2 {
 				.flatMap(Pk2ExtractorUtils::toCSVRecordStream)
 				.filter((record) -> record.size() > 57 && !record.get(0).startsWith("//"))
 				.map(this::toItemEntity)
-				.distinct()
-				.peek((item) -> item.setName(names.get(item.getName())));
+				.distinct();
+				//.peek((item) -> item.setName(names.get(item.getName())));
 
 	}
 
@@ -283,28 +284,33 @@ public class MediaPk2 implements IMediaPk2 {
 	}
 
 	private ItemEntity toItemEntity(CSVRecord record) {
-		ItemEntity entity = new ItemEntity();
+		var builder =ItemEntity.builder() ; 
+		
 		String field = record.get(1); // id
 
 		if (NumberUtils.isParsable(field)) {
-			entity.setRefId(Integer.parseInt(field));
+			
+			builder.refId(Integer.parseInt(field));
 		}
 
 		field = record.get(2); // long id
 
 		if (!field.isBlank()) {
-			entity.setLongId(field);
+			builder.longId(field);
 		}
 
 		field = record.get(5); // name
-		entity.setName(field);
+		builder.name(names.get(field));
+		
 
 		field = record.get(7); // isMallItem {0 , 1}
 		boolean isMall = false;
 		if (NumberUtils.isParsable(field)) {
 			isMall = BooleanUtils.toBoolean(Byte.valueOf(field));
 		}
-		entity.setMallItem(isMall);
+
+		builder.isMallItem(isMall) ;
+		
 
 		String type = "";
 
@@ -326,7 +332,8 @@ public class MediaPk2 implements IMediaPk2 {
 			type += Integer.toHexString(Integer.parseInt(field));
 		}
 
-		entity.setItemType(ItemType.parseType(Integer.valueOf(type, 16), record.get(2)));
+		builder.itemType(ItemType.parseType(Integer.valueOf(type, 16), record.get(2)));
+		
 
 		field = record.get(14); // item race
 		Race itemRace = Race.Universal;
@@ -334,27 +341,34 @@ public class MediaPk2 implements IMediaPk2 {
 		if (NumberUtils.isParsable(field)) {
 			itemRace = Race.parseType(Byte.valueOf(field));
 		}
-		entity.setRace(itemRace);
+		builder.race(itemRace) ;
+		
 
 		field = record.get(15); // isSOX
-		entity.setSOX(field.equals("1"));
+
+		builder.isSOX(field.equals("1"));
+		
 
 		field = record.get(19);
-		entity.setSortable(!field.equals("0"));
+		builder.isSortable(!field.equals("0")) ;
+		
 
 		field = record.get(33); // lvl
 		int lvl = 0;
 		if (NumberUtils.isParsable(field)) {
 			lvl = Integer.parseInt(field);
 		}
-		entity.setLevel(lvl);
+		builder.level(lvl);
+		
 
 		field = record.get(57);
 		int maxStacks = 0;
 		if (NumberUtils.isParsable(field)) {
 			maxStacks = Integer.parseInt(field);
 		}
-		entity.setMaxStacks(maxStacks);
+
+		builder.maxStacks(maxStacks); 
+		
 
 		Gender itemGender = Gender.Unisex;
 
@@ -365,7 +379,8 @@ public class MediaPk2 implements IMediaPk2 {
 			}
 		}
 
-		entity.setGender(itemGender);
+		builder.gender(itemGender); 
+		
 
 		int degree = 0;
 
@@ -376,31 +391,36 @@ public class MediaPk2 implements IMediaPk2 {
 			}
 		}
 
-		entity.setDegree(degree);
+		builder.degree(degree); 
+		
 
-		return entity;
+		return builder.build();
 
 	}
 	private SkillEntity toSkillEntity(CSVRecord record) { 
-		SkillEntity skill = new SkillEntity();
 
+		var builder = SkillEntity.builder() ; 
+		
 		String field = record.get(1);
 		if (NumberUtils.isParsable(field)) {
 
-			skill.setRefId(Integer.parseInt(field));
+			builder.refId(Integer.parseInt(field)) ;
 		}
 
-		skill.setLongId(record.get(3));
+		String longId = record.get(3) ;
+		
+		builder.longId(longId); 
+		
 
 
 		field = record.get(13); // castTime
 		if (NumberUtils.isParsable(field)) {
-			skill.setCastTime(Integer.parseInt(field));
+			builder.castTime(Integer.parseInt(field));
 		}
 
 		field = record.get(14); // cooldown
 		if (NumberUtils.isParsable(field)) {
-			skill.setCooldown(Integer.parseInt(field));
+			builder.cooldown(Integer.parseInt(field));
 		}
 
 		field = record.get(22);
@@ -409,19 +429,21 @@ public class MediaPk2 implements IMediaPk2 {
 		if (NumberUtils.isParsable(field)) {
 			targetRequired = BooleanUtils.toBoolean(Byte.valueOf(field));
 		}
-		skill.setTargetRequired(targetRequired);
+		builder.targetRequired(targetRequired);
+		
 		
 		field = record.get(53) ;
 		if(NumberUtils.isParsable(field)) { 
-			skill.setMP(Integer.parseInt(field));
+			builder.MP(Integer.parseInt(field)) ; 
 		}
 		
-
-		skill.setName(record.get(62));
+		builder.name(record.get(62)) ; 
+		
 
 		field = record.get(70) ; 
 		if(NumberUtils.isParsable(field)) { 
-			skill.setDuration(Integer.parseInt(field));
+			builder.duration(Integer.parseInt(field)) ;
+			
 		}
 		
 		// parse type 
@@ -430,12 +452,13 @@ public class MediaPk2 implements IMediaPk2 {
         field = record.get(8) ; // {0 , 1 , 2} 0 = passive
         
         if(!field.equals("0")) { 
-        	type = SkillType.parseType(skill.getLongId()) ; 
+        	type = SkillType.parseType(longId) ; 
         }
         
-        skill.setType(type);
+        builder.type(type); 
+        
 
-        return skill ; 
+        return builder.build() ; 
 	}
 	
 

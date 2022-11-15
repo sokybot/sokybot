@@ -11,9 +11,14 @@
   
   <appender name="WRAPPER" class="org.sokybot.app.logger.AppenderWrapper"/>
  
-        
-  <root level="DEBUG">
+ 
+ <logger name = "org.sokybot" level="INFO" > 
     <appender-ref ref="WRAPPER" />
+ 
+ </logger>       
+ 
+  <root level="DEBUG">
+   <!-- <appender-ref ref="WRAPPER" /> --> 
     <appender-ref ref="STDOUT" />
   
   </root>

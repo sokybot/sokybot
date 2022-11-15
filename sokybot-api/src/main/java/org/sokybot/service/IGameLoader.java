@@ -5,7 +5,7 @@ public interface IGameLoader {
 
 	
 	
-	public long launch(String clientPath ) ; 
+	public int launch(String clientPath ) ; 
 	/**
 	 * 
 	 * 
@@ -13,7 +13,7 @@ public interface IGameLoader {
 	 * @param command  command that passed to the client
 	 * @return Process handle that can be used to manipulate the opened process
 	 */
-	public long launch(String clientPath , String command) ; 
+	public int launch(String clientPath , String command) ; 
 	
 	/**
 	 * return unique name for this implementation that used to identify it 

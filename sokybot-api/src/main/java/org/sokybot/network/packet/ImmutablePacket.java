@@ -32,6 +32,9 @@ public class ImmutablePacket extends Packet{
 		return reader ; 
 	}
 	
+	public IStreamReader getStreamReader() { 
+		return getPacketReader().asStreamReader() ; 
+	}
 	public static ImmutablePacket wrap(byte[] buffer) { 
 		return new ImmutablePacket(ByteBuffer.wrap(Arrays.copyOf(buffer, buffer.length))) ; 
 	}

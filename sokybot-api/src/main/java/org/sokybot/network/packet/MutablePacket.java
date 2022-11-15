@@ -63,10 +63,10 @@ public class MutablePacket extends Packet {
 		return packet ; 
 	}
 	
-	public static IPacketBuilder getBuilder(int capacity) { 
+	public static IPacketBuilder getBuilder(int capacity , int opcode) { 
 		ByteBuffer buffer = ByteBuffer.allocate(capacity + 6) ;
 		 buffer.order(ByteOrder.LITTLE_ENDIAN) ; 
-		return new FixedPacketBuilder(buffer) ; 
+		return new FixedPacketBuilder(buffer ,(short) opcode) ; 
 		
 	}
 	

@@ -6,9 +6,8 @@ import java.util.stream.Stream;
 
 import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.SilkroadType;
-import org.sokybot.domain.SkillEntity;
-import org.sokybot.domain.items.ItemEntity;
-
+import org.sokybot.domain.item.ItemEntity;
+import org.sokybot.domain.skill.SkillEntity;
 import org.sokybot.pk2extractor.exception.Pk2InvalidResourceFormatException;
 
 public interface IMediaPk2 extends Closeable {
