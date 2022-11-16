@@ -20,8 +20,8 @@ public class Item {
 	private byte slot ; 
 	private int rentType ; 
 	
-	private int stackCount ; 
-	private int attributeAssimilationProbability ; 
+	private short stackCount ; 
+	private byte attributeAssimilationProbability ; 
 	
 	@Delegate
 	private ItemRent rent  ; 

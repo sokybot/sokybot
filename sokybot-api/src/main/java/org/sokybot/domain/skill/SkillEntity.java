@@ -1,7 +1,6 @@
 package org.sokybot.domain.skill;
 
 import org.sokybot.domain.SilkrodEntity;
-import org.sokybot.domain.item.ItemType;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,7 +23,7 @@ public class SkillEntity extends SilkrodEntity {
 	private int duration ; 
 	private int MP ; 
 	
-	private ItemType requiredWeapon ;
+	//private ItemType requiredWeapon ;
 	
 	private boolean targetRequired ; 
 	

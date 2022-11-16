@@ -3,8 +3,8 @@ package org.sokybot.machine.model ;
 
 import java.util.List;
 
-import org.sokybot.domain.CharacterEntity;
 import org.sokybot.domain.item.ItemEntity;
+import org.sokybot.domain.npc.CharacterEntity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -28,7 +28,12 @@ public class Equipment extends Item {
 	@Delegate
 	@Getter(value = AccessLevel.NONE)
 	@Setter(value = AccessLevel.NONE)
-	MagParam bluse = new MagParam() ;
+	private MagParam bluse = new MagParam() ;
+	
+	@Delegate
+	@Getter(value = AccessLevel.NONE)
+	@Setter(value = AccessLevel.NONE)	
+	private Option option  = new Option(); 
 	
 	public Equipment(Item item) {
 		super(item);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.sokybot.domain;
+package org.sokybot.domain.npc;
 
 import java.beans.PropertyChangeSupport;
 

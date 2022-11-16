@@ -159,13 +159,13 @@ public class NitriteGameDAO implements IGameDAO {
 	}
 
 	@Override
-	public ItemEntity getItem(int refId) {
-		return this.itemEntities.getById(refId);
+	public Optional<ItemEntity> findItem(int refId) {
+		return Optional.ofNullable(this.itemEntities.getById(refId));
 	}
 
 	@Override
-	public SkillEntity getSkill(int refId) {
-		return this.skillEntities.getById(refId);
+	public Optional<SkillEntity> findSkill(int refId) {
+		return Optional.ofNullable(this.skillEntities.getById(refId));
 	}
 
 	@Override

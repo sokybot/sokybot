@@ -43,7 +43,7 @@ public class ItemEntity extends SilkrodEntity {
 		return (this.itemType.getValue() & 0x140) == 0x140;
 	}
 
-	public boolean IsClothing() {
+	public boolean isClothing() {
 		int value = this.itemType.getValue();
 		return isEquipmentItem() && !((value & 0x140) == 0x140 || (value & 0x150) == 0x150 || (value & 0x160) == 0x160
 				|| (value & 0x1C0) == 0x1C0);
@@ -51,6 +51,22 @@ public class ItemEntity extends SilkrodEntity {
 
 	public boolean isAccessory() {
 		return (itemType.getValue() & 0x150) == 0x150 || (this.itemType.getValue() & 0x1C0) == 0x1C0;
+	}
+
+	public boolean isMagicStone() {
+		return itemType.getValue() >> 4 == 0x3B1;
+	}
+
+	public boolean isAttributeStone() {
+		return itemType.getValue() >> 4 == 0x3B2;
+	}
+
+	public boolean isJadeTablet() {
+		return itemType.getValue() >> 4 == 0x3B30;
+	}
+
+	public boolean isRubyTablet() {
+		return itemType.getValue() >> 4 == 0x3B31;
 	}
 
 }

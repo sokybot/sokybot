@@ -3,6 +3,7 @@ package org.sokybot.domain.skill;
 
 public enum SkillType {
 
+	UNKNOWN((byte)0xff) , 
 	Passive((byte) 0x00), Imbue((byte) 0x01), SpeedBuff((byte) 0x02), Buff((byte) 0x03), Heal((byte) 0x04),
 	SelfHeal((byte) 0x05), ManaBuff((byte) 0x06), Resurrection((byte) 0x07), Debuff((byte) 0x08), Cure((byte) 0x09),
 	KnockDownOnly((byte) 0x0A), Knockdown((byte) 0x0B), WarlockDOT((byte) 0x0C), Other((byte) 0x0F);

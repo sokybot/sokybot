@@ -1,8 +1,11 @@
 package org.sokybot.service;
 
+import java.util.Optional;
+
 import org.sokybot.domain.DivisionInfo;
 import org.sokybot.domain.SilkroadType;
 import org.sokybot.domain.item.ItemEntity;
+
 import org.sokybot.domain.skill.SkillEntity;
 
 public interface IGameDAO {
@@ -24,9 +27,11 @@ public interface IGameDAO {
 	
 	DivisionInfo getDivisionInfo();
 
-	ItemEntity getItem(int refId);
+	Optional<ItemEntity> findItem(int refId);
 
-	SkillEntity getSkill(int refId);
+	Optional<SkillEntity> findSkill(int refId);
+	
+
 	
 
 }
